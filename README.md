@@ -20,6 +20,18 @@ Other ways in:
 
 **White paper:** [docs/WHITEPAPER.md](docs/WHITEPAPER.md) ([PDF](docs/whitepaper.pdf)): the needs, design, checks, standards mapping, a worked example and the limits.
 
+## Automated quality checks
+
+Every push and pull request runs [CI](https://github.com/ultimatixarup/agent-ops-check/actions/workflows/ci.yml) on Node 18, 20 and 22 (Ubuntu) and Node 22 (macOS, Windows):
+
+- the full test suite (`npm test`);
+- golden-result checks: the sample bad agent, the good agent, the zip of the bad agent, the ADSF poisoned doc and the STE samples are scanned, and their scores and rule-ID counts must match the snapshots in `test/golden/` (`npm run golden`; refresh with `npm run golden:update`);
+- the docs drift check (`npm run docs:check`): the README check tables must match `rules/*.yaml`;
+- a smoke test that installs the packed tarball, scans with it, and runs it with `npx`.
+
+Every scan runs with network calls blocked (`test/no-network.js`); only `npm` installs use the network.
+See the [latest run on main](https://github.com/ultimatixarup/agent-ops-check/actions/workflows/ci.yml?query=branch%3Amain). Each run page has an `agent-ops-reports` artifact with the HTML reports for the sample scans.
+
 ## Needs and checks
 
 Each section states an unmet need with sourced figures, the checks that address it, and the details of each check. The check tables are generated from `rules/*.yaml` and `docs/checks-catalog.yaml` by `npm run docs`; a test fails if they drift.
