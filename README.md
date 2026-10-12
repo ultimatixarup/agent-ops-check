@@ -18,6 +18,8 @@ Other ways in:
 > Heuristic regex and static checks, **not a security audit**. It can miss problems and it can flag harmless code.
 > Free, MIT-licensed personal project.
 
+**White paper:** [docs/WHITEPAPER.md](docs/WHITEPAPER.md) ([PDF](docs/whitepaper.pdf)): the needs, design, checks, standards mapping, a worked example and the limits.
+
 ## Automated quality checks
 
 Every push and pull request runs [CI](https://github.com/ultimatixarup/agent-ops-check/actions/workflows/ci.yml) on Node 18, 20 and 22 (Ubuntu) and Node 22 (macOS, Windows):
