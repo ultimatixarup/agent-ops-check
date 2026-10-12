@@ -1,5 +1,7 @@
 # agent-ops-check
 
+[![CI](https://github.com/ultimatixarup/agent-ops-check/actions/workflows/ci.yml/badge.svg)](https://github.com/ultimatixarup/agent-ops-check/actions/workflows/ci.yml)
+
 **Run an agent-ops review on your own computer with one command.** No SaaS, no account, no network calls.
 Optional LLM review uses your own API key, and only if you ask for it.
 
@@ -259,9 +261,14 @@ Rule updates ship only through this repo: `git pull`, or re-run npx. There are n
 
 ```bash
 npm install
-npm test          # node --test, 35 tests, no network
-npm run example   # scans examples/bad-agent into ./report
+npm test               # node --test, no network
+npm run docs:check     # README check tables match rules/*.yaml
+npm run golden         # scores + rule-ID counts on examples/ vs test/golden/*.json
+npm run golden:update  # refresh the snapshots after an intended rule change
+npm run example        # scans examples/bad-agent into ./report
 ```
+
+CI (`.github/workflows/ci.yml`) runs all of the above on Node 18/20/22 (Ubuntu) and Node 22 (macOS, Windows), plus a smoke test of the packed tarball, and uploads the HTML reports as a build artifact.
 
 `examples/bad-agent/` is deliberately bad and entirely fictional; `examples/good-agent/` should score 100 on tabs 1–3.
 
