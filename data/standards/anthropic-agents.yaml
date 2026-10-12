@@ -1,0 +1,59 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: anthropic-agents
+name: Anthropic / Claude agent guidance (summarized)
+source: https://docs.anthropic.com/
+note: Practices summarized from Anthropic's public docs and engineering posts on building and securing agents.
+items:
+  - id: AN-CONFIRM
+    title: Ask a human before consequential or irreversible actions
+    coverage: covered
+    checks:
+      - actions.
+    how: Gate map
+  - id: AN-LEASTPRIV
+    title: Least-privilege tools and credentials
+    coverage: covered
+    checks:
+      - crossover.shared_credential
+      - crossover.source_to_sink
+      - actions.wildcard_domain
+    how: Shared tokens, reach, wildcards
+  - id: AN-UNTRUSTED
+    title: Treat tool results and web/doc content as untrusted (prompt injection)
+    coverage: covered
+    checks:
+      - injection.
+      - health.untrusted_input
+    how: Injection scan
+  - id: AN-SANDBOX
+    title: Run in a sandbox / isolated environment
+    coverage: partial
+    checks:
+      - actions.browser_profile
+    how: Real browser profile use
+  - id: AN-PROMPT
+    title: Clear system prompt with explicit constraints
+    coverage: covered
+    checks:
+      - actions.no_deny_list
+      - ste.
+    how: Deny-list check, STE clarity
+  - id: AN-EVALS
+    title: Build evaluations with test cases
+    coverage: covered
+    checks: []
+    how: Generates functional + security eval sets (not run)
+  - id: AN-LIMITS
+    title: Limit cost and steps
+    coverage: covered
+    checks:
+      - governance.no_max_tokens
+      - governance.no_recursion_cap
+      - governance.no_budget
+    how: Caps and budgets
+  - id: AN-OBSERVE
+    title: Log and monitor agent actions
+    coverage: covered
+    checks:
+      - governance.no_tracing
+    how: Tracing

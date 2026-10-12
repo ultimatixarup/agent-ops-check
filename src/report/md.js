@@ -4,6 +4,7 @@ const P = { high: "P0", medium: "P1", low: "P2", info: "OK" };
 module.exports = function md(r) {
   const L = [];
   L.push("# Agent ops audit memo (self-run)", "", "_Generated locally by agent-ops-check " + r.version + " on " + r.generatedAt + ". " + r.network + "_", "", "> " + r.disclaimer, "");
+  if (r.rules) L.push("Rules " + r.rules.version + " (" + r.rules.date + "). " + r.rules.hint, "");
   L.push("**Overall score:** " + r.score + "/100 · files scanned: " + r.filesScanned + " · agents: " + r.agents.join(", "), "");
   L.push("| Area | Score | High | Medium | Low |", "|---|---|---|---|---|");
   r.groups.forEach((g) => L.push("| " + g.title + " | " + g.score + " | " + g.counts.high + " | " + g.counts.medium + " | " + g.counts.low + " |"));
@@ -27,6 +28,17 @@ module.exports = function md(r) {
     st.docs.forEach((d) => L.push("- " + d.file + ": " + d.sentences + " sentences, " + d.findings + " findings"));
     if (st.compare) L.push("", "**Information-loss check:** " + st.compare.original + " → " + st.compare.rewrite + ": " + st.compare.missing.length + " item(s) missing from the rewrite (of " + st.compare.originalFacts + " facts found in the original).");
   }
+  const inj = r.groups.find((g) => g.id === "injection");
+  if (inj) L.push("", "## Document-wide prompt-injection scan (ADSF)", "", "_" + inj.note + "_", "", inj.docsScanned + " files scanned, " + inj.findings.length + " findings.");
+  if (r.standards) {
+    L.push("", "## Standards map (maps to, not compliance)", "", "✅ covered by a check · 🟡 partly · ⬜ not checked. Numbers = findings in this scan that map to the item.", "");
+    for (const fw of r.standards) {
+      L.push("### " + fw.name, "", "_" + fw.note + "_ (" + fw.summary.covered + " ✅ · " + fw.summary.partial + " 🟡 · " + fw.summary.none + " ⬜)", "", "| Item | Status | Findings here | What the tool checks |", "|---|---|---|---|");
+      fw.items.forEach((i) => L.push("| " + i.id + " " + i.title + " | " + i.icon + " | " + (i.findings ? i.findings + (i.high ? " (" + i.high + " high)" : "") : "-") + " | " + i.how + " |"));
+      L.push("");
+    }
+  }
+  if (r.evals) L.push("", "## Generated eval sets", "", r.evals.functional.length + " functional and " + r.evals.security.length + " security test cases in `evals/` (JSONL + README.md). Generated from the source; not run.");
   L.push("", "## 4. Findings (P0 = fix before real traffic)", "");
   for (const g of r.groups) {
     L.push("### " + g.title, "");

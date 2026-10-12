@@ -1,0 +1,99 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: mitre-atlas
+name: MITRE ATLAS (selected techniques)
+source: https://github.com/mitre-atlas/atlas-data
+note: Selected agent techniques; IDs/names per ATLAS data (via framework-pitch research).
+items:
+  - id: AML.T0051
+    title: LLM Prompt Injection (direct and indirect)
+    coverage: covered
+    checks:
+      - injection.
+      - health.untrusted_input
+      - health.t_override
+    how: Injection scan + untrusted-input rules + eval cases
+  - id: AML.T0054
+    title: LLM Jailbreak
+    coverage: partial
+    checks:
+      - health.t_override
+    how: Obeyed overrides in transcripts; jailbreak eval cases
+  - id: AML.T0056
+    title: LLM Meta Prompt Extraction
+    coverage: covered
+    checks:
+      - health.confidential_in_prompt
+      - health.t_leaks
+    how: Secrets in prompts, leaks in transcripts
+  - id: AML.T0057
+    title: LLM Data Leakage
+    coverage: covered
+    checks:
+      - crossover.
+      - health.t_other_customer
+    how: Personal-to-work paths, other customers' data
+  - id: AML.T0053
+    title: AI Agent Tool Invocation
+    coverage: covered
+    checks:
+      - actions.
+      - crossover.shared_credential
+    how: Tool gates and credential sharing
+  - id: AML.T0034
+    title: Cost Harvesting
+    coverage: covered
+    checks:
+      - governance.no_max_tokens
+      - governance.no_budget
+      - governance.unbounded_loop
+    how: Caps and budgets
+  - id: AML.T0029
+    title: Denial of ML Service
+    coverage: partial
+    checks:
+      - governance.no_timeout
+      - governance.no_recursion_cap
+    how: Timeouts and step caps
+  - id: AML.T0055
+    title: Unsecured Credentials
+    coverage: covered
+    checks:
+      - crossover.secret
+      - health.secret_smells
+    how: Hardcoded secrets
+  - id: AML.T0010
+    title: ML Supply Chain Compromise
+    coverage: partial
+    checks:
+      - governance.unpinned_model
+    how: Pinning only
+  - id: AML.T0083
+    title: Credentials from AI Agent Configuration
+    coverage: covered
+    checks:
+      - crossover.secret
+      - crossover.env_committed
+    how: Secrets in agent/MCP configs, .env present
+  - id: AML.T0086
+    title: Exfiltration via AI Agent Tool Invocation
+    coverage: covered
+    checks:
+      - crossover.source_to_sink
+      - crossover.slack_webhook
+      - injection.exfil_instruction
+      - injection.md_image_exfil
+    how: Source-to-sink paths, hardcoded webhooks, exfil instructions/links in docs
+  - id: AML.T0101
+    title: Data Destruction via AI Agent Tool Invocation
+    coverage: covered
+    checks:
+      - actions.irreversible_tool
+    how: Ungated delete/drop/destroy/purge tools
+  - id: AML.T0100
+    title: AI Agent Clickbait
+    coverage: partial
+    checks:
+      - actions.browser_write
+      - actions.url_shortener
+      - actions.wildcard_domain
+    how: Browser writes, shorteners, allowlists

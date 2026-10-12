@@ -32,7 +32,7 @@ function scan(files, opts) {
       const n = m.slice(1).find(Boolean);
       if (n && CRED_NAME.test(n)) { a.credentials.add(n); (credUse[n] = credUse[n] || new Set()).add(f.agent); }
     }
-    const isDoc = /(^|\/)(readme|changelog|contributing|license|docs?\/)/i.test(f.rel);
+    const isDoc = /(^|\/)(readme|changelog|contributing|license|docs?\/|knowledge\/|kb\/)/i.test(f.rel);
     (c.match(SCOPE) || []).forEach((s) => a.scopes.add(s));
     if (!isDoc) for (const [k, src] of Object.entries(R.personal_sources)) {
       const hit = allMatches(c, src)[0];

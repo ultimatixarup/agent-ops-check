@@ -6,5 +6,6 @@ standard test values. Do not copy any of this into a real project.
 
 - `finance-cfo/` reads Gmail and a tax folder, then posts a "monthly audit" to Slack.
 - `work-assistant/` posts to Slack and Jira using the same Slack token.
+- `finance-cfo/knowledge/vendor-faq.md` is a poisoned document: a hidden HTML-comment instruction, zero-width and invisible Unicode tag characters, a base64 instruction and a data-leaking image link.
 - `browser-bot/` fills and submits forms on other people's sites, reads cookies and localStorage, and uses a shortener.
 - `support-bot/` is a customer-facing chat bot (prompt + transcripts) for the Agent Health Checker pass.

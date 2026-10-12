@@ -1,0 +1,82 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: nist-ai-rmf
+name: NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks
+source: https://www.nist.gov/itl/ai-risk-management-framework
+note: Function names from AI RMF 1.0; risk names from the GenAI Profile. This tool supports a few outcomes; it does not implement the framework.
+items:
+  - id: GOVERN
+    title: 'Govern: policies, accountability, oversight'
+    coverage: partial
+    checks:
+      - governance.no_owner
+      - governance.no_review_record
+    how: Owner and review records; AI inventory
+  - id: MAP
+    title: 'Map: context, components, third parties'
+    coverage: covered
+    checks:
+      - governance.
+      - crossover.
+    how: AI inventory (providers, SDKs, models), connector inventory and source-to-sink map
+  - id: MEASURE
+    title: 'Measure: test and evaluate'
+    coverage: partial
+    checks:
+      - governance.no_tracing
+      - observability.
+    how: Generates eval sets (functional + security) from the source; does not run them
+  - id: MANAGE
+    title: 'Manage: prioritize and respond to risks'
+    coverage: partial
+    checks: []
+    how: P0–P2 audit memo and SARIF for CI; no incident workflow
+  - id: GAI-Confabulation
+    title: 'GenAI risk: Confabulation'
+    coverage: partial
+    checks:
+      - health.grounding_rule
+      - health.t_grounding
+    how: Grounding rule checks
+  - id: GAI-DataPrivacy
+    title: 'GenAI risk: Data Privacy'
+    coverage: covered
+    checks:
+      - crossover.
+      - health.pii_collection
+      - health.t_sensitive_requests
+    how: PII, secrets, personal-to-work paths
+  - id: GAI-HumanAI
+    title: 'GenAI risk: Human-AI Configuration'
+    coverage: covered
+    checks:
+      - actions.
+      - health.bot_disclosure
+      - health.handoff_rule
+    how: Approval gates, disclosure, handoff
+  - id: GAI-InfoIntegrity
+    title: 'GenAI risk: Information Integrity'
+    coverage: partial
+    checks:
+      - health.t_grounding
+      - ste.info_loss
+    how: FAQ grounding; STE information-loss compare
+  - id: GAI-InfoSecurity
+    title: 'GenAI risk: Information Security'
+    coverage: covered
+    checks:
+      - injection.
+      - crossover.secret
+      - actions.cookie_read
+      - actions.storage_read
+    how: Injection scan, secrets, token lifting
+  - id: GAI-ValueChain
+    title: 'GenAI risk: Value Chain and Component Integration'
+    coverage: partial
+    checks:
+      - governance.unpinned_model
+    how: Provider/SDK/model inventory and pinning
+  - id: GAI-Harmful
+    title: 'GenAI risks: CBRN, violent/hateful, obscene, bias, IP, environmental'
+    coverage: none
+    checks: []
+    how: Not checked
