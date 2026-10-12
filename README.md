@@ -16,6 +16,8 @@ Other ways in:
 > Heuristic regex and static checks, **not a security audit**. It can miss problems and it can flag harmless code.
 > Free, MIT-licensed personal project.
 
+**White paper:** [docs/WHITEPAPER.md](docs/WHITEPAPER.md) ([PDF](docs/whitepaper.pdf)): the needs, design, checks, standards mapping, a worked example and the limits.
+
 ## Needs and checks
 
 Each section states an unmet need with sourced figures, the checks that address it, and the details of each check. The check tables are generated from `rules/*.yaml` and `docs/checks-catalog.yaml` by `npm run docs`; a test fails if they drift.
@@ -259,7 +261,7 @@ Rule updates ship only through this repo: `git pull`, or re-run npx. There are n
 
 ```bash
 npm install
-npm test          # node --test, 35 tests, no network
+npm test          # node --test, 39 tests, no network
 npm run example   # scans examples/bad-agent into ./report
 ```
 
