@@ -9,6 +9,10 @@ npx github:ultimatixarup/agent-ops-check ./my-agent
 
 Then open `agent-ops-report/index.html` in your browser.
 
+Other ways in:
+- A zipped agent: `npx github:ultimatixarup/agent-ops-check ./agent.zip` (extracted locally to a temp folder, deleted after; path-traversal entries are rejected)
+- A local launch page: `npx github:ultimatixarup/agent-ops-check ui --open` serves a page on `127.0.0.1` where you type a folder/zip path or upload a zip, start the scan, and view the report
+
 > Heuristic regex and static checks, **not a security audit**. It can miss problems and it can flag harmless code.
 > Free, MIT-licensed personal project.
 
@@ -24,6 +28,10 @@ It points at a folder (or files) holding agent code, prompts, MCP configs and lo
 | **4. Agent Health Checker + Labs tools** | The [Arup Banerjee Labs](https://ultimatixarup.github.io/arup-banerjee-labs/) browser tools, run unchanged in a sandbox: **Agent Health Checker** (8 engineering + 9 customer-safety checks on prompts/configs, 9 checks on chat transcripts `.jsonl`), plus extra checks for 7 of its 8 recorded misses; **Cloud Bill Smell Detector** on bill CSV exports; **Observability Gap Finder** on the whole input. | Per-file scores and verdicts |
 
 | **5. Simplified Technical English (STE)** | Prompts, system prompts, `.md` docs and agent instructions (and any text you give it): procedural sentences over 20 words and descriptive sentences over 25; passive voice; noun clusters of more than 3 nouns; complex tenses (perfect, progressive, modal + be + past participle); -ing words used as verbs; semicolons; more than one instruction per sentence; common phrasal verbs; vague hedges ("perhaps", "as appropriate"); plain-word hints ("utilize" → "use"). | Per-document sentence and finding counts, file:line findings, and an information-loss table when you compare two versions |
+
+| **6. Prompt-injection scan (ADSF)** | Every file in the input, plus extra docs or knowledge files via `--docs <file|dir>`: "ignore previous instructions" overrides, role reassignment, fake system markers, instructions addressed to AI readers, secrecy requests, exfiltration instructions, risky tool-call requests, HTML-comment instructions, CSS-hidden text, zero-width / bidi / Unicode-tag (invisible) characters (tag text is decoded), base64 blobs that decode to instructions, data-leaking Markdown images, templated URLs, request-capture hosts. | file:line findings with decoded evidence |
+| **Standards map** | Maps findings to 10 frameworks, from offline data in `data/standards/`: OWASP Top 10 for LLM Apps 2025, OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10), OWASP Agentic AI threats T1–T15, NIST AI RMF functions + GenAI Profile (AI 600-1) risks, ISO/IEC 42001 Annex A areas, MITRE ATLAS (selected agent techniques), CSA AI Controls Matrix domains, EU AI Act (selected articles), Copilot Studio governance areas, Anthropic/Claude agent guidance. | ✅ covered / 🟡 partial / ⬜ not checked per item, plus how many findings in this scan map to it. It shows what the tool **maps to**; it is not a compliance assessment. |
+| **Eval sets** | Generated offline from the source: functional cases (each tool; in-scope and out-of-scope per prompt) and security cases (direct and indirect injection, jailbreak, each irreversible action without confirmation, each personal-to-work path, each credential name, unbounded consumption). | `evals/functional.jsonl`, `evals/security.jsonl`, `evals/README.md`. The tool writes them; you run them against your agent. |
 
 The score (0–100) averages tabs 1–3: each high finding costs 10 points, medium 4, low 1.
 
@@ -72,6 +80,9 @@ agent-ops-check <dir|files...> [options]
   --rules <dir>        use your own copy of rules/*.yaml
   --no-labs            skip tab 4
   --llm <provider>     optional review: openai | anthropic | openrouter
+  --docs <file|dir>    extra documents for the prompt-injection scan (repeatable)
+  --no-injection, --no-ste, --no-evals   skip those parts
+agent-ops-check ui [--port N] [--open]   local launch page (127.0.0.1 only)
 ```
 
 Outputs: `index.html` (static, opens offline, three-plus tabs with file:line findings), `report.json`,
@@ -95,6 +106,10 @@ Try it on the built-in bad example: `npm run example`.
 All patterns live in `rules/crossover.yaml`, `rules/actions.yaml` and `rules/governance.yaml` as case-insensitive
 JavaScript regex. Copy the folder, edit, and run with `--rules ./my-rules`.
 
+## Updates
+
+Rule updates ship only through this repo: `git pull`, or re-run npx. There are no live rule downloads. Every report shows the rules version and date and a local-only "rules are N days old" hint. See [docs/UPDATES.md](docs/UPDATES.md) for versioning, the changelog, adding a rule, and release notifications.
+
 ## Known limits
 
 - Regex reads what code and configs **say**, not what they enforce at runtime.
@@ -106,7 +121,7 @@ JavaScript regex. Copy the folder, edit, and run with `--rules ./my-rules`.
 
 ```bash
 npm install
-npm test          # node --test, 26 tests, no network
+npm test          # node --test, 35 tests, no network
 npm run example   # scans examples/bad-agent into ./report
 ```
 
