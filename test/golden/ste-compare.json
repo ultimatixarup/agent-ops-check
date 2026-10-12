@@ -1,0 +1,15 @@
+{
+  "score": 16,
+  "filesScanned": 0,
+  "groups": {
+    "ste": {
+      "score": 16,
+      "findings": 9,
+      "rules": {
+        "ste.info_loss.constraint": 5,
+        "ste.info_loss.date": 1,
+        "ste.info_loss.number_unit": 3
+      }
+    }
+  }
+}

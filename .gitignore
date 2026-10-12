@@ -2,3 +2,5 @@ node_modules/
 /agent-ops-report/
 /report/
 *.tgz
+golden-out/
+*.tgz

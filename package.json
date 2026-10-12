@@ -25,7 +25,9 @@
     "test": "node --test test/*.test.js",
     "example": "node bin/agent-ops-check.js examples/bad-agent --out report",
     "docs": "node scripts/gen-docs.js",
-    "docs:check": "node scripts/gen-docs.js --check"
+    "docs:check": "node scripts/gen-docs.js --check",
+    "golden": "node scripts/golden.js",
+    "golden:update": "node scripts/golden.js --update"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"

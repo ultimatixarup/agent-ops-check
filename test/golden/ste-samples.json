@@ -1,0 +1,14 @@
+{
+  "score": 93,
+  "filesScanned": 0,
+  "groups": {
+    "ste": {
+      "score": 93,
+      "findings": 7,
+      "rules": {
+        "ste.not_in_dictionary": 6,
+        "ste.noun_cluster": 1
+      }
+    }
+  }
+}
