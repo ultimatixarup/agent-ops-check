@@ -1,0 +1,88 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: owasp-llm-2025
+name: OWASP Top 10 for LLM Applications 2025
+source: https://genai.owasp.org/llm-top-10/
+note: Item names from the OWASP 2025 list. Status = what this tool checks statically, not whether your app is safe.
+items:
+  - id: LLM01
+    title: Prompt Injection
+    coverage: covered
+    checks:
+      - injection.
+      - health.untrusted_input
+      - health+.untrusted_input
+      - health.t_override
+      - actions.no_deny_list
+    how: Document-wide injection scan (ADSF tab), untrusted-input rule in prompts, obeyed overrides in transcripts, injection eval cases
+  - id: LLM02
+    title: Sensitive Information Disclosure
+    coverage: covered
+    checks:
+      - crossover.
+      - health.confidential_in_prompt
+      - health.t_leaks
+      - health.pii_collection
+    how: Secrets/PII in files, personal-to-work source-to-sink paths, confidential text in prompts, leaks in transcripts
+  - id: LLM03
+    title: Supply Chain
+    coverage: partial
+    checks:
+      - governance.unpinned_model
+    how: Model pinning and SDK inventory only; no dependency or model-provenance scan
+  - id: LLM04
+    title: Data and Model Poisoning
+    coverage: partial
+    checks:
+      - injection.
+    how: Poisoned instructions hidden in docs/knowledge files; no training-data checks
+  - id: LLM05
+    title: Improper Output Handling
+    coverage: partial
+    checks:
+      - health.injection_sinks
+      - actions.irreversible_tool
+    how: Shell/SQL/exec tools and ungated actions that consume model output; no taint tracking
+  - id: LLM06
+    title: Excessive Agency
+    coverage: covered
+    checks:
+      - actions.
+      - crossover.source_to_sink
+      - crossover.shared_credential
+      - health.high_risk_tools
+    how: Gate map for irreversible tools and browser actions, shared credentials, scopes
+  - id: LLM07
+    title: System Prompt Leakage
+    coverage: covered
+    checks:
+      - health.confidential_in_prompt
+      - health.t_leaks
+      - health+.t_leaks
+      - crossover.secret
+    how: Secrets and internal notes in prompts; leaked prompt text in transcripts
+  - id: LLM08
+    title: Vector and Embedding Weaknesses
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: LLM09
+    title: Misinformation
+    coverage: partial
+    checks:
+      - health.grounding_rule
+      - health+.grounding_rule
+      - health.t_grounding
+      - ste.
+    how: '''I don''t know'' rule, made-up prices/policies vs your FAQ; STE clarity checks'
+  - id: LLM10
+    title: Unbounded Consumption
+    coverage: covered
+    checks:
+      - governance.no_max_tokens
+      - governance.no_timeout
+      - governance.no_retry_cap
+      - governance.no_recursion_cap
+      - governance.unbounded_loop
+      - governance.no_budget
+      - bill.
+    how: Token caps, timeouts, retry/step caps, infinite loops, budget alerts, bill smells

@@ -1,0 +1,112 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: owasp-agentic
+name: OWASP Agentic AI – Threats and Mitigations (T1–T15)
+source: https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/
+note: Threat names from the OWASP Agentic Security Initiative taxonomy.
+items:
+  - id: T1
+    title: Memory Poisoning
+    coverage: partial
+    checks:
+      - injection.
+    how: Hidden instructions in files an agent may load as memory/knowledge
+  - id: T2
+    title: Tool Misuse
+    coverage: covered
+    checks:
+      - actions.
+      - health.high_risk_tools
+    how: 'Gate map: approval, dry-run, rate limit, allowlist per tool'
+  - id: T3
+    title: Privilege Compromise
+    coverage: covered
+    checks:
+      - crossover.shared_credential
+      - crossover.source_to_sink
+      - crossover.secret
+      - actions.browser_profile
+      - actions.cookie_read
+    how: Shared tokens, broad reach, real browser profiles, cookie reads
+  - id: T4
+    title: Resource Overload
+    coverage: covered
+    checks:
+      - governance.no_max_tokens
+      - governance.no_timeout
+      - governance.no_recursion_cap
+      - governance.unbounded_loop
+      - governance.no_budget
+    how: Caps, timeouts, loops, budgets
+  - id: T5
+    title: Cascading Hallucination Attacks
+    coverage: partial
+    checks:
+      - health.grounding_rule
+      - health.t_grounding
+    how: Grounding rules only
+  - id: T6
+    title: Intent Breaking & Goal Manipulation
+    coverage: covered
+    checks:
+      - injection.
+      - health.untrusted_input
+      - health.t_override
+    how: Injection scan, untrusted-input rule, obeyed overrides
+  - id: T7
+    title: Misaligned & Deceptive Behaviors
+    coverage: partial
+    checks:
+      - health.bot_disclosure
+      - health+.bot_disclosure
+      - health.t_human_claim
+    how: Bot-disclosure / human-persona checks
+  - id: T8
+    title: Repudiation & Untraceability
+    coverage: covered
+    checks:
+      - governance.no_tracing
+      - observability.
+    how: Tracing and logging checks
+  - id: T9
+    title: Identity Spoofing & Impersonation
+    coverage: partial
+    checks:
+      - crossover.shared_credential
+      - health.t_human_claim
+    how: Shared credentials; claims to be human
+  - id: T10
+    title: Overwhelming Human in the Loop
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: T11
+    title: Unexpected RCE and Code Attacks
+    coverage: partial
+    checks:
+      - health.injection_sinks
+    how: Shell/exec/SQL tools fed by model output
+  - id: T12
+    title: Agent Communication Poisoning
+    coverage: partial
+    checks:
+      - injection.
+    how: Injection patterns in shared files only; no runtime message checks
+  - id: T13
+    title: Rogue Agents in Multi-Agent Systems
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: T14
+    title: Human Attacks on Multi-Agent Systems
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: T15
+    title: Human Manipulation
+    coverage: partial
+    checks:
+      - health.bot_disclosure
+      - health.t_human_claim
+      - health.t_dosing
+      - health.regulated_advice
+    how: Persona, unsafe advice

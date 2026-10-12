@@ -1,0 +1,63 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: eu-ai-act
+name: EU AI Act basics (selected articles)
+source: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+note: Selected articles for orientation. Not legal advice; maps to, not compliant with.
+items:
+  - id: Art.4
+    title: AI literacy
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: Art.5
+    title: Prohibited practices
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: Art.9
+    title: Risk management system (high-risk)
+    coverage: partial
+    checks: []
+    how: Audit memo is an input
+  - id: Art.10
+    title: Data and data governance
+    coverage: partial
+    checks:
+      - crossover.pii
+    how: Personal data in agent files
+  - id: Art.12
+    title: Record-keeping (logging)
+    coverage: covered
+    checks:
+      - governance.no_tracing
+      - observability.
+    how: Tracing/logging checks
+  - id: Art.13
+    title: Transparency and information to deployers
+    coverage: partial
+    checks:
+      - governance.no_owner
+    how: Owner docs
+  - id: Art.14
+    title: Human oversight
+    coverage: covered
+    checks:
+      - actions.
+      - health.handoff_rule
+    how: Approval gates, handoff
+  - id: Art.15
+    title: Accuracy, robustness and cybersecurity
+    coverage: partial
+    checks:
+      - injection.
+      - crossover.secret
+      - health.grounding_rule
+    how: Injection, secrets, grounding
+  - id: Art.50
+    title: 'Transparency: tell people they are talking to AI'
+    coverage: covered
+    checks:
+      - health.bot_disclosure
+      - health+.bot_disclosure
+      - health.t_human_claim
+    how: Bot disclosure checks

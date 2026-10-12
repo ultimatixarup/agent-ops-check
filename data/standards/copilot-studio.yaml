@@ -1,0 +1,61 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: copilot-studio
+name: Microsoft Copilot Studio governance areas (summarized)
+source: https://learn.microsoft.com/microsoft-copilot-studio/
+note: Areas summarized from Microsoft's public documentation. This tool scans exported agent files/configs only; it does not read your tenant.
+items:
+  - id: CS-DLP
+    title: Data policies for connectors
+    coverage: partial
+    checks:
+      - crossover.source_to_sink
+    how: Source-to-sink reach in exported configs
+  - id: CS-AUTH
+    title: Agent authentication
+    coverage: partial
+    checks:
+      - crossover.secret
+      - crossover.shared_credential
+    how: Credentials in files
+  - id: CS-SHARE
+    title: Maker permissions and sharing
+    coverage: none
+    checks: []
+    how: Not checked (tenant setting)
+  - id: CS-ENV
+    title: Environment strategy (dev/test/prod)
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: CS-AUDIT
+    title: Audit logging and monitoring
+    coverage: partial
+    checks:
+      - governance.no_tracing
+    how: Tracing references
+  - id: CS-KNOW
+    title: Knowledge sources for generative answers
+    coverage: partial
+    checks:
+      - injection.
+    how: Injection scan over knowledge files you point it at
+  - id: CS-MOD
+    title: Content moderation and instructions
+    coverage: partial
+    checks:
+      - health.
+      - injection.
+    how: Prompt checks
+  - id: CS-HANDOFF
+    title: Escalation / human handoff
+    coverage: covered
+    checks:
+      - health.handoff_rule
+      - health.t_handoff
+    how: Handoff rules and transcripts
+  - id: CS-ACTIONS
+    title: Actions and flows that change data
+    coverage: covered
+    checks:
+      - actions.
+    how: Gate map
