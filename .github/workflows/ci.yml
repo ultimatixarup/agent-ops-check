@@ -41,8 +41,9 @@ jobs:
           # installed bin, network blocked during the scan
           node -r "$GITHUB_WORKSPACE/test/no-network.js" node_modules/agent-ops-check/bin/agent-ops-check.js node_modules/agent-ops-check/examples/bad-agent --out r1
           test -s r1/index.html && test -s r1/report.json
-          # npx from the tarball
-          npx --yes "$TGZ" node_modules/agent-ops-check/examples/good-agent --out r2
+          # npx from the tarball, in a clean folder
+          mkdir -p "$RUNNER_TEMP/npx" && cd "$RUNNER_TEMP/npx"
+          npx --yes --package "$TGZ" agent-ops-check "$RUNNER_TEMP/smoke/node_modules/agent-ops-check/examples/good-agent" --out r2
           test -s r2/index.html
       - name: Upload HTML reports
         if: always() && matrix.os == 'ubuntu-latest' && matrix.node == 22
