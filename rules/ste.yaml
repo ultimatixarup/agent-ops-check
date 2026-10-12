@@ -1,0 +1,78 @@
+# Simplified Technical English (STE) style rules, inspired by ASD-STE100 writing rules.
+# NOT the ASD-STE100 specification and NOT a certified checker. No text or dictionary from the
+# specification is included. All word lists below are original and incomplete. Edit freely.
+limits:
+  procedural_words: 20
+  descriptive_words: 25
+  noun_cluster: 3          # flag clusters of MORE than this many nouns in a row
+# Words that start an instruction (imperative). Used to tell procedural sentences from descriptive ones.
+imperative_verbs: [add, adjust, align, apply, ask, attach, check, clean, click, close, compare, connect, copy, create, delete, disconnect, do, download, enter, examine, find, flag, give, install, keep, let, make, measure, monitor, move, open, put, read, record, remove, replace, report, reply, return, run, save, select, send, set, show, start, stop, submit, summarize, tell, test, turn, type, update, use, verify, wait, write, never, always, only, don't, avoid, answer, list, include, refuse, follow, escalate, hand, collect, call, post]
+auxiliaries: [is, are, was, were, be, been, being, am]
+modals: [will, would, shall, should, can, could, may, might, must]
+# Irregular past participles (ending -ed is detected automatically).
+irregular_participles: [done, made, given, taken, sent, shown, known, seen, written, found, built, kept, set, put, held, run, told, put, read, left, lost, paid, sold, brought, bought, chosen, driven, frozen, hidden, broken, spoken, stolen, worn, torn, drawn, grown, thrown, begun, cut, hit, shut, split, spread, understood, forgotten, gotten]
+# Words that are never nouns in a noun cluster (function words, common verbs, adjectives).
+not_nouns: [a, an, the, this, that, these, those, and, or, but, if, then, of, in, on, at, to, for, with, by, from, as, is, are, was, were, be, been, it, its, you, your, we, our, they, their, he, she, his, her, not, no, all, any, each, every, some, more, most, less, than, when, where, which, who, what, how, do, does, did, can, will, must, should, may, has, have, had, new, old, good, bad, high, low, large, small, other, same, only, also, very, so, up, down, out, into, over, under, about, after, before, until, one, two, three, four, five]
+# Common phrasal verbs, with an original plain replacement hint.
+phrasal_verbs:
+  set up: prepare / install
+  carry out: do
+  find out: find / learn
+  look into: examine
+  look up: find
+  go over: examine
+  point out: show
+  figure out: find / calculate
+  make sure: verify / ensure
+  turn on: start / energize
+  turn off: stop / de-energize
+  fill in: write / enter
+  fill out: complete
+  get rid of: remove
+  put off: delay
+  come up with: make / write
+  check out: examine
+  back up: copy / support
+  shut down: stop
+  hand over: give
+  pick up: take
+  sort out: correct
+  deal with: handle / correct
+  bring up: show / start
+  keep up: continue
+# Vague hedges and soft words.
+hedges: [perhaps, maybe, possibly, probably, generally, usually, typically, somewhat, fairly, quite, rather, as appropriate, as needed, if possible, where possible, as soon as possible, try to, it is recommended, it is suggested, in some cases, sort of, kind of, etc, and so on, a few, several, some time, reasonable, appropriate, adequate, sufficient]
+# Original unapproved -> plain hint list (written for this tool; not from the specification).
+hints:
+  utilize: use
+  utilise: use
+  commence: start
+  terminate: stop
+  facilitate: help
+  endeavor: try
+  ascertain: find
+  approximately: about
+  subsequently: then / after
+  prior to: before
+  in order to: to
+  in the event that: if
+  due to the fact that: because
+  at this point in time: now
+  a number of: some / (give the number)
+  in addition: also
+  with regard to: about
+  sufficient: enough
+  additional: more
+  numerous: many
+  obtain: get
+  require: need
+  demonstrate: show
+  indicate: show
+  modify: change
+  perform: do
+  assist: help
+  attempt: try
+  ensure: make sure → verify
+  via: through / with
+  e.g.: for example
+  i.e.: that is
