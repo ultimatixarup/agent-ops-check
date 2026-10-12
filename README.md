@@ -23,7 +23,35 @@ It points at a folder (or files) holding agent code, prompts, MCP configs and lo
 | **3. Governance + cost** | Inventory of providers, SDKs/frameworks and model names. Missing `max_tokens`, timeouts, retry caps and step/recursion caps; `while True` loops with no cap; no budget or usage alert; no tracing (OpenTelemetry, LangSmith, Langfuse...); unpinned or premium models; no owner or review record. | An AI inventory and a "missing basics" list |
 | **4. Agent Health Checker + Labs tools** | The [Arup Banerjee Labs](https://ultimatixarup.github.io/arup-banerjee-labs/) browser tools, run unchanged in a sandbox: **Agent Health Checker** (8 engineering + 9 customer-safety checks on prompts/configs, 9 checks on chat transcripts `.jsonl`), plus extra checks for 7 of its 8 recorded misses; **Cloud Bill Smell Detector** on bill CSV exports; **Observability Gap Finder** on the whole input. | Per-file scores and verdicts |
 
+| **5. Simplified Technical English (STE)** | Prompts, system prompts, `.md` docs and agent instructions (and any text you give it): procedural sentences over 20 words and descriptive sentences over 25; passive voice; noun clusters of more than 3 nouns; complex tenses (perfect, progressive, modal + be + past participle); -ing words used as verbs; semicolons; more than one instruction per sentence; common phrasal verbs; vague hedges ("perhaps", "as appropriate"); plain-word hints ("utilize" → "use"). | Per-document sentence and finding counts, file:line findings, and an information-loss table when you compare two versions |
+
 The score (0–100) averages tabs 1–3: each high finding costs 10 points, medium 4, low 1.
+
+## STE (Simplified Technical English) checks
+
+> **This is not a certified ASD-STE100 checker.** The rules are inspired by the ASD-STE100 writing rules and use regex and
+> light word lists only. The ASD-STE100 specification and its dictionary are copyrighted and are **not** included.
+> The plain-word hints and phrasal-verb list in `rules/ste.yaml` are original and incomplete.
+
+Every input method runs the same rules (`src/ste/core.js`), and none of them use the network:
+
+| Input | Command |
+|---|---|
+| Agent folder (prompts, `.md`, prompt strings in JSON/YAML configs) | `npx github:ultimatixarup/agent-ops-check ./my-agent` (STE is tab 5) |
+| Any file or folder of text | `agent-ops-check --ste docs/ --ste prompt.txt` |
+| Pasted text | `agent-ops-check --ste-text "The pump is running; perhaps utilize the valve."` |
+| stdin | `cat prompt.txt \| agent-ops-check --ste -` |
+| Your own approved-word list (one word per line) | add `--ste-dict my-words.txt`; words not on it are flagged |
+| Information-loss check | `agent-ops-check --ste-compare original.txt ste.txt` |
+| Offline page with a paste box and file picker | `agent-ops-check ste-ui` (writes `agent-ops-report/ste.html`; add `--open` to open it). Every report folder also gets `ste.html`. |
+
+The **information-loss check** pulls numbers, units, dates, names, paths, URLs, identifiers and constraint words
+(must, never, only, at least, before, until, unless, within…) from the original, and lists any that are missing from the
+STE version. A rewrite that drops "within 30 seconds" or turns "never" into nothing is flagged high.
+
+Try it: `agent-ops-check --ste-compare examples/ste/original.txt examples/ste/rewrite.txt`.
+
+Use `--no-ste` to skip the STE tab in a normal scan.
 
 ## Inputs
 
@@ -78,7 +106,7 @@ JavaScript regex. Copy the folder, edit, and run with `--rules ./my-rules`.
 
 ```bash
 npm install
-npm test          # node --test, 16 tests, no network
+npm test          # node --test, 26 tests, no network
 npm run example   # scans examples/bad-agent into ./report
 ```
 

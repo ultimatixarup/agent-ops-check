@@ -4,26 +4,30 @@ const crossover = require("./scanners/crossover");
 const actions = require("./scanners/actions");
 const governance = require("./scanners/governance");
 const labs = require("./labs");
+const ste = require("./scanners/ste");
 
 const W = { high: 10, medium: 4, low: 1, info: 0 };
 function groupScore(findings) { return Math.max(0, 100 - findings.reduce((s, f) => s + (W[f.severity] ?? 1), 0)); }
 
 function analyze(inputs, opts) {
   const o = opts || {};
-  const files = collect(inputs, o.ignore);
-  const groups = [crossover.scan(files, o), actions.scan(files, o), governance.scan(files, o)];
-  if (!o.noLabs) groups.push(labs.scan(files));
+  const files = inputs && inputs.length ? collect(inputs, o.ignore) : [];
+  const steOnly = !files.length && (o.steInputs?.length || o.steCompare);
+  const groups = steOnly ? [] : [crossover.scan(files, o), actions.scan(files, o), governance.scan(files, o)];
+  if (!o.noLabs && !steOnly) groups.push(labs.scan(files));
+  if (!o.noSte) groups.push(ste.scan(files, o));
   for (const g of groups) {
     g.findings.sort((a, b) => (W[b.severity] - W[a.severity]) || String(a.file).localeCompare(b.file) || a.line - b.line);
     g.score = groupScore(g.findings);
     g.counts = { high: 0, medium: 0, low: 0, info: 0 };
     g.findings.forEach((f) => g.counts[f.severity]++);
   }
-  const core = groups.slice(0, 3);
+  // Overall score = tabs 1–3 only (or the STE tab when that is all that ran).
+  const core = steOnly ? groups : groups.slice(0, 3);
   const score = Math.round(core.reduce((s, g) => s + g.score, 0) / core.length);
   return {
     tool: "agent-ops-check", version: require("../package.json").version,
-    generatedAt: new Date().toISOString(), inputs, filesScanned: files.length,
+    generatedAt: new Date().toISOString(), inputs: inputs || [], steOnly: !!steOnly, filesScanned: files.length,
     agents: [...new Set(files.map((f) => f.agent))],
     score, groups,
     network: o.llm ? "LLM review enabled: snippets were sent to " + o.llm + " using your key" : "No network calls were made. Nothing left this machine.",

@@ -15,10 +15,20 @@ on THIS machine. No network calls unless you pass --llm.
   --rules <dir>        use your own edited rules/*.yaml
   --no-labs            skip the Agent Health Checker / bill / observability pass
   --llm <provider>     optional review with YOUR key: openai | anthropic | openrouter
+  --no-ste             skip the STE tab
+
+Simplified Technical English (STE) style checks (not a certified ASD-STE100 checker):
+  --ste <file|dir|->   check any text file or folder; "-" reads stdin (repeatable)
+  --ste-text "..."     check pasted text
+  --ste-dict <path>    your own approved-word list (one word per line); flags other words
+  --ste-compare <original> <rewrite>   list facts and constraints missing from the STE rewrite
+
+agent-ops-check ste-ui [--out <file>] [--open]
+  writes an offline STE page (paste box + file picker), default ./agent-ops-report/ste.html
   -h, --help`;
 
 function parse(argv) {
-  const o = { inputs: [], ignore: [], format: ["html", "json", "md", "sarif"], out: "agent-ops-report" };
+  const o = { inputs: [], ignore: [], steInputs: [], stePaths: [], format: ["html", "json", "md", "sarif"], out: "agent-ops-report" };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]; const v = () => argv[++i];
     if (a === "-h" || a === "--help") o.help = true;
@@ -29,16 +39,44 @@ function parse(argv) {
     else if (a === "--rules") o.rulesDir = path.resolve(v());
     else if (a === "--no-labs") o.noLabs = true;
     else if (a === "--llm") o.llm = v();
+    else if (a === "--no-ste") o.noSte = true;
+    else if (a === "--ste") o.stePaths.push(v());
+    else if (a === "--ste-text") o.steInputs.push({ name: "(pasted text)", text: v() });
+    else if (a === "--ste-dict") o.steDict = path.resolve(v());
+    else if (a === "--ste-compare") o.steCompare = [v(), v()];
+    else if (a === "--open") o.open = true;
+    else if (a === "ste-ui" && !o.inputs.length && !o.ui) o.ui = true;
     else if (a.startsWith("-")) throw new Error("Unknown option " + a);
     else o.inputs.push(a);
   }
   return o;
 }
 
+function readStdin() { try { return fs.readFileSync(0, "utf8"); } catch (_) { return ""; } }
+
+function steFiles(p, out) {
+  const st = fs.statSync(p);
+  if (st.isDirectory()) { for (const e of fs.readdirSync(p).sort()) if (!["node_modules", ".git"].includes(e)) steFiles(path.join(p, e), out); }
+  else if (/\.(md|txt|prompt|rst|adoc|html?)$/i.test(p) || !path.extname(p)) out.push({ name: path.relative(process.cwd(), p) || p, text: fs.readFileSync(p, "utf8") });
+}
+
 async function main(argv) {
   let o;
   try { o = parse(argv); } catch (e) { console.error(e.message + "\n\n" + HELP); return 2; }
-  if (o.help || !o.inputs.length) { console.log(HELP); return o.help ? 0 : 2; }
+  if (o.ui) {
+    const file = o.out && /\.html?$/.test(o.out) ? o.out : path.join(o.out, "ste.html");
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, require("./ste/ui")(o.rulesDir));
+    console.log("Offline STE page: " + path.resolve(file) + "\nOpen it in any browser. It makes no network requests.");
+    if (o.open) { const cmd = process.platform === "darwin" ? "open" : process.platform === "win32" ? "start" : "xdg-open"; try { require("child_process").spawn(cmd, [path.resolve(file)], { detached: true, stdio: "ignore", shell: process.platform === "win32" }).unref(); } catch (_) {} }
+    return 0;
+  }
+  for (const p of o.stePaths) {
+    if (p === "-") o.steInputs.push({ name: "(stdin)", text: readStdin() });
+    else { if (!fs.existsSync(p)) { console.error("Not found: " + p); return 2; } steFiles(p, o.steInputs); }
+  }
+  const steAsked = o.steInputs.length || o.steCompare;
+  if (o.help || (!o.inputs.length && !steAsked)) { console.log(HELP); return o.help ? 0 : 2; }
   const r = analyze(o.inputs, o);
   if (o.llm) r.llm = await require("./llm/optional").review(r, o.llm);
   fs.mkdirSync(o.out, { recursive: true });
@@ -46,8 +84,9 @@ async function main(argv) {
   const written = [];
   for (const f of o.format) { if (!W[f]) { console.error("Unknown format " + f); return 2; } const p = path.join(o.out, W[f][0]); fs.writeFileSync(p, W[f][1](r)); written.push(p); }
   const lb = r.groups.find((g) => g.id === "labs");
+  if (r.groups.some((g) => g.id === "ste")) { const p = path.join(o.out, "ste.html"); fs.writeFileSync(p, require("./ste/ui")(o.rulesDir)); written.push(p); }
   if (lb && lb.redteam) { const p = path.join(o.out, "redteam-pack.txt"); fs.writeFileSync(p, lb.redteam); written.push(p); }
-  console.log("agent-ops-check: score " + r.score + "/100 · " + r.filesScanned + " files · " + r.agents.length + " agent(s)");
+  console.log("agent-ops-check: score " + r.score + "/100 · " + r.filesScanned + " files · " + r.agents.length + " agent(s)" + (o.steInputs.length ? " · " + o.steInputs.length + " STE input(s)" : ""));
   for (const g of r.groups) console.log("  " + g.title.padEnd(36) + String(g.score).padStart(3) + "/100  high " + g.counts.high + " · medium " + g.counts.medium + " · low " + g.counts.low);
   console.log(r.network);
   if (r.llm && r.llm.error) console.log("LLM: " + r.llm.error);

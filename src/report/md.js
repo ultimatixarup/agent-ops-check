@@ -8,6 +8,7 @@ module.exports = function md(r) {
   L.push("| Area | Score | High | Medium | Low |", "|---|---|---|---|---|");
   r.groups.forEach((g) => L.push("| " + g.title + " | " + g.score + " | " + g.counts.high + " | " + g.counts.medium + " | " + g.counts.low + " |"));
   const x = r.groups.find((g) => g.id === "crossover");
+  if (x) {
   L.push("", "## 1. Agent and connector inventory", "", "| Agent | Connectors | Credentials (names only) | Scopes |", "|---|---|---|---|");
   x.inventory.forEach((a) => L.push("| " + a.agent + " | " + (a.connectors.join(", ") || "-") + " | " + (a.credentials.join(", ") || "-") + " | " + (a.scopes.join(", ") || "-") + " |"));
   L.push("", "### Source-to-sink matrix (personal data → work destinations)", "");
@@ -18,6 +19,14 @@ module.exports = function md(r) {
   a.actions.forEach((t) => L.push("| " + t.agent + " | `" + t.action + "` | " + t.file + ":" + t.line + " | " + ["approval", "dry_run", "rate_limit", "domain_allowlist"].map((k) => (t.gates[k] ? "yes" : "**no**")).join(" | ") + " |"));
   const gv = r.groups.find((g) => g.id === "governance");
   L.push("", "## 3. AI inventory", "", "- Providers: " + (Object.keys(gv.inventory.providers).join(", ") || "none found"), "- Frameworks/SDKs: " + (Object.keys(gv.inventory.frameworks).join(", ") || "none found"), "- Models: " + (Object.keys(gv.inventory.models).map((m) => "`" + m + "`").join(", ") || "none found"));
+  }
+  const st = r.groups.find((g) => g.id === "ste");
+  if (st) {
+    L.push("", "## STE (Simplified Technical English) style", "", "_" + st.note + "_", "");
+    if (st.dictionary) L.push("Approved-word list: " + st.dictionary, "");
+    st.docs.forEach((d) => L.push("- " + d.file + ": " + d.sentences + " sentences, " + d.findings + " findings"));
+    if (st.compare) L.push("", "**Information-loss check:** " + st.compare.original + " → " + st.compare.rewrite + ": " + st.compare.missing.length + " item(s) missing from the rewrite (of " + st.compare.originalFacts + " facts found in the original).");
+  }
   L.push("", "## 4. Findings (P0 = fix before real traffic)", "");
   for (const g of r.groups) {
     L.push("### " + g.title, "");
