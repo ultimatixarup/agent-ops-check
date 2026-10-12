@@ -1,0 +1,53 @@
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    name: ${{ matrix.os }} / Node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node: [18, 20, 22]
+        include:
+          - { os: macos-latest, node: 22 }
+          - { os: windows-latest, node: 22 }
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - name: Unit tests (network blocked by test/no-network.js)
+        run: npm test
+      - name: README check tables match rules
+        run: npm run docs:check
+      - name: Golden results (scores + rule-ID counts vs test/golden/*.json)
+        run: node scripts/golden.js --keep golden-out
+      - name: Packed-tarball smoke test
+        run: |
+          npm pack
+          TGZ="$PWD/$(ls agent-ops-check-*.tgz)"
+          mkdir -p "$RUNNER_TEMP/smoke" && cd "$RUNNER_TEMP/smoke"
+          npm init -y >/dev/null && npm install --no-audit --no-fund "$TGZ"
+          # installed bin, network blocked during the scan
+          node -r "$GITHUB_WORKSPACE/test/no-network.js" node_modules/agent-ops-check/bin/agent-ops-check.js node_modules/agent-ops-check/examples/bad-agent --out r1
+          test -s r1/index.html && test -s r1/report.json
+          # npx from the tarball
+          npx --yes "$TGZ" node_modules/agent-ops-check/examples/good-agent --out r2
+          test -s r2/index.html
+      - name: Upload HTML reports
+        if: always() && matrix.os == 'ubuntu-latest' && matrix.node == 22
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-ops-reports
+          path: golden-out/
+          if-no-files-found: warn

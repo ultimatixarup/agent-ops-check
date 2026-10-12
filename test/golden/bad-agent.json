@@ -1,0 +1,107 @@
+{
+  "score": 27,
+  "filesScanned": 11,
+  "groups": {
+    "crossover": {
+      "score": 39,
+      "findings": 7,
+      "rules": {
+        "crossover.pii.bank_account": 1,
+        "crossover.pii.ssn": 1,
+        "crossover.secret.generic_assignment": 1,
+        "crossover.shared_credential": 1,
+        "crossover.slack_channel_id": 1,
+        "crossover.source_to_sink": 2
+      }
+    },
+    "actions": {
+      "score": 0,
+      "findings": 16,
+      "rules": {
+        "actions.browser_profile": 2,
+        "actions.browser_write": 2,
+        "actions.cookie_read": 1,
+        "actions.irreversible_tool": 5,
+        "actions.no_deny_list": 3,
+        "actions.storage_read": 1,
+        "actions.url_shortener": 1,
+        "actions.wildcard_domain": 1
+      }
+    },
+    "governance": {
+      "score": 41,
+      "findings": 17,
+      "rules": {
+        "governance.no_budget": 2,
+        "governance.no_max_tokens": 2,
+        "governance.no_owner": 1,
+        "governance.no_recursion_cap": 2,
+        "governance.no_retry_cap": 2,
+        "governance.no_review_record": 1,
+        "governance.no_timeout": 2,
+        "governance.no_tracing": 2,
+        "governance.unbounded_loop": 1,
+        "governance.unpinned_model": 2
+      }
+    },
+    "labs": {
+      "score": 0,
+      "findings": 31,
+      "rules": {
+        "health+.handoff_rule": 1,
+        "health+.t_dosing": 1,
+        "health+.t_handoff_claim": 1,
+        "health.bot_disclosure": 2,
+        "health.confidential_in_prompt": 1,
+        "health.grounding_rule": 2,
+        "health.handoff_rule": 2,
+        "health.high_risk_tools": 1,
+        "health.other_customer_records": 1,
+        "health.pii_collection": 1,
+        "health.regulated_advice": 2,
+        "health.t_dosing": 1,
+        "health.t_grounding": 1,
+        "health.t_handoff": 1,
+        "health.t_human_claim": 1,
+        "health.t_leaks": 1,
+        "health.t_other_customer": 1,
+        "health.t_override": 1,
+        "health.t_refunds": 1,
+        "health.t_sensitive_requests": 1,
+        "health.untrusted_input": 2,
+        "observability.golden_signals": 1,
+        "observability.langfuse": 1,
+        "observability.otel": 1,
+        "observability.prometheus": 1,
+        "observability.runbooks_alerts": 1
+      }
+    },
+    "injection": {
+      "score": 6,
+      "findings": 10,
+      "rules": {
+        "injection.base64_instruction": 1,
+        "injection.html_comment_instruction": 1,
+        "injection.ignore_previous": 2,
+        "injection.md_image_exfil": 1,
+        "injection.role_reassign": 1,
+        "injection.templated_url": 1,
+        "injection.unicode_tags": 1,
+        "injection.webhook_catcher": 1,
+        "injection.zero_width": 1
+      }
+    },
+    "ste": {
+      "score": 84,
+      "findings": 7,
+      "rules": {
+        "ste.multiple_instructions": 1,
+        "ste.noun_cluster": 2,
+        "ste.passive_voice": 1,
+        "ste.phrasal_verb": 1,
+        "ste.semicolon": 1,
+        "ste.sentence_length": 1
+      }
+    }
+  }
+}

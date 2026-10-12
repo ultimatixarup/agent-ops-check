@@ -1,0 +1,46 @@
+{
+  "score": 100,
+  "filesScanned": 3,
+  "groups": {
+    "crossover": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "actions": {
+      "score": 100,
+      "findings": 1,
+      "rules": {
+        "actions.irreversible_tool": 1
+      }
+    },
+    "governance": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "labs": {
+      "score": 95,
+      "findings": 5,
+      "rules": {
+        "observability.golden_signals": 1,
+        "observability.langfuse": 1,
+        "observability.prometheus": 1,
+        "observability.runbooks_alerts": 1,
+        "observability.splunk_logs": 1
+      }
+    },
+    "injection": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "ste": {
+      "score": 99,
+      "findings": 1,
+      "rules": {
+        "ste.ing_verb": 1
+      }
+    }
+  }
+}
