@@ -96,9 +96,9 @@ test("ADSF: --docs scans extra files outside the agent folder", () => {
 
 test("standards: 9 frameworks, honest coverage icons, findings mapped, never 'compliant'", () => {
   const r = analyze([BAD], { noLabs: true });
-  assert.strictEqual(r.standards.length, 9);
+  assert.strictEqual(r.standards.length, 10);
   const names = r.standards.map((s) => s.id).sort();
-  assert.deepStrictEqual(names, ["anthropic-agents", "copilot-studio", "csa-aicm", "eu-ai-act", "iso-42001", "mitre-atlas", "nist-ai-rmf", "owasp-agentic", "owasp-llm-2025"]);
+  assert.deepStrictEqual(names, ["anthropic-agents", "copilot-studio", "csa-aicm", "eu-ai-act", "iso-42001", "mitre-atlas", "nist-ai-rmf", "owasp-agentic", "owasp-agentic-2026", "owasp-llm-2025"]);
   const llm = r.standards.find((s) => s.id === "owasp-llm-2025");
   assert.strictEqual(llm.items.length, 10);
   assert.ok(llm.items.find((i) => i.id === "LLM06").findings > 0);

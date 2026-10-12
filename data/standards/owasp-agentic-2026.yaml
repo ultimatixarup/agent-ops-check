@@ -1,0 +1,78 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: owasp-agentic-2026
+name: OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)
+source: https://genai.owasp.org/download/52117
+note: Item names as listed in the OWASP GenAI Security Project document (via framework-pitch research).
+items:
+  - id: ASI01
+    title: Agent Goal Hijack
+    coverage: covered
+    checks:
+      - injection.
+      - health.untrusted_input
+      - actions.no_deny_list
+    how: ADSF injection scan over all docs, untrusted-input rule, deny-list check
+  - id: ASI02
+    title: Tool Misuse and Exploitation
+    coverage: covered
+    checks:
+      - actions.
+    how: Gate map, rate limits, allowlists, wildcard domains, URL shorteners
+  - id: ASI03
+    title: Identity and Privilege Abuse
+    coverage: covered
+    checks:
+      - crossover.shared_credential
+      - crossover.source_to_sink
+      - actions.browser_profile
+      - actions.cookie_read
+    how: Shared credentials, scopes, browser profiles, cookie reads
+  - id: ASI04
+    title: Agentic Supply Chain Vulnerabilities
+    coverage: partial
+    checks:
+      - governance.unpinned_model
+    how: MCP/provider inventory, unpinned models; no registry integrity check
+  - id: ASI05
+    title: Unexpected Code Execution
+    coverage: partial
+    checks:
+      - health.injection_sinks
+    how: Free-form shell/exec/SQL tools
+  - id: ASI06
+    title: Memory and Context Poisoning
+    coverage: partial
+    checks:
+      - injection.
+    how: ADSF scan of knowledge/memory files you point it at; no runtime memory check
+  - id: ASI07
+    title: Insecure Inter-Agent Communication
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: ASI08
+    title: Cascading Failures
+    coverage: partial
+    checks:
+      - governance.no_recursion_cap
+      - governance.unbounded_loop
+      - governance.no_retry_cap
+      - governance.no_timeout
+      - health.single_llm_spof
+    how: Step, loop and retry caps, timeouts, single-provider fallback
+  - id: ASI09
+    title: Human-Agent Trust Exploitation
+    coverage: partial
+    checks:
+      - health.bot_disclosure
+      - health.t_human_claim
+      - health+.t_handoff_claim
+    how: Bot disclosure, human claims, unrecorded handoffs
+  - id: ASI10
+    title: Rogue Agents
+    coverage: partial
+    checks:
+      - governance.no_tracing
+      - governance.no_owner
+      - observability.
+    how: Tracing, owner, observability; no stop-switch check

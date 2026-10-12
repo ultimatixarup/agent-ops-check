@@ -1,8 +1,8 @@
 # Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
 id: mitre-atlas
 name: MITRE ATLAS (selected techniques)
-source: https://atlas.mitre.org/
-note: Selected ATLAS technique IDs relevant to agents.
+source: https://github.com/mitre-atlas/atlas-data
+note: Selected agent techniques; IDs/names per ATLAS data (via framework-pitch research).
 items:
   - id: AML.T0051
     title: LLM Prompt Injection (direct and indirect)
@@ -33,8 +33,8 @@ items:
       - health.t_other_customer
     how: Personal-to-work paths, other customers' data
   - id: AML.T0053
-    title: LLM Plugin Compromise
-    coverage: partial
+    title: AI Agent Tool Invocation
+    coverage: covered
     checks:
       - actions.
       - crossover.shared_credential
@@ -67,3 +67,33 @@ items:
     checks:
       - governance.unpinned_model
     how: Pinning only
+  - id: AML.T0083
+    title: Credentials from AI Agent Configuration
+    coverage: covered
+    checks:
+      - crossover.secret
+      - crossover.env_committed
+    how: Secrets in agent/MCP configs, .env present
+  - id: AML.T0086
+    title: Exfiltration via AI Agent Tool Invocation
+    coverage: covered
+    checks:
+      - crossover.source_to_sink
+      - crossover.slack_webhook
+      - injection.exfil_instruction
+      - injection.md_image_exfil
+    how: Source-to-sink paths, hardcoded webhooks, exfil instructions/links in docs
+  - id: AML.T0101
+    title: Data Destruction via AI Agent Tool Invocation
+    coverage: covered
+    checks:
+      - actions.irreversible_tool
+    how: Ungated delete/drop/destroy/purge tools
+  - id: AML.T0100
+    title: AI Agent Clickbait
+    coverage: partial
+    checks:
+      - actions.browser_write
+      - actions.url_shortener
+      - actions.wildcard_domain
+    how: Browser writes, shorteners, allowlists
