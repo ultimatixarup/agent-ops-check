@@ -1,0 +1,60 @@
+# Personal-to-work crossover rules. Edit freely; patterns are JavaScript regex (case-insensitive).
+personal_sources:
+  gmail: '\bgmail\b|googleapis\.com/gmail|gmail\.(readonly|modify|send)|server-gmail'
+  google_drive: '\bgoogle[-_ ]?drive\b|googleapis\.com/drive|auth/drive|server-gdrive'
+  personal_files: '~/(Documents|Desktop|Downloads)|/home/[^/\s]+/(Documents|Desktop)|\bmy[-_ ]?documents\b'
+  finance: '\bplaid\b|\bbank(ing)?[-_ ]?(api|account|statement)s?\b|\bbudget[-_ ]?app\b|\bmint\b|\bynab\b|\bpersonal[-_ ]?finance\b|\bbrokerage\b|\bpaystub'
+  tax_paths: '\btax(es)?[/_-]|\b1040\b|\bw-?2\b|\bw-?9\b|\btax[-_ ]?return'
+  personal_calendar_contacts: '\b(icloud|personal)[-_ ]?(calendar|contacts)\b|\bimessage\b|\bwhatsapp\b'
+work_sinks:
+  slack: '\bslack\b|hooks\.slack\.com|chat\.postMessage|server-slack'
+  teams: '\bmsteams\b|\bmicrosoft[-_ ]?teams\b|webhook\.office\.com|outlook\.office\.com/webhook'
+  jira: '\bjira\b|atlassian\.net|\bconfluence\b'
+  discord: 'discord(app)?\.com/api/webhooks|\bdiscord\b'
+  generic_webhook: '\bwebhook(_url|url)?\b|\bzapier\.com/hooks|\bhook\.make\.com|\bn8n\b'
+  work_email: '\bsmtp\b|\bsendgrid\b|\bmailgun\b|\bsend_?(mail|email)\b'
+hardcoded:
+  - id: slack_webhook
+    severity: high
+    pattern: 'https://hooks\.slack\.com/services/[A-Z0-9]+/[A-Z0-9]+/[A-Za-z0-9]+'
+    message: Hardcoded Slack webhook URL. Anyone with the file can post to that channel.
+  - id: teams_webhook
+    severity: high
+    pattern: 'https://[a-z0-9.-]*webhook\.office\.com/[^\s"'']+'
+    message: Hardcoded Microsoft Teams webhook URL.
+  - id: discord_webhook
+    severity: high
+    pattern: 'https://(discord|discordapp)\.com/api/webhooks/\d+/[\w-]+'
+    message: Hardcoded Discord webhook URL.
+  - id: slack_channel_id
+    severity: low
+    pattern: '\b[CG][A-Z0-9]{8,10}\b(?=.*(channel|slack))|channel["'']?\s*[:=]\s*["'']?#?[a-z0-9_-]*(exec|team|all|general|company)[a-z0-9_-]*'
+    message: Work channel hardcoded as an output target. Check it can't be confused with a personal chat.
+secrets:
+  - id: openai_key
+    pattern: '\bsk-(proj-)?[A-Za-z0-9_-]{20,}'
+  - id: anthropic_key
+    pattern: '\bsk-ant-[A-Za-z0-9_-]{20,}'
+  - id: aws_access_key
+    pattern: '\bAKIA[0-9A-Z]{16}\b'
+  - id: github_token
+    pattern: '\bgh[pousr]_[A-Za-z0-9]{30,}\b'
+  - id: slack_token
+    pattern: '\bxox[abposr]-[A-Za-z0-9-]{10,}'
+  - id: google_api_key
+    pattern: '\bAIza[0-9A-Za-z_-]{35}\b'
+  - id: stripe_key
+    pattern: '\b(sk|rk)_(live|test)_[A-Za-z0-9]{16,}'
+  - id: private_key
+    pattern: '-----BEGIN (RSA |EC |OPENSSH |PGP )?PRIVATE KEY-----'
+  - id: generic_assignment
+    pattern: '\b(api[_-]?key|secret|token|password|passwd)\b["'']?\s*[:=]\s*["''][^"''\s$<{]{12,}["'']'
+pii:
+  - id: ssn
+    pattern: '\b(?!000|666|9\d\d)\d{3}-(?!00)\d{2}-(?!0000)\d{4}\b'
+  - id: card_number
+    pattern: '\b(?:4\d{3}|5[1-5]\d{2}|3[47]\d{2})[ -]?\d{4}[ -]?\d{4}[ -]?\d{3,4}\b'
+  - id: bank_account
+    pattern: '\b(account|acct|routing)[ _-]?(no|number|#)?["'']?\s*[:=]?\s*["'']?\d{8,17}\b'
+  - id: email_address
+    pattern: '\b[A-Za-z0-9._%+-]+@(gmail|yahoo|outlook|hotmail|icloud|proton)\.(com|me)\b'
