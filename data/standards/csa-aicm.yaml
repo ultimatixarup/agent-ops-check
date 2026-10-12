@@ -1,0 +1,115 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: csa-aicm
+name: CSA AI Controls Matrix (AICM) domains
+source: https://cloudsecurityalliance.org/artifacts/ai-controls-matrix
+note: Domain names only.
+items:
+  - id: A&A
+    title: Audit & Assurance
+    coverage: partial
+    checks: []
+    how: Audit memo + SARIF
+  - id: AIS
+    title: Application & Interface Security
+    coverage: partial
+    checks:
+      - actions.
+      - injection.
+    how: Gates, injection
+  - id: BCR
+    title: Business Continuity & Operational Resilience
+    coverage: partial
+    checks:
+      - health.single_llm_spof
+    how: Single-LLM fallback
+  - id: CCC
+    title: Change Control & Configuration
+    coverage: partial
+    checks:
+      - governance.unpinned_model
+      - governance.no_review_record
+    how: Pinning, review record
+  - id: CEK
+    title: Cryptography, Encryption & Key Management
+    coverage: partial
+    checks:
+      - crossover.secret
+    how: Hardcoded keys
+  - id: DCS
+    title: Datacenter Security
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: DSP
+    title: Data Security & Privacy Lifecycle
+    coverage: covered
+    checks:
+      - crossover.
+    how: PII, secrets, data paths
+  - id: GRC
+    title: Governance, Risk & Compliance
+    coverage: partial
+    checks:
+      - governance.no_owner
+    how: Owner, inventory
+  - id: HRS
+    title: Human Resources
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: IAM
+    title: Identity & Access Management
+    coverage: covered
+    checks:
+      - crossover.shared_credential
+      - crossover.source_to_sink
+      - actions.browser_profile
+    how: Shared credentials, scopes, profiles
+  - id: IPY
+    title: Interoperability & Portability
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: I&S
+    title: Infrastructure Security
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: LOG
+    title: Logging & Monitoring
+    coverage: covered
+    checks:
+      - governance.no_tracing
+      - observability.
+    how: Tracing, observability gaps
+  - id: MDS
+    title: Model Security
+    coverage: partial
+    checks:
+      - injection.
+      - governance.unpinned_model
+    how: Injection, pinning
+  - id: SEF
+    title: Security Incident Management & Forensics
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: STA
+    title: Supply Chain, Transparency & Accountability
+    coverage: partial
+    checks:
+      - governance.
+      - health.bot_disclosure
+    how: Inventory, disclosure
+  - id: TVM
+    title: Threat & Vulnerability Management
+    coverage: partial
+    checks:
+      - injection.
+      - actions.
+    how: Static findings
+  - id: UEM
+    title: Universal Endpoint Management
+    coverage: none
+    checks: []
+    how: Not checked

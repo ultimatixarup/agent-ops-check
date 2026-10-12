@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const EXT = new Set([".js", ".mjs", ".cjs", ".ts", ".tsx", ".py", ".json", ".jsonl", ".yaml", ".yml", ".toml", ".md", ".txt", ".csv", ".env", ".example"]);
+const EXT = new Set([".html", ".htm", ".xml", ".svg", ".js", ".mjs", ".cjs", ".ts", ".tsx", ".py", ".json", ".jsonl", ".yaml", ".yml", ".toml", ".md", ".txt", ".csv", ".env", ".example"]);
 const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", ".venv", "venv", "__pycache__", "report", ".next"]);
 const MAX_BYTES = 2 * 1024 * 1024;
 
@@ -18,7 +18,7 @@ function wanted(file) {
   return EXT.has(path.extname(base)) || /\.env\.(example|sample|template)$/.test(base);
 }
 
-function collect(inputs, ignore) {
+function collect(inputs, ignore, labels) {
   const ig = (ignore || []).map(globToRe);
   const out = [];
   const roots = [];
@@ -45,7 +45,8 @@ function collect(inputs, ignore) {
   for (const f of out) {
     const parts = f.rel.split("/");
     f.agent = parts.length > 1 ? parts[0] : path.basename(f.root);
-    f.display = path.relative(process.cwd(), f.abs).split(path.sep).join("/");
+    const label = labels && labels[f.root];
+    f.display = label ? label + "!/" + f.rel : path.relative(process.cwd(), f.abs).split(path.sep).join("/");
   }
   return out;
 }

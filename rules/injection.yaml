@@ -1,0 +1,56 @@
+# ADSF: all-document scan for prompt injection. Case-insensitive JS regex. Edit freely.
+instructions:
+  - id: ignore_previous
+    severity: high
+    pattern: '\b(ignore|disregard|forget|override)\b[^.\n]{0,40}\b(all |any )?(previous|prior|above|earlier|preceding|system)\b[^.\n]{0,20}\b(instructions?|prompts?|rules?|messages?|directions?)\b'
+    message: '"Ignore previous instructions" style override.'
+  - id: role_reassign
+    severity: high
+    pattern: '\b(you are now|from now on,? you are|act as (an? )?(unrestricted|jailbroken|developer mode)|enter (developer|god|dan) mode|new (system )?instructions?:)'
+    message: Tries to reassign the agent's role or rules.
+  - id: fake_system
+    severity: high
+    pattern: '(^|\n)\s*(\[?(system|assistant)\]?\s*:|<\|?(system|im_start)\|?>|###\s*(system|instruction)|<\/?system>)'
+    message: Fake system/assistant marker inside content.
+  - id: hidden_task
+    severity: high
+    pattern: '\b(ai|assistant|agent|llm|model|chatbot)s?\b[^.\n]{0,30}\b(reading|processing|summari[sz]ing)\b[^.\n]{0,30}\b(must|should|need to|are instructed to)\b'
+    message: Instruction addressed to an AI reading the document.
+  - id: secrecy
+    severity: medium
+    pattern: '\b(do not|don''t|never) (tell|mention|reveal|inform|alert) (the )?(user|human|operator|anyone)\b'
+    message: Asks the agent to hide something from the user.
+  - id: exfil_instruction
+    severity: high
+    pattern: '\b(send|post|forward|upload|email|leak|include)\b[^.\n]{0,50}\b(api[_ -]?keys?|passwords?|tokens?|credentials?|secrets?|conversation|chat history|system prompt|env(ironment)? variables?|\.env|cookies?)\b[^.\n]{0,40}\b(to|at)\b'
+    message: Instruction to send secrets or conversation data somewhere.
+  - id: tool_call_injection
+    severity: high
+    pattern: '\b(call|run|execute|invoke|use) (the )?(tool|function)\b[^.\n]{0,30}\b(send_|delete_|transfer|pay|submit|shell|exec|curl|wget)'
+    message: Asks the agent to call a risky tool.
+exfil_links:
+  - id: md_image_exfil
+    severity: high
+    pattern: '!\[[^\]]*\]\(https?://[^)\s]*[?&][^)\s]*(\{\{|\$\{|%7B%7B|\[[A-Z_]+\]|<[A-Z_]+>|data=|q=|secret|token|key)'
+    message: Markdown image whose URL carries data. Rendering it can leak data with no click.
+  - id: templated_url
+    severity: high
+    pattern: 'https?://[^\s"''<>)]*(\{\{[^}]+\}\}|\$\{[^}]+\}|%7B%7B)'
+    message: URL with a template slot for the agent to fill in.
+  - id: webhook_catcher
+    severity: medium
+    pattern: 'https?://[^\s"''<>)]*(webhook\.site|requestbin|pipedream\.net|ngrok(-free)?\.(io|app)|burpcollaborator|interact\.sh|oast\.(fun|me|pro)|beeceptor)'
+    message: Known request-capture host.
+hidden_text:
+  - id: html_comment_instruction
+    severity: high
+    pattern: '<!--[\s\S]{0,400}?\b(ignore|instruction|assistant|ai agent|system prompt|you must|you are|send|reveal)\b[\s\S]{0,400}?-->'
+    message: HTML comment containing instructions (invisible when rendered).
+  - id: css_hidden
+    severity: medium
+    pattern: '(display\s*:\s*none|visibility\s*:\s*hidden|font-size\s*:\s*0(px)?\b|opacity\s*:\s*0(\.0+)?\b|color\s*:\s*(#fff(fff)?|white)\b[^"]{0,40}background(-color)?\s*:\s*(#fff(fff)?|white))'
+    message: CSS that hides text from people but not from an agent.
+  - id: data_uri
+    severity: low
+    pattern: 'data:(text\/(html|plain)|application\/(json|javascript))[;,][^\s"'')]{20,}'
+    message: Inline data URI with text content.

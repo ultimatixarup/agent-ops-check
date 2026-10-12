@@ -1,0 +1,69 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: mitre-atlas
+name: MITRE ATLAS (selected techniques)
+source: https://atlas.mitre.org/
+note: Selected ATLAS technique IDs relevant to agents.
+items:
+  - id: AML.T0051
+    title: LLM Prompt Injection (direct and indirect)
+    coverage: covered
+    checks:
+      - injection.
+      - health.untrusted_input
+      - health.t_override
+    how: Injection scan + untrusted-input rules + eval cases
+  - id: AML.T0054
+    title: LLM Jailbreak
+    coverage: partial
+    checks:
+      - health.t_override
+    how: Obeyed overrides in transcripts; jailbreak eval cases
+  - id: AML.T0056
+    title: LLM Meta Prompt Extraction
+    coverage: covered
+    checks:
+      - health.confidential_in_prompt
+      - health.t_leaks
+    how: Secrets in prompts, leaks in transcripts
+  - id: AML.T0057
+    title: LLM Data Leakage
+    coverage: covered
+    checks:
+      - crossover.
+      - health.t_other_customer
+    how: Personal-to-work paths, other customers' data
+  - id: AML.T0053
+    title: LLM Plugin Compromise
+    coverage: partial
+    checks:
+      - actions.
+      - crossover.shared_credential
+    how: Tool gates and credential sharing
+  - id: AML.T0034
+    title: Cost Harvesting
+    coverage: covered
+    checks:
+      - governance.no_max_tokens
+      - governance.no_budget
+      - governance.unbounded_loop
+    how: Caps and budgets
+  - id: AML.T0029
+    title: Denial of ML Service
+    coverage: partial
+    checks:
+      - governance.no_timeout
+      - governance.no_recursion_cap
+    how: Timeouts and step caps
+  - id: AML.T0055
+    title: Unsecured Credentials
+    coverage: covered
+    checks:
+      - crossover.secret
+      - health.secret_smells
+    how: Hardcoded secrets
+  - id: AML.T0010
+    title: ML Supply Chain Compromise
+    coverage: partial
+    checks:
+      - governance.unpinned_model
+    how: Pinning only

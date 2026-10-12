@@ -1,0 +1,63 @@
+# Offline mapping data. Status = what agent-ops-check checks statically. "Maps to", never "compliant".
+id: iso-42001
+name: ISO/IEC 42001:2023 Annex A control areas
+source: https://www.iso.org/standard/81230.html
+note: Annex A area names only (the standard text is copyrighted and not included). Maps to, not compliant with.
+items:
+  - id: A.2
+    title: Policies related to AI
+    coverage: none
+    checks: []
+    how: Not checked
+  - id: A.3
+    title: Internal organization (roles, responsibilities)
+    coverage: partial
+    checks:
+      - governance.no_owner
+    how: Owner/maintainer recorded
+  - id: A.4
+    title: Resources for AI systems (inventory of tools, data, compute)
+    coverage: covered
+    checks:
+      - governance.
+      - crossover.
+    how: AI and connector inventory
+  - id: A.5
+    title: Assessing impacts of AI systems
+    coverage: partial
+    checks: []
+    how: Audit memo is a starting input
+  - id: A.6
+    title: AI system life cycle (verification, deployment, operation, monitoring)
+    coverage: partial
+    checks:
+      - governance.no_tracing
+      - governance.unpinned_model
+      - observability.
+    how: Tracing, pinning; generated eval sets
+  - id: A.7
+    title: Data for AI systems
+    coverage: partial
+    checks:
+      - crossover.pii
+      - crossover.source_to_sink
+    how: Personal data reach
+  - id: A.8
+    title: Information for interested parties
+    coverage: partial
+    checks:
+      - health.bot_disclosure
+    how: Bot disclosure
+  - id: A.9
+    title: Use of AI systems (responsible use, human oversight)
+    coverage: covered
+    checks:
+      - actions.
+      - health.handoff_rule
+    how: Approval gates, handoff rules
+  - id: A.10
+    title: Third-party and customer relationships
+    coverage: partial
+    checks:
+      - governance.
+    how: Provider inventory
