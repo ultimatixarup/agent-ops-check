@@ -1,0 +1,6 @@
+{
+  "mcpServers": {
+    "slack": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-slack"], "env": { "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}" } },
+    "gmail": { "command": "npx", "args": ["-y", "server-gmail"], "env": { "GMAIL_OAUTH_TOKEN": "${GMAIL_OAUTH_TOKEN}" } }
+  }
+}

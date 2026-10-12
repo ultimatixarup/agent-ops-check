@@ -1,0 +1,33 @@
+# Irreversible-action rules (case-insensitive JS regex).
+# Verbs that make a tool name irreversible (matched as a word part: send_email, sendEmail, slack.post).
+irreversible_verbs: 'send|post|publish|tweet|delete|remove|drop|destroy|purge|submit|pay|charge|refund|transfer|wire|purchase|buy|order|checkout|book|cancel|approve|merge|deploy|accept|sign|transact'
+tool_def_context: '"name"\s*:|name:\s|def\s+\w+\s*\(|function\s+\w+\s*\(|tool\(|@tool|DynamicTool|server\.tool\(|registerTool|"type"\s*:\s*"function"|tools:'
+browser_actions: '\.(click|submit|fill|type|press|selectOption|setInputFiles)\s*\(|\.send_keys\s*\(|form\.submit\(|requestSubmit\(|method\s*[:=]\s*["'']POST'
+gates:
+  approval: '\b(require[sd]?_?approval|needs?_?approval|human[_ -]?in[_ -]?the[_ -]?loop|hitl|confirm(ation)?_?required|requires_confirmation|ask_?user|await_?approval|interrupt_before|approval_gate|ask (the )?user (to )?confirm)\b'
+  dry_run: '\bdry[_ -]?run\b|\bpreview_?only\b|\bsimulate\b'
+  rate_limit: '\brate[_ -]?limit|\bmax_?(calls|actions|requests)_?per|\bthrottl|\bquota\b'
+  domain_allowlist: '\b(allowed|allow)[_ -]?(domains|hosts|urls|origins)\b|\bdomain[_ -]?allow[_ -]?list\b|\ballowlist\b'
+risky_reads:
+  - id: cookie_read
+    severity: high
+    pattern: 'document\.cookie|\.cookies\s*\(|context\.cookies|get_cookies|browser_cookie3|Cookies\b.*sqlite'
+    message: Reads browser cookies. Agents have lifted working tokens this way.
+  - id: storage_read
+    severity: high
+    pattern: '(localStorage|sessionStorage)\.getItem|storageState\s*\(|__NEXT_DATA__|window\.__[A-Z_]+__'
+    message: Reads a site's browser storage or the config the site sends to browsers.
+  - id: browser_profile
+    severity: high
+    pattern: 'user[-_]?data[-_]?dir|Chrome/User Data|Library/Application Support/(Google/Chrome|Firefox)|\.mozilla/firefox|launchPersistentContext'
+    message: Uses a real browser profile, so the agent acts with your logged-in sessions.
+  - id: url_shortener
+    severity: medium
+    pattern: '\b(bit\.ly|tinyurl\.com|t\.co|is\.gd|rebrand\.ly|cutt\.ly|shorturl\.at)/'
+    message: URL shortener. Can be used to get around fetch limits or hide the real destination.
+  - id: wildcard_domain
+    severity: medium
+    pattern: '["''](\*|https?://\*)[^"'']*["'']|\ballowed_?(domains|hosts)\b\s*[:=]\s*\[?\s*["'']\*'
+    message: Wildcard domain or host permission.
+deny_list: '\b(never|do not|don''t|must not)\b[^.\n]{0,80}\b(submit|send|pay|purchase|post|delete|transfer|sign|accept)\b[^.\n]{0,60}\b(without|unless|until)\b[^.\n]{0,40}\b(confirm|approv|permission|ask)'
+prompt_markers: '\b(you are|system prompt|instructions?:|your (job|role|task) is)\b'

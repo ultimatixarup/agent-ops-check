@@ -1,0 +1,19 @@
+{
+  "name": "agent-ops-check",
+  "version": "0.1.0",
+  "description": "Local, no-network agent-ops analyzer: personal-to-work data crossover, irreversible actions, governance + cost, plus the Arup Banerjee Labs Agent Health Checker, Cloud Bill Smell and Observability Gap checks. Heuristic, not a security audit.",
+  "bin": { "agent-ops-check": "bin/agent-ops-check.js" },
+  "main": "src/index.js",
+  "files": ["bin", "src", "rules", "examples", "README.md", "LICENSE"],
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node bin/agent-ops-check.js",
+    "test": "node --test test/",
+    "example": "node bin/agent-ops-check.js examples/bad-agent --out report"
+  },
+  "dependencies": { "js-yaml": "^4.1.0" },
+  "license": "MIT",
+  "author": "Arup Kumar Banerjee",
+  "repository": { "type": "git", "url": "https://github.com/ultimatixarup/agent-ops-check.git" },
+  "keywords": ["ai-agents", "agent-ops", "mcp", "static-analysis", "governance", "local-first"]
+}
