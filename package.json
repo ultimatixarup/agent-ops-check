@@ -4,7 +4,7 @@
   "description": "Local, no-network agent-ops analyzer: personal-to-work data crossover, irreversible actions, governance + cost, plus the Arup Banerjee Labs Agent Health Checker, Cloud Bill Smell and Observability Gap checks. Heuristic, not a security audit.",
   "bin": { "agent-ops-check": "bin/agent-ops-check.js" },
   "main": "src/index.js",
-  "files": ["bin", "src", "rules", "examples", "README.md", "LICENSE"],
+  "files": ["bin", "src", "rules", "data", "docs", "examples", "README.md", "LICENSE"],
   "engines": { "node": ">=18" },
   "scripts": {
     "start": "node bin/agent-ops-check.js",

@@ -138,3 +138,8 @@ test("CLI writes evals/ files and the report shows every tab", () => {
   for (const s of ["Source-to-sink matrix", "Gate map", "AI inventory", "Tool runs", "Prompt-injection scan (ADSF)", "Simplified Technical English", "Standards map", "Generated eval sets", "redteam-pack.txt", "Rules 20"]) assert.ok(html.includes(s), s);
   for (const l of fs.readFileSync(path.join(out, "evals/security.jsonl"), "utf8").trim().split("\n")) JSON.parse(l);
 });
+
+test("package.json 'files' ships every folder the code reads at runtime", () => {
+  const files = require("../package.json").files;
+  for (const d of ["bin", "src", "rules", "data"]) assert.ok(files.includes(d), d);
+});
