@@ -1,0 +1,1539 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "agent-ops-check",
+          "version": "0.1.0",
+          "informationUri": "https://github.com/ultimatixarup/agent-ops-check",
+          "rules": [
+            {
+              "id": "crossover.pii.email_address",
+              "shortDescription": {
+                "text": "crossover.pii.email_address"
+              }
+            },
+            {
+              "id": "actions.browser_write",
+              "shortDescription": {
+                "text": "actions.browser_write"
+              }
+            },
+            {
+              "id": "actions.no_deny_list",
+              "shortDescription": {
+                "text": "actions.no_deny_list"
+              }
+            },
+            {
+              "id": "actions.wildcard_domain",
+              "shortDescription": {
+                "text": "actions.wildcard_domain"
+              }
+            },
+            {
+              "id": "governance.no_owner",
+              "shortDescription": {
+                "text": "governance.no_owner"
+              }
+            },
+            {
+              "id": "governance.no_max_tokens",
+              "shortDescription": {
+                "text": "governance.no_max_tokens"
+              }
+            },
+            {
+              "id": "governance.no_budget",
+              "shortDescription": {
+                "text": "governance.no_budget"
+              }
+            },
+            {
+              "id": "governance.no_review_record",
+              "shortDescription": {
+                "text": "governance.no_review_record"
+              }
+            },
+            {
+              "id": "governance.unpinned_model",
+              "shortDescription": {
+                "text": "governance.unpinned_model"
+              }
+            },
+            {
+              "id": "observability.otel",
+              "shortDescription": {
+                "text": "observability.otel"
+              }
+            },
+            {
+              "id": "observability.prometheus",
+              "shortDescription": {
+                "text": "observability.prometheus"
+              }
+            },
+            {
+              "id": "observability.runbooks_alerts",
+              "shortDescription": {
+                "text": "observability.runbooks_alerts"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "crossover.pii.email_address",
+          "level": "note",
+          "message": {
+            "text": "Possible personal data (email_address) in agent code, prompt or fixture."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/backend/pyproject.toml"
+                },
+                "region": {
+                  "startLine": 6
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.browser_write",
+          "level": "error",
+          "message": {
+            "text": "Browser write action .submit( has no approval gate or dry-run mode. Add a human confirm step before it runs."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/src/App.tsx"
+                },
+                "region": {
+                  "startLine": 137
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.no_deny_list",
+          "level": "warning",
+          "message": {
+            "text": "Prompt has no explicit deny-list such as \"never submit, pay or send without asking me first\". Agents treat what isn't forbidden as allowed."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/backend/src/agent/prompts.py"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/eslint.config.js"
+                },
+                "region": {
+                  "startLine": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 837
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 838
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 863
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 864
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 883
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 898
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 913
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 935
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 936
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 955
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 975
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 976
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 998
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1025
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1026
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1049
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1050
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1073
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1074
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1096
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1097
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1127
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1128
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1158
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1159
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1201
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1202
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1224
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1249
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1250
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1283
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1284
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1303
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1322
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1340
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1358
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1373
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1388
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1406
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1424
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1442
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1443
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 2208
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 2223
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 2232
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 2247
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 3048
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 3657
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 4578
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 4941
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 4963
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 5024
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 5589
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 5611
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 5689
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 5691
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 5692
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 5693
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 5694
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.no_deny_list",
+          "level": "warning",
+          "message": {
+            "text": "Prompt has no explicit deny-list such as \"never submit, pay or send without asking me first\". Agents treat what isn't forbidden as allowed."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/README.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_owner",
+          "level": "warning",
+          "message": {
+            "text": "No owner/maintainer documented. Every agent needs a named person who answers for it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_max_tokens",
+          "level": "warning",
+          "message": {
+            "text": "[google-gemini__gemini-fullstack-langgraph-quickstart] No max_tokens / output cap set on model calls."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py"
+                },
+                "region": {
+                  "startLine": 36
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_budget",
+          "level": "warning",
+          "message": {
+            "text": "[google-gemini__gemini-fullstack-langgraph-quickstart] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py"
+                },
+                "region": {
+                  "startLine": 36
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_review_record",
+          "level": "note",
+          "message": {
+            "text": "No documented review (reviewed-by / review date / changelog)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unpinned_model",
+          "level": "note",
+          "message": {
+            "text": "Model 'gemini-2.5-pro-preview-05-06' is not pinned to a dated version, so behavior and price can change under you."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py"
+                },
+                "region": {
+                  "startLine": 24
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unpinned_model",
+          "level": "note",
+          "message": {
+            "text": "Model 'gemini-2.0-flash' is not pinned to a dated version, so behavior and price can change under you."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/backend/src/agent/configuration.py"
+                },
+                "region": {
+                  "startLine": 12
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unpinned_model",
+          "level": "note",
+          "message": {
+            "text": "Model 'gemini-2.5-flash' is not pinned to a dated version, so behavior and price can change under you."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/backend/src/agent/configuration.py"
+                },
+                "region": {
+                  "startLine": 19
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unpinned_model",
+          "level": "note",
+          "message": {
+            "text": "Model 'gemini-2.5-pro' is not pinned to a dated version, so behavior and price can change under you."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/backend/src/agent/configuration.py"
+                },
+                "region": {
+                  "startLine": 26
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unpinned_model",
+          "level": "note",
+          "message": {
+            "text": "Model 'gemini-2.5-flash-preview-04-17' is not pinned to a dated version, so behavior and price can change under you."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/frontend/src/components/InputForm.tsx"
+                },
+                "region": {
+                  "startLine": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unpinned_model",
+          "level": "note",
+          "message": {
+            "text": "Model 'gemini-fullstack-langgraph' is not pinned to a dated version, so behavior and price can change under you."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "google-gemini__gemini-fullstack-langgraph-quickstart/README.md"
+                },
+                "region": {
+                  "startLine": 100
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "observability.otel",
+          "level": "note",
+          "message": {
+            "text": "Gap — no clear signal for OpenTelemetry traces/metrics."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "observability.prometheus",
+          "level": "note",
+          "message": {
+            "text": "Gap — no clear signal for Prometheus metrics / alerts."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "observability.runbooks_alerts",
+          "level": "note",
+          "message": {
+            "text": "Gap — no clear signal for Alerts tied to runbooks."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
