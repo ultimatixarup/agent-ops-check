@@ -3,6 +3,9 @@
 **Standing rule:** new checks, injection patterns and CVE-driven rules ship **only through this Git repo**.
 agent-ops-check never fetches rules, never checks for updates over the network, and never phones home.
 
+## Imported datasets (maintainers)
+- **LLMail-Inject** (Microsoft, MIT): `npm run import:llmail` downloads the dataset into `.cache/llmail/` (git-ignored), then writes the small samples and family stats committed in `data/llmail/`. `npm run bench:llmail` re-measures the rules offline and rewrites `docs/LLMAIL_BENCHMARK.md`; a test fails if that doc is stale. The tool itself never downloads the dataset. Users get the result with `git pull`.
+
 ## Getting updates
 - Cloned: `git pull`
 - npx: re-run `npx github:ultimatixarup/agent-ops-check ...` (npx fetches the current `main`; to force it, clear the npx cache or pin a tag `#vX.Y.Z`)

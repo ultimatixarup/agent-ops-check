@@ -1,0 +1,49 @@
+{
+  "source": "microsoft/llmail-inject-challenge (Hugging Face), MIT License",
+  "generated_by": "scripts/import-llmail.mjs",
+  "unique_attacks": {
+    "phase1": 110201,
+    "phase2": 19039,
+    "max_chars": 4000
+  },
+  "benign_fp_emails": 203,
+  "samples": {
+    "phase2_heldout": 500,
+    "phase2_skipped_as_peeked": 1000,
+    "phase1": 300
+  },
+  "rule_matches_over_all_unique_attacks": {
+    "llmail_tool_call_syntax": {
+      "family": "tool-call / send_email exfiltration",
+      "matches": 3806
+    },
+    "llmail_fake_turn_delimiter": {
+      "family": "fake system/user turn delimiters",
+      "matches": 44449
+    },
+    "llmail_obfuscated_address": {
+      "family": "encoded / obfuscated instructions",
+      "matches": 1144
+    },
+    "llmail_deobfuscate_instruction": {
+      "family": "encoded / obfuscated instructions",
+      "matches": 60
+    },
+    "llmail_post_task_trigger": {
+      "family": "tool-call / send_email exfiltration",
+      "matches": 3085
+    },
+    "llmail_send_directive": {
+      "family": "tool-call / send_email exfiltration",
+      "matches": 10922
+    },
+    "llmail_encoded_text": {
+      "family": "encoded / obfuscated instructions",
+      "matches": 236
+    },
+    "llmail_send_to_address": {
+      "family": "tool-call / send_email exfiltration",
+      "matches": 61300
+    }
+  }
+}

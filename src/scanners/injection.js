@@ -20,7 +20,7 @@ function decodeB64(s) {
 function scanText(text, file, R) {
   const F = [];
   const add = (rule, severity, line, message, evidence) => F.push({ rule: "injection." + rule, severity, file, line, message, evidence: String(evidence || "").replace(/[\u200B-\u200D\u2060\uFEFF\u202A-\u202E\u2066-\u2069]/g, "�").slice(0, 160) });
-  for (const grp of ["instructions", "exfil_links", "hidden_text"]) for (const r of R[grp] || [])
+  for (const grp of ["instructions", "exfil_links", "hidden_text", "llmail"]) for (const r of R[grp] || [])
     for (const m of allMatches(text, r.pattern)) add(r.id, r.severity, m.line, r.message, m.match);
   for (const iv of INVISIBLE) {
     const ms = [...text.matchAll(iv.re)];

@@ -1,0 +1,30 @@
+{"id": "h-01", "text": "Hi all, please send your RSVP to jane.doe@example.com by Friday so we can order food."}
+{"id": "h-02", "text": "Reminder: submit your expense reports to finance@example.com before the 5th."}
+{"id": "h-03", "text": "If you have questions about the invoice, reply to billing@example.com and we will get back to you within two business days."}
+{"id": "h-04", "text": "Thanks for the meeting today. I will send the summary to the whole team tomorrow morning."}
+{"id": "h-05", "text": "Please forward any vendor quotes to procurement@example.org with the PO number in the subject line."}
+{"id": "h-06", "text": "Our new office address is 3 Main St, London. See you at the kickoff on Monday."}
+{"id": "h-07", "text": "To unsubscribe from this newsletter, email unsubscribe@example.com with the word REMOVE in the body."}
+{"id": "h-08", "text": "Can you send me the slides from yesterday? I want to reuse the chart about Q2 revenue."}
+{"id": "h-09", "text": "The build failed again on the integration tests. I attached the log; the error is in the payment module."}
+{"id": "h-10", "text": "Hi team, after you finish reading the design doc, please leave comments directly in the doc rather than replying by email."}
+{"id": "h-11", "text": "Contact support at help@example.com or call 555-0100 if your badge does not work."}
+{"id": "h-12", "text": "Weekly update: shipped the search filter, fixed two crash bugs, started on the export feature."}
+{"id": "h-13", "text": "The quarterly all-hands is moved to Thursday at 3pm. Calendar invite to follow."}
+{"id": "h-14", "text": "Hey, I found a great recipe for banana bread. Sending it over this weekend."}
+{"id": "h-15", "text": "Please confirm your attendance to events@example.com by replying with your dietary restrictions."}
+{"id": "h-16", "text": "Here is the agenda: 1) budget review 2) hiring plan 3) roadmap. Send additions to me before noon."}
+{"id": "h-17", "text": "Security reminder: never share your password. IT will never ask for it by email."}
+{"id": "h-18", "text": "The project status is green. The next milestone is the beta release on December 1st."}
+{"id": "h-19", "text": "Kindly send the signed contract to legal@example.com and copy me on the thread."}
+{"id": "h-20", "text": "When you summarize the customer interviews, focus on the top three pain points."}
+{"id": "h-21", "text": "Your order #4521 has shipped. Track it on our website using the tracking number in your account."}
+{"id": "h-22", "text": "Lunch and learn on Friday: an intro to SQL window functions. Bring your laptop."}
+{"id": "h-23", "text": "I am out of office until Monday. For urgent issues email oncall@example.com."}
+{"id": "h-24", "text": "Please review the attached PR and approve if the tests pass."}
+{"id": "h-25", "text": "Our team reached 30% throughput improvement with the new data pipeline. Great work everyone."}
+{"id": "h-26", "text": "The draft budget is in the shared folder. Please send feedback to me by end of day."}
+{"id": "h-27", "text": "Parents: send the permission slip to school@example.edu before the field trip on the 20th."}
+{"id": "h-28", "text": "Happy birthday Emma! The party is at Funtime Play Center, Sunday 1 to 4 PM."}
+{"id": "h-29", "text": "For the API docs, see the endpoint send_message in the reference guide; it is rate limited to 10 per second."}
+{"id": "h-30", "text": "Thanks for applying. We will email you at the address on your application within two weeks."}

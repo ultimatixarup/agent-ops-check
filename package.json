@@ -15,7 +15,8 @@
     "examples",
     "README.md",
     "LICENSE",
-    "scripts"
+    "scripts",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "engines": {
     "node": ">=18"
@@ -29,7 +30,10 @@
     "golden": "node scripts/golden.js",
     "golden:update": "node scripts/golden.js --update",
     "build:web": "node scripts/build-web.js",
-    "build:labs": "node scripts/build-web.js --labs ../arup-banerjee-labs"
+    "build:labs": "node scripts/build-web.js --labs ../arup-banerjee-labs",
+    "bench:llmail": "node scripts/bench-llmail.js",
+    "bench:llmail:check": "node scripts/bench-llmail.js --check",
+    "import:llmail": "node --max-old-space-size=8000 scripts/import-llmail.mjs"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"

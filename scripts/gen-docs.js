@@ -15,7 +15,7 @@ function yamlRules() {
   const add = (scanner, list) => (list || []).forEach((r) => (R[scanner + "." + r.id] = r));
   const c = load("rules/crossover.yaml"), a = load("rules/actions.yaml"), i = load("rules/injection.yaml");
   add("crossover", c.hardcoded); add("actions", a.risky_reads);
-  add("injection", i.instructions); add("injection", i.exfil_links); add("injection", i.hidden_text);
+  add("injection", i.instructions); add("injection", i.exfil_links); add("injection", i.hidden_text); add("injection", i.llmail);
   return { R, secrets: c.secrets || [], pii: c.pii || [] };
 }
 function healthChecks() {
