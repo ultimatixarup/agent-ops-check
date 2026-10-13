@@ -4,3 +4,4 @@ node_modules/
 *.tgz
 golden-out/
 *.tgz
+web-dist/

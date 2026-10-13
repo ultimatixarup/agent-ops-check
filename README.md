@@ -245,6 +245,16 @@ Outputs: `index.html` (static, opens offline, three-plus tabs with file:line fin
 Other ways to run: `git clone https://github.com/ultimatixarup/agent-ops-check && cd agent-ops-check && npm install && npm start -- ./my-agent`.
 Try it on the built-in bad example: `npm run example`.
 
+## Browser version
+
+The same engine also runs as a static web page on [Arup Banerjee Labs](https://ultimatixarup.github.io/arup-banerjee-labs/agent-ops-check/). It uses the same `src/` scanners and `rules/` files, bundled by `npm run build:web` into `web-dist/agent-ops-check.js` (`npm run build:labs` copies the bundle, a vendored JSZip and the sample agents into a sibling `arup-banerjee-labs` checkout).
+
+- Everything runs in the browser tab. The page's Content-Security-Policy blocks network requests, it loads no analytics, and nothing is uploaded or stored.
+- Inputs: a folder, one or more .zip files (read with the vendored JSZip, same safety rules as the CLI's unzip), loose files, extra docs for the ADSF scan, STE text or files, an approved-word list, and the information-loss compare.
+- Outputs: the same score, tabs, 10-framework standards map and eval sets, with downloads of `index.html`, `report.json`, `report.md`, `report.sarif`, `evals/*`, `ste.html` and `redteam-pack.txt` (or all of them as one .zip).
+- Not in the browser: the optional `--llm` review (by design, so nothing leaves the tab), `--rules <dir>` custom rule files and `--fail-on` (a CI exit code).
+- `test/web-parity.test.js` runs the bundle in a bare sandbox and checks that it gives the same findings, scores, standards map and eval sets as the CLI on the sample agents, the sample zip, the poisoned doc and the STE samples.
+
 ## Privacy
 
 - With no `--llm` flag, **nothing leaves your machine**. The tool makes no network calls; the test suite fails if it tries.
