@@ -5,3 +5,4 @@ node_modules/
 golden-out/
 *.tgz
 web-dist/
+.cache/

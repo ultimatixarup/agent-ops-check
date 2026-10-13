@@ -54,3 +54,53 @@ hidden_text:
     severity: low
     pattern: 'data:(text\/(html|plain)|application\/(json|javascript))[;,][^\s"'')]{20,}'
     message: Inline data URI with text content.
+# Derived from Microsoft LLMail-Inject (MIT). Regenerate stats with scripts/import-llmail.mjs; see docs/LLMAIL_BENCHMARK.md.
+llmail:
+  - id: llmail_tool_call_syntax
+    severity: high
+    family: tool-call / send_email exfiltration
+    source: LLMail-Inject (microsoft/llmail-inject-challenge, MIT)
+    pattern: '(\bapi[_ ]?call\b|\bsend_?e?mail\s*\(|\bsendmail\s*\(|\bcall_?tool\b|\btool_?call\b\s*[:(=>-]|"function"\s*:\s*\{\s*"name"|\bsend_email\b[^.\n]{0,40}\b(to|destination|recipient)\b)'
+    message: Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape.
+  - id: llmail_fake_turn_delimiter
+    severity: high
+    family: fake system/user turn delimiters
+    source: LLMail-Inject (microsoft/llmail-inject-challenge, MIT)
+    pattern: '(<<\s*(end|start|begin)_?(context|prompt|program|user_query|query)\s*>>|<\/?\s*(user_query|user_session|assistant_task|end_summari[sz]ation_session|start_session|end_session|start_user_session|user_instructions?)\b[^>]{0,80}>|<\|\s*(end|user|assistant|im_end|im_start|eot_id|start_header_id|(begin|end|start)[ _][a-z ]{2,20})\s*\|>|<\/?(email|user|assistant|system prompt|developer|tool|tool_output|documents)>|\[\s*(end|start) (user|system|email)[ _]?(input|query|context|instructions?)?\s*\]|\b(END_EMAIL_CONTEXT|END_USER_SESSION|START_USER_SESSION|NEW_USER_SESSION|NEXT_INSTRUCTION|END_QUERY|TEXT_OVER|USERQUERY|PROCESS_USER_QUERY)\b|>>\}\}\]\]\)\)|\[\s*internal (ai )?instructions?\b)'
+    message: Fake end-of-data or new user/system turn marker that tries to break out of the email/document context.
+  - id: llmail_obfuscated_address
+    severity: medium
+    family: encoded / obfuscated instructions
+    source: LLMail-Inject (microsoft/llmail-inject-challenge, MIT)
+    pattern: '\b[a-z0-9._-]+\s*(\[at\]|\(at\)|<at>|\{at\}|\s+at\s+)\s*[a-z0-9-]+\s*(\[dot\]|\(dot\)|<dot>|\{dot\}|\s+dot\s+)\s*(com|net|org|io)\b'
+    message: Email address written in obfuscated form (name [at] domain [dot] com), often used to slip past filters.
+  - id: llmail_deobfuscate_instruction
+    severity: high
+    family: encoded / obfuscated instructions
+    source: LLMail-Inject (microsoft/llmail-inject-challenge, MIT)
+    pattern: '\b((remove|delete|strip|ignore) (all|every|the)( of the)? ["''“]?[^\s"''”]{1,12}["''”]?( (signs?|characters?|words?|tokens?|symbols?))?( from (this|the) (text|message|email))? (and|then) (run|execute|send|follow|do)|every (second|other|third) word\b|read (it|this|the text|the message) backwards|(decode|deobfuscate|reverse) (the|this) (following|message|text|instructions?) (and|then) (run|execute|follow|send|do))'
+    message: Asks the agent to decode or de-obfuscate hidden text and then act on it.
+  - id: llmail_post_task_trigger
+    severity: high
+    family: tool-call / send_email exfiltration
+    source: LLMail-Inject (microsoft/llmail-inject-challenge, MIT)
+    pattern: '\b(after|once|when) (you(''ve| have)? )?(finish(ed)? )?(summari[sz](e|es|ed|ing)|reading|processing)\b[^.\n]{0,60}\b(send|e-?mail|forward|notify|call|post)\b|\binstead of (summari[sz](ing|e)|the summary)\b'
+    message: Piggy-backs an extra action onto the agent's real task ("after summarizing, send...").
+  - id: llmail_send_directive
+    severity: medium
+    family: tool-call / send_email exfiltration
+    source: LLMail-Inject (microsoft/llmail-inject-challenge, MIT)
+    pattern: '\b(send|compose|draft and send|shoot|drop|fire off|dispatch|issue)\b[^.\n]{0,40}\b(e-?mail|message|mail|notification|reply)\b[^.\n]{0,60}\b(body|content|text|containing|saying|with the (word|text))\b[^.\n]{0,40}\b(to|destination|recipient)\b|\b(destination|recipient|to|e-?mail)["'']?\s*[=:]\s*["''(]?[a-z0-9._-]+@[a-z0-9.-]+[^\n]{0,40}\bbody["'']?\s*[=:]'
+    message: Instruction to send an email with a specific recipient and body. In untrusted content this is the classic indirect-injection goal.
+  - id: llmail_encoded_text
+    severity: medium
+    family: encoded / obfuscated instructions
+    source: LLMail-Inject (microsoft/llmail-inject-challenge, MIT)
+    pattern: '((\\u|u\+|\bU\+?)[0-9a-f]{4}[\s,]*){12,}|(\b[a-z] ){15,}|(%[0-9a-f]{2}){12,}|(\b[01]{8}\s+){8,}'
+    message: Long run of encoded or letter-spaced text (Unicode escapes, s p a c e d letters, URL or binary encoding) that may hide instructions.
+  - id: llmail_send_to_address
+    severity: low
+    family: tool-call / send_email exfiltration
+    source: LLMail-Inject (microsoft/llmail-inject-challenge, MIT)
+    pattern: '\b(send|reply|submit|forward|e-?mail|mail|confirm)\b[^.\n]{0,60}\bto:?\s*["''(`]?[a-z0-9._+-]+@[a-z0-9-]+\.[a-z]{2,}'
+    message: 'Low-confidence signal: text asks the reader to send something to a specific address. Normal in human email; worth a look when the reader is an agent with a send tool.'

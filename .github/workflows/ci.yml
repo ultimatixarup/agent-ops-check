@@ -30,6 +30,8 @@ jobs:
         run: npm test
       - name: README check tables match rules
         run: npm run docs:check
+      - name: LLMail benchmark doc is current
+        run: npm run bench:llmail:check
       - name: Golden results (scores + rule-ID counts vs test/golden/*.json)
         run: node scripts/golden.js --keep golden-out
       - name: Packed-tarball smoke test
