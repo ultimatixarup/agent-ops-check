@@ -7,6 +7,7 @@ const governance = require("./scanners/governance");
 const labs = require("./labs");
 const ste = require("./scanners/ste");
 const injection = require("./scanners/injection");
+const persistence = require("./scanners/persistence");
 const evals = require("./evals");
 const standards = require("./standards");
 
@@ -41,6 +42,8 @@ function run(inputs, o, orig) {
   if (!o.noLabs && !steOnly) groups.push(labs.scan(files));
   if (!o.noInjection && (files.length || (o.docs && o.docs.length))) groups.push(injection.scan(files, o));
   if (!o.noSte) groups.push(ste.scan(files, o));
+  // Daemon/sidecar + skill provenance (tabs after STE; not part of the overall score, like tabs 4-6).
+  if (!o.noPersistence && !steOnly && (files.length || (files.extras && files.extras.length))) groups.push(...persistence.scan(files, o));
   // Notebook findings: the scan text is the notebook's cells, so map the line to "cell N, line M".
   const nbs = {}; for (const f of files) if (f.notebook) nbs[f.display] = f.notebook;
   if (Object.keys(nbs).length) for (const g of groups) for (const f of g.findings) {

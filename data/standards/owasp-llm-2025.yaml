@@ -28,7 +28,14 @@ items:
     coverage: partial
     checks:
       - governance.unpinned_model
-    how: Model pinning and SDK inventory only; no dependency or model-provenance scan
+      - skills.unpinned_source
+      - skills.no_hashes
+      - skills.committed_pycache
+      - skills.orphan_pyc
+      - daemon.unpinned_latest_install
+      - daemon.pipe_to_shell
+      - daemon.auto_update
+    how: Model pinning, SDK inventory, unpinned skill/MCP/CLI sources, missing skill hashes, stray .pyc, curl|sh and self-update patterns; no dependency or model-provenance scan
   - id: LLM04
     title: Data and Model Poisoning
     coverage: partial

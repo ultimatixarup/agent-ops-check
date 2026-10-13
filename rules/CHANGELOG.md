@@ -2,6 +2,15 @@
 
 Rule updates ship only through this Git repo. Refresh with `git pull` or re-run `npx github:ultimatixarup/agent-ops-check`.
 
+## 2026.10.13 (third update, same day: background daemons + skill artifact provenance)
+Two new static check families in `rules/persistence.yaml` and `src/scanners/persistence.js`, shown as tabs 7 and 8. They don't change the overall score (tabs 1–3). Every rule carries `family` and `source` metadata. Static only: they cannot see running processes, installed binaries, runtime behavior, files written outside the scanned folder, or what a `.pyc` contains (never decoded or run). Verify on your install.
+- New: `daemon.*` (8 rules): `launchd_register`, `systemd_register`, `cron_register`, `windows_task_register`, `auto_update`, `daemon_mode`, `unpinned_latest_install`, `pipe_to_shell`. Matches in documentation are lowered to low. Source: a single, unreproduced report about a coding-agent CLI's self-updating background daemon (openai/codex#48195; Hacker News, 2026-10-12; Groundy audit guide https://groundy.com/articles/codex-cli-now-runs-a-self-updating-daemon-how-to-audit-and-stop/). This project does not confirm that report.
+- New: `skills.*` (6 rules): `committed_pycache`, `orphan_pyc`, `persistent_write`, `session_hook`, `unpinned_source`, `no_hashes`, applied in skill/plugin scope (SKILL.md folders with front matter, `.claude/`, `.codex/`, `.gemini/`, `.agents/`, `skills/`, `plugins/`, MCP and plugin configs). Sources (their findings, not ours): SkillRelayBench, arXiv 2610.13227 (https://arxiv.org/abs/2610.13227); PyCache Trap, arXiv 2610.10612 (https://arxiv.org/abs/2610.10612).
+- New: install/startup scripts and unit files (`.sh`, `.ps1`, `.bat`, `.plist`, `.service`, `.timer`, Dockerfile, Makefile, crontab...), `.pyc` names and lockfile names are collected for these two tabs only. The other checks see the same files as before.
+- New: `data/standards/` "maps to" entries: OWASP LLM03; OWASP Agentic ASI04, ASI05, ASI06, ASI10; OWASP Agentic T1, T11; MITRE ATLAS AML.T0010; NIST GAI-ValueChain. All stay 🟡 partial.
+- New: `--no-persistence` CLI flag.
+- Tuned on the vendor-samples campaign repos (see the PR for counts): Python `threading.Thread(daemon=True)` is not flagged as a daemon; a `skill.md` without front matter (a tips document) is not a skill root; non-SKILL.md docs in skill scope are lowered to low.
+
 ## 2026.10.13 (second update, same day: false-positive fixes)
 False-positive fixes from the vendor-samples campaign (`campaigns/2026-10-vendor-samples/`). Each has a regression test in `test/fp-regressions.test.js` built on short attributed excerpts of the scanned samples (`test/fixtures/fp/`).
 - New: Jupyter notebooks (`.ipynb`) are scanned: code and markdown cells only (outputs ignored), findings say "notebook cell N, line M". Raw notebook limit 8 MB, extracted text limit 2 MB.

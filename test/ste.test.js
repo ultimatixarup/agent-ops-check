@@ -69,7 +69,7 @@ test("scanner: prompts and .md in an agent folder get an STE tab", () => {
   const g = r.groups.find((x) => x.id === "ste");
   assert.ok(g && g.docs.some((d) => /instructions\.md/.test(d.file)));
   assert.match(g.note, /Not a certified ASD-STE100 checker/);
-  assert.deepStrictEqual(r.groups.map((g) => g.id), ["crossover", "actions", "governance", "injection", "ste"]); // overall score still from tabs 1–3
+  assert.deepStrictEqual(r.groups.map((g) => g.id), ["crossover", "actions", "governance", "injection", "ste", "daemon", "skills"]); // overall score still from tabs 1–3
 });
 
 test("CLI: --ste-text, stdin, files/dirs, --ste-compare, --ste-dict; reports written; no network", () => {

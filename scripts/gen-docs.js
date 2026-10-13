@@ -14,9 +14,9 @@ const short = (s, n = 90) => (s.length > n ? s.slice(0, n) + "…" : s);
 function yamlRules() {
   const R = {};
   const add = (scanner, list) => (list || []).forEach((r) => (R[scanner + "." + r.id] = r));
-  const c = load("rules/crossover.yaml"), a = load("rules/actions.yaml"), i = load("rules/injection.yaml");
+  const c = load("rules/crossover.yaml"), a = load("rules/actions.yaml"), i = load("rules/injection.yaml"), ps = load("rules/persistence.yaml");
   add("crossover", c.hardcoded); add("actions", a.risky_reads);
-  add("injection", i.instructions); add("injection", i.exfil_links); add("injection", i.hidden_text); add("injection", i.llmail);
+  add("injection", i.instructions); add("injection", i.exfil_links); add("injection", i.hidden_text); add("injection", i.llmail); add("daemon", ps.daemon);
   return { R, secrets: c.secrets || [], pii: c.pii || [] };
 }
 function healthChecks() {
@@ -79,6 +79,7 @@ function generate() {
       if (y) {
         looks = (y.message ? y.message + " " : "") + "Pattern: " + code(short(y.pattern));
         if (!sev) sev = "medium";
+        if (y.family && id.startsWith("daemon.")) looks = "Family: " + y.family + ". " + looks + " Lowered to low in documentation.";
       }
       if (c.family === "secrets") looks = "Hardcoded secrets (values are masked): " + secrets.map((s) => "`" + s.id + "`").join(", ") + ". Patterns in `rules/crossover.yaml`.";
       if (c.family === "pii") looks = "Personal data: " + pii.map((s) => "`" + s.id + "`").join(", ") + " (card numbers are Luhn-checked). Patterns in `rules/crossover.yaml`.";
@@ -92,10 +93,17 @@ function generate() {
       const s = llmailStats();
       L.push("**Microsoft LLMail-Inject dataset.** " + s.rules + " `injection.llmail_*` rules are derived from Microsoft's [LLMail-Inject](https://huggingface.co/datasets/microsoft/llmail-inject-challenge) dataset (MIT License; see `THIRD_PARTY_NOTICES.md`). On " + s.heldout + " held-out attacks the scan flags " + s.any + " at any severity and " + s.medium + " at medium or higher (" + s.before + " before these rules), with " + s.fp + " false positives on the dataset's benign emails. About a third of attacks are still missed. Details: [docs/LLMAIL_BENCHMARK.md](docs/LLMAIL_BENCHMARK.md).", "");
     }
+    if (need.id === "daemon" || need.id === "skills") {
+      const ps = load("rules/persistence.yaml");
+      const src = need.id === "daemon" ? ["codex_daemon_report"] : ["skillrelaybench", "pycache_trap", "supply_chain"];
+      L.push("**Sources (rule `source` metadata in `rules/persistence.yaml`; their findings, not ours):**", "");
+      src.forEach((k) => L.push("- `" + k + "`: " + String(ps.sources[k]).trim()));
+      L.push("", "**What it can't see.** " + require("../src/scanners/persistence").LIMITS + (need.id === "daemon" ? " Commands to try: " + ps.verify_hint.replace(/^Verify on your install:\s*/, "") : ""), "");
+    }
     L.push(...standardsLines(need.id));
   }
   L.push("_Standards and datasets are named for reference only. This project is not affiliated with or endorsed by Microsoft, OWASP, NIST, ISO, MITRE, CSA, Anthropic or the EU._", "");
-  L.push("_Rules version " + load("rules/VERSION.json").version + ". File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), Jupyter notebooks (.ipynb code and markdown cells, outputs ignored; findings show cell N, line M), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._", "", END);
+  L.push("_Rules version " + load("rules/VERSION.json").version + ". File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), Jupyter notebooks (.ipynb code and markdown cells, outputs ignored; findings show cell N, line M), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these. The daemon and skill checks also read install/startup scripts and unit files (.sh, .ps1, .bat, .plist, .service, .timer, Dockerfile, Makefile, crontab) and list .pyc file names (never decoded or run)._", "", END);
   return L.join("\n");
 }
 

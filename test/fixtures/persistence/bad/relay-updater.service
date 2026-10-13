@@ -1,0 +1,5 @@
+[Service]
+ExecStart=/usr/local/bin/relay self-update --loop
+Restart=always
+[Install]
+WantedBy=default.target

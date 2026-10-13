@@ -18,6 +18,7 @@ on THIS machine. No network calls unless you pass --llm.
   --no-ste             skip the STE tab
   --docs <file|dir>    extra docs/knowledge files for the prompt-injection scan (ADSF) (repeatable)
   --no-injection       skip the ADSF tab
+  --no-persistence     skip the background-daemon and skill-provenance tabs
   --no-evals           don't write generated eval sets (report/evals/)
 
 Simplified Technical English (STE) style checks (not a certified ASD-STE100 checker):
@@ -50,6 +51,7 @@ function parse(argv) {
     else if (a === "--no-ste") o.noSte = true;
     else if (a === "--docs") o.docs.push(v());
     else if (a === "--no-injection") o.noInjection = true;
+    else if (a === "--no-persistence") o.noPersistence = true;
     else if (a === "--no-evals") o.noEvals = true;
     else if (a === "--ste") o.stePaths.push(v());
     else if (a === "--ste-text") o.steInputs.push({ name: "(pasted text)", text: v() });

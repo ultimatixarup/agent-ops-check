@@ -101,6 +101,18 @@
         "ste.semicolon": 1,
         "ste.sentence_length": 1
       }
+    },
+    "daemon": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "skills": {
+      "score": 98,
+      "findings": 2,
+      "rules": {
+        "skills.unpinned_source": 2
+      }
     }
   }
 }
