@@ -24,72 +24,90 @@ Commit dates (CT): Microsoft 2026-10-13, Google 2025-06-18, Anthropic 2026-10-07
 - General cookbooks (anthropics/claude-cookbooks, openai/openai-cookbook), framework or SDK repos (langchain-ai/langgraph, openai/openai-agents-python, huggingface/smolagents) and non-agent courses (microsoft/generative-ai-for-beginners) were out of scope.
 - microsoft/autogen was also excluded because its repo license is CC-BY-4.0, which is not an OSI license.
 - We checked google/adk-samples, but it now redirects to google/adk-recipes (10,443 stars). The Gemini quickstart has more stars.
-- awslabs/agentcore-samples is a large monorepo, so we scanned one defined subfolder, `05-blueprints/`. `00-getting-started/` held only 2 scannable files, because most of its content is notebooks.
+- awslabs/agentcore-samples is a large monorepo, so we scanned one defined subfolder, `05-blueprints/`. `00-getting-started/` holds only 2 scannable files (1 `.py`, 1 `.md`, plus images).
 
-## Results
+## Results (rules after the false-positive fixes)
 
-Score is 0–100, and higher means fewer flags. Cells show high/medium/low flag counts.
+Score is 0–100, and higher means fewer flags. Cells show high/medium/low flag counts. These runs use the engine from the fp-fixes-notebooks PR, on the same pinned commits as the first run. The Microsoft scan now includes its 40 notebooks (`.ipynb` code and markdown cells; outputs ignored).
 
-| Repo | Score | Files | Data crossover | Irreversible actions | Governance + cost | Health + Labs | Prompt injection (ADSF) | STE (style) |
-|---|---|---|---|---|---|---|---|---|
-| [microsoft__ai-agents-for-beginners](microsoft__ai-agents-for-beginners/report.md) | 16 | 103 | 5/0/2 | 18/39/0 | 3/71/50 | 15/21/1 | 22/5/0 | 0/763/1577 |
-| [anthropics__claude-quickstarts](anthropics__claude-quickstarts/report.md) | 7 | 533 | 2/0/58 | 64/477/0 | 7/35/52 | 12/16/1 | 45/7/0 | 0/590/861 |
-| [google-gemini__gemini-fullstack-langgraph-quickstart](google-gemini__gemini-fullstack-langgraph-quickstart/report.md) | 45 | 39 | 1/0/1 | 1/62/0 | 0/11/9 | 0/0/3 | 0/0/0 | 0/15/17 |
-| [openai__openai-cs-agents-demo](openai__openai-cs-agents-demo/report.md) | 41 | 38 | 0/0/0 | 5/28/0 | 1/15/7 | 0/0/3 | 2/0/0 | 0/12/16 |
-| [awslabs__agentcore-samples](awslabs__agentcore-samples/report.md) | 8 | 359 | 16/0/0 | 50/433/0 | 2/12/8 | 17/13/2 | 38/1/0 | 0/246/580 |
+| Repo | Score | Files | Agents | Data crossover | Irreversible actions | Governance + cost | Health + Labs | Prompt injection (ADSF) | STE (style) |
+|---|---|---|---|---|---|---|---|---|---|
+| [microsoft__ai-agents-for-beginners](microsoft__ai-agents-for-beginners/report.md) | 19 | 143 | 20 | 4/0/2 | 28/50/0 | 0/69/53 | 9/11/1 | 19/11/9 | 0/362/860 |
+| [google-gemini__gemini-fullstack-langgraph-quickstart](google-gemini__gemini-fullstack-langgraph-quickstart/report.md) | 60 | 40 | 1 | 0/0/1 | 1/62/0 | 0/3/7 | 0/0/3 | 0/0/0 | 0/0/0 |
+| [anthropics__claude-quickstarts](anthropics__claude-quickstarts/report.md) | 7 | 535 | 11 | 2/0/58 | 64/485/0 | 4/29/51 | 1/4/1 | 36/7/0 | 0/493/586 |
+| [openai__openai-cs-agents-demo](openai__openai-cs-agents-demo/report.md) | 58 | 38 | 1 | 0/0/0 | 5/28/0 | 0/5/5 | 0/0/3 | 0/0/2 | 0/0/0 |
+| [awslabs__agentcore-samples](awslabs__agentcore-samples/report.md) | 28 | 360 | 5 | 6/0/0 | 47/433/0 | 0/12/8 | 0/0/2 | 27/1/11 | 0/237/562 |
 
-Each folder has `report.md`, `report.json` and `report.sarif`. The two small repos also have `report.html`. HTML, evals, STE and red-team outputs were left out of the large repos to keep the repo small. You can regenerate them with the commands below.
+Each folder has `report.md`, `report.json` and `report.sarif` from this run, plus `before-fp-fixes/` with the first run's reports. The two small repos also have `report.html`. HTML, evals, STE and red-team outputs were left out of the large repos to keep the repo small.
 
-## Hand review: top 3 high flags per repo
+## Before vs after the false-positive fixes
 
-We picked 3 representative high flags from each repo and read the source around each one. Labels are judgment calls made from reading the code. We did not run the code.
+Same commits, same paths, same command. "Before" = rules as of the first run; "after" = the fp-fixes-notebooks engine. STE counts are left out of the high/medium columns because STE is a style check.
 
-**microsoft/ai-agents-for-beginners**
-1. `actions.irreversible_tool`, `02-explore-agentic-frameworks/README.md:82` `book_flight`: **likely false positive.** It's a teaching snippet in lesson prose that returns a string. No booking happens.
-2. `governance.unbounded_loop`, `11-agentic-protocols/code_samples/mcp-agents/client/client.py:176`: **likely false positive.** The `while True` is a console y/n prompt that returns when the user answers. It's a human-in-the-loop prompt, not an agent loop.
-3. `actions.irreversible_tool`, `11-agentic-protocols/.../client/utils.py:109` `delete_tokens`: **likely false positive.** It deletes a local resumption-token file. This is housekeeping, not an action the agent takes.
+| Repo | Score before → after | Files | Agents | High flags (tabs 1–5) before → after | Medium before → after |
+|---|---|---|---|---|---|
+| microsoft__ai-agents-for-beginners | 16 → 19 | 103 → 143 | 25 → 20 | 63 → 60 | 136 → 141 |
+| google-gemini__gemini-fullstack-langgraph-quickstart | 45 → 60 | 39 → 40 | 3 → 1 | 2 → 1 | 73 → 65 |
+| anthropics__claude-quickstarts | 7 → 7 | 533 → 535 | 12 → 11 | 130 → 107 | 535 → 525 |
+| openai__openai-cs-agents-demo | 41 → 58 | 38 → 38 | 3 → 1 | 8 → 5 | 43 → 33 |
+| awslabs__agentcore-samples | 8 → 28 | 359 → 360 | 5 → 5 | 123 → 80 | 459 → 446 |
+| microsoft (same 103 files, notebooks excluded, new rules) | 16 → 23 | 103 → 103 | 25 → 20 | 63 → 43 | 136 → 135 |
 
-**anthropics/claude-quickstarts**
-1. `governance.unbounded_loop`, `agents/agent.py:100`: **unclear.** The loop returns when the model stops calling tools (line 151), but there's no explicit max-steps cap. Worth noting for production use, and fine for a quickstart.
-2. `injection.fake_system`, `agents/agent.py:35`: **likely false positive.** It matches a Python parameter named `system:` in a constructor signature, not a role marker inside content.
-3. `crossover.source_to_sink`, `managed-agents/` (`reducer.ts:251`): **likely false positive.** The inferred "personal sources" and "work sinks" come from keywords across a UI sample. The cited line is a text-comparison helper.
+- The Microsoft row grew in files (103 → 143) because notebooks are now scanned, so its "after" row is not like-for-like. The last row is the like-for-like comparison: the same 103 files with the new rules (notebooks excluded with `--ignore '**/*.ipynb'`).
+- AWS `00-getting-started/` was checked again. It still has only 2 scannable files (1 `.py`, 1 `.md`; no notebooks), so the AWS row keeps `05-blueprints/` for a consistent comparison.
+- Most of the drop comes from: agent loops needing a model/tool call in the body, Health checks skipping CI/devcontainer/tooling files, read-only tool names (`get_order`, `list_orders`), app folders (`backend/`, `ui/`) no longer split one app into several agents, and context-based lowering in the injection scan (lowered, not removed: those flags now show as low).
+- Irreversible-action highs barely moved. That tab's flags are dominated by real action names (`delete_*`, `send_*`, `cancel_*`) in sample code, which the tool is meant to surface.
 
-**google-gemini/gemini-fullstack-langgraph-quickstart**
-1. `actions.browser_write`, `frontend/src/App.tsx:137` `thread.submit(`: **likely false positive.** This is the app's own SDK call that sends the user's chat message. The agent isn't submitting a web form.
-2. `crossover.shared_credential`, `GEMINI_API_KEY` across `backend` and the repo root: **likely false positive.** It's the same app, with the root `.env.example` and the backend. There is only one agent, so it isn't two agents sharing a key.
-3. This repo has no other high flags.
+## Hand review (after the fixes): seeded random sample
 
-**openai/openai-cs-agents-demo**
-1. `actions.irreversible_tool`, `python-backend/airline/tools.py:342` `cancel_flight`: **likely true positive (in demo context).** The tool cancels with no confirmation step. It's mock airline data, but a real deployment would want a confirm step.
-2. `injection.ignore_previous`, `python-backend/airline/guardrails.py:64`: **likely false positive.** The text is the jailbreak guardrail's own instructions describing attacks to detect.
-3. `governance.unbounded_loop`, `python-backend/main.py:89`: **likely false positive.** It's a server-sent-events stream loop that waits on a queue and ends when the client disconnects. No LLM calls happen inside it.
+We drew up to 5 high flags per repo at random with Python `random.Random(20261013)`, in the order the repos are listed, from each `report.json` (the Gemini repo has only 1 high flag). We read the source around each one. Labels are judgment calls from reading the code; nothing was executed.
 
-**awslabs/agentcore-samples (05-blueprints)**
-1. `actions.irreversible_tool`, `customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:260` `process_refund`: **likely true positive (in demo context).** It's a refund tool schema with no visible approval step. The sample backend is mock data.
-2. `crossover.pii.bank_account`, `customer-support-agent-with-agentcore/cdk/bin/cdk.ts:22`: **likely false positive.** It matched AWS's documented placeholder account ID `123456789012` in a commented-out line. The tool already masks it in the report.
-3. `governance.unbounded_loop`, `multitenant-agentic-platform/src/lambda_functions/token_usage/handler.py:17`: **likely false positive.** It's a DynamoDB pagination loop that breaks when `LastEvaluatedKey` is absent, and it makes no LLM calls.
+| Repo | Flag | Label | Reason |
+|---|---|---|---|
+| Microsoft | `health.tracing_hooks`, `tests/lesson-16-smoke-tests.json` | likely FP | A smoke-test JSON file, not an agent config. |
+| Microsoft | `actions.irreversible_tool` `sign_receipt`, `18-signed-receipts.ipynb` cell 12, line 1 | likely FP | Cryptographic signing of a local receipt, not an external action. |
+| Microsoft | `actions.browser_write` `.fill(`, `15-browser-use/llms.txt:1396` | likely FP | Library documentation text (llms.txt), not sample code. |
+| Microsoft | `health.retries_backoff`, `tests/lesson-05-smoke-tests.json` | likely FP | Same as above: test JSON. |
+| Microsoft | `injection.llmail_tool_call_syntax`, `17-local-agent-foundry-local.ipynb` cell 13, line 2 | likely FP | The notebook's own tool definition JSON in a code cell. |
+| Google | `actions.browser_write` `thread.submit(`, `frontend/src/App.tsx:137` | likely FP | SDK call that sends the user's chat message. |
+| Anthropic | `actions.irreversible_tool` `destroy`, `managed-agents/self-hosted-sandboxes/archil/sandboxes.py:87` | unclear | Stops and deletes a sandbox VM with no confirm. It's destructive but it's setup code, not an agent tool. |
+| Anthropic | `actions.browser_write` `.type(`, `computer-use-best-practices/computer_use/tools/browser.py:202` | unclear | The agent really types into a browser here; whether a gate is needed depends on deployment. |
+| Anthropic | `actions.irreversible_tool` `sendMessage`, `managed-agents/mcp-server-typescript/src/managed-agents.ts:73` | likely FP | Sends a chat turn to an agent session, not an outbound message to a person. |
+| Anthropic | `injection.llmail_tool_call_syntax`, `browser-use-demo/browser_use_demo/loop.py:125` | likely FP | Matches the code comment "# Make API call". |
+| Anthropic | `injection.llmail_tool_call_syntax`, `managed-agents/chat-sdk/src/sessions.ts:87` | likely FP | Matches a TypeScript type name (`ToolCall>`). |
+| OpenAI | `actions.irreversible_tool` `delete_attachment`, `python-backend/memory_store.py:173` | likely FP | A storage-interface method called by the framework, not an agent tool. |
+| OpenAI | `actions.irreversible_tool` `book_new_flight`, `python-backend/airline/tools.py:208` | likely TP (demo) | An agent tool that books with no confirm step; mock data. |
+| OpenAI | `actions.irreversible_tool` `delete_thread`, `python-backend/memory_store.py:89` | likely FP | Storage-interface method, as above. |
+| OpenAI | `actions.irreversible_tool` `delete_thread_item`, `python-backend/memory_store.py:148` | likely FP | Storage-interface method, as above. |
+| OpenAI | `actions.irreversible_tool` `cancel_flight`, `python-backend/airline/tools.py:342` | likely TP (demo) | An agent tool that cancels with no confirm step; mock data. |
+| AWS | `crossover.pii.card_number`, `shopping-concierge-agent/concierge_agent/local-visa-server/server.py:181` | likely FP | A card number in a request-body docstring example for a local sandbox server (masked in the report). |
+| AWS | `actions.irreversible_tool` `send_purchase_confirmation_email`, `shopping-concierge-agent/concierge_agent/mcp_cart_tools/server.py:343` | likely TP (demo) | An MCP tool that sends email via SES to a given recipient with no confirm. |
+| AWS | `injection.llmail_tool_call_syntax`, `travel-concierge-agent/docs/VISA_SECRETS_SETUP.md:74` | likely FP | Setup docs that say "API call". |
+| AWS | `injection.templated_url`, `travel-concierge-agent/concierge_agent/supervisor_agent/prompt_manager.py:80` | likely FP | A prompt template telling the agent how to build product links (`amazon.com/dp/{{ASIN}}`). |
+| AWS | `actions.irreversible_tool` `send_message`, `end-to-end-customer-service-agent/cx-agent-frontend/src/services/agentcore_client.py:21` | likely FP | A frontend client sending the user's message to the agent. |
 
-In this sample, 2 of 14 reviewed high flags look like likely true positives, 1 is unclear and 11 look like likely false positives. That's a small, hand-picked sample, not a precision measurement.
+**Precision on this sample:** 3 of 21 likely true positives (14%), 2 unclear, 16 likely false positives. Counting the unclear ones as true gives at most 5 of 21 (24%). The first run's hand-picked review was 2 of 14 (14%). So the fixes cut the number of high flags (for example AWS 123 → 80, Anthropic 130 → 107), but **precision of the high flags that remain is still low**. The sample is small, so treat these as rough numbers.
 
-## False-positive patterns (tool-improvement ideas; rules unchanged in this PR)
+The three true positives from the first run's review stay flagged: OpenAI `cancel_flight`, AWS `process_refund` (and the bad-agent sample score is unchanged at 27).
 
-- **Read-only tools flagged as irreversible.** For example, `get_order` was flagged in AWS, apparently from a nearby refund or cancel context. The rule should look only at the tool's own name and verb.
-- **Every `while True` treated as an agent loop.** Pagination loops, SSE stream loops and input-prompt loops get flagged. Require an LLM or tool call inside the loop body, and treat a `break` or `return` on a pagination key as a stop.
-- **Guardrail and detector prompts matched as injection.** Text that *describes* an attack ("override system instructions") is flagged. Suppress matches inside guardrail or classifier instructions.
-- **`system:` as a code parameter or YAML key** is matched as a fake role marker. Restrict the rule to prose or message content.
-- **Documentation tool-call JSON** (`"function": {"name"`) in API reference docs is matched by the LLMail tool-call-syntax rule. Down-weight it in `references/` and `docs/` markdown.
-- **Templated URLs in infrastructure code** (CDK `${region}`) were flagged as high. Skip them in IaC files.
-- **The Health checks run per file.** "No retries" and "no tracing" fire on CI YAML, `devcontainer.json` and catalog JSON. They should be evaluated per agent, not per config file.
-- **Placeholder IDs** such as AWS `123456789012` match the bank-account PII rule. Add a known-placeholder allowlist.
-- **"Agents" are inferred from folders**, so one app splits into several "agents" and shared-credential flags fire.
-- **STE runs on all README and lesson prose**, which produces very large counts in course repos. STE is a style check and shouldn't be read as risk.
+## Remaining false-positive patterns (ideas for the next round)
+
+- **Storage and framework interface methods** (`delete_thread`, `delete_attachment` on a memory store) are read as agent tools. Only count functions registered as tools (`@function_tool`, `@mcp.tool`, tool schemas).
+- **`sign` as a verb** fires on cryptographic signing. Treat `sign_receipt`/`sign_payload` as not irreversible unless it's e-signature.
+- **Code comments and type names trip `llmail_tool_call_syntax`** ("# Make API call", `ToolCall>`). Restrict it to string literals and prose.
+- **Tool-definition JSON in notebook code cells** looks like injected tool calls. Lower it in code cells, as in markdown code blocks.
+- **Health checks on `tests/*.json`** fixtures that contain a prompt key. Skip `tests/`/`fixtures/` by default.
+- **Library docs bundled as `.txt`** (`llms.txt`) are scanned like code for browser actions.
+- **Client calls to the agent** (`send_message` in a frontend client, `thread.submit`) are read as agent actions.
+- **Sandbox test card numbers** in docstrings (Visa sandbox examples) aren't on the placeholder list.
+- **Templated URLs in prompt templates** for legitimate links are high. They need a reviewer either way.
 
 ## Methodology and limits
 
-- **Tool:** agent-ops-check 0.1.0, rules 2026.10.13, run from this repo's `main` at the PR's base commit.
+- **Tool:** agent-ops-check 0.1.0, rules 2026.10.13. The first run (`before-fp-fixes/`) used `main` at 6b310d8; the current reports use the engine from the fp-fixes-notebooks PR (same rules version, second same-day update; see `rules/CHANGELOG.md`).
 - **Offline:** no `--llm`, and the CLI reported no network calls. Repos were cloned shallow at the pinned SHAs above.
 - **Command:** `node bin/agent-ops-check.js <path> --out <dir> --format html,json,md,sarif`, plus `--ignore 'translations/**' --ignore 'translated_images/**' --ignore 'images/**'` for the Microsoft repo.
-- **Static and heuristic only.** Nothing was executed, and there's no data flow or reachability analysis. The CLI does not read `.ipynb` notebooks, which leaves much of the Microsoft course's code (about 40 notebooks) unscanned.
+- **Static and heuristic only.** Nothing was executed, and there's no data flow or reachability analysis. Notebooks are now scanned (code and markdown cells; outputs ignored). Other formats such as images and PDFs are not.
 - **Not comparable across repos.** Scores depend on repo size: more files means more flags. They should not be read as a ranking of vendor quality.
 - **Secrets:** we searched the reports for real-looking keys (`sk-`, `sk-ant-`, `AKIA`, `AIza`, `ghp_`, `xox`) and found none. The only match was the word "sk-management-framework". The tool already masks PII-like strings.
 - The standards mappings in the reports say "maps to", not compliance.

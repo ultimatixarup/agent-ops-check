@@ -16,12 +16,6 @@
               }
             },
             {
-              "id": "crossover.pii.bank_account",
-              "shortDescription": {
-                "text": "crossover.pii.bank_account"
-              }
-            },
-            {
               "id": "crossover.pii.card_number",
               "shortDescription": {
                 "text": "crossover.pii.card_number"
@@ -49,12 +43,6 @@
               "id": "actions.no_deny_list",
               "shortDescription": {
                 "text": "actions.no_deny_list"
-              }
-            },
-            {
-              "id": "governance.unbounded_loop",
-              "shortDescription": {
-                "text": "governance.unbounded_loop"
               }
             },
             {
@@ -106,42 +94,6 @@
               }
             },
             {
-              "id": "health.retries_backoff",
-              "shortDescription": {
-                "text": "health.retries_backoff"
-              }
-            },
-            {
-              "id": "health.tracing_hooks",
-              "shortDescription": {
-                "text": "health.tracing_hooks"
-              }
-            },
-            {
-              "id": "health.prompt_injection_sinks",
-              "shortDescription": {
-                "text": "health.prompt_injection_sinks"
-              }
-            },
-            {
-              "id": "health.timeouts",
-              "shortDescription": {
-                "text": "health.timeouts"
-              }
-            },
-            {
-              "id": "health.tool_auth_notes",
-              "shortDescription": {
-                "text": "health.tool_auth_notes"
-              }
-            },
-            {
-              "id": "health.evals_tests",
-              "shortDescription": {
-                "text": "health.evals_tests"
-              }
-            },
-            {
               "id": "observability.prometheus",
               "shortDescription": {
                 "text": "observability.prometheus"
@@ -154,12 +106,6 @@
               }
             },
             {
-              "id": "injection.templated_url",
-              "shortDescription": {
-                "text": "injection.templated_url"
-              }
-            },
-            {
               "id": "injection.llmail_tool_call_syntax",
               "shortDescription": {
                 "text": "injection.llmail_tool_call_syntax"
@@ -169,6 +115,12 @@
               "id": "injection.exfil_instruction",
               "shortDescription": {
                 "text": "injection.exfil_instruction"
+              }
+            },
+            {
+              "id": "injection.templated_url",
+              "shortDescription": {
+                "text": "injection.templated_url"
               }
             },
             {
@@ -274,25 +226,6 @@
           ]
         },
         {
-          "ruleId": "crossover.pii.bank_account",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (bank_account) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/bin/cdk.ts"
-                },
-                "region": {
-                  "startLine": 22
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "crossover.pii.card_number",
           "level": "error",
           "message": {
@@ -306,44 +239,6 @@
                 },
                 "region": {
                   "startLine": 181
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.card_number",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (card_number) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md"
-                },
-                "region": {
-                  "startLine": 23
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.card_number",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (card_number) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md"
-                },
-                "region": {
-                  "startLine": 178
                 }
               }
             }
@@ -378,44 +273,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/services/visaMockService.ts"
-                },
-                "region": {
-                  "startLine": 257
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.bank_account",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (bank_account) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/services/visaMockService.ts"
-                },
-                "region": {
-                  "startLine": 257
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.card_number",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (card_number) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/concierge_agent/local-visa-server/server.py"
                 },
                 "region": {
@@ -435,124 +292,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md"
-                },
-                "region": {
-                  "startLine": 23
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.card_number",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (card_number) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md"
-                },
-                "region": {
-                  "startLine": 178
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.card_number",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (card_number) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/docs/VISA_SECRETS_SETUP.md"
-                },
-                "region": {
-                  "startLine": 63
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.card_number",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (card_number) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/components/CardOnboardingTest.tsx"
                 },
                 "region": {
                   "startLine": 69
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.card_number",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (card_number) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/services/visaMockService.ts"
-                },
-                "region": {
-                  "startLine": 257
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "crossover.pii.bank_account",
-          "level": "error",
-          "message": {
-            "text": "Possible personal data (bank_account) in agent code, prompt or fixture."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/services/visaMockService.ts"
-                },
-                "region": {
-                  "startLine": 257
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "actions.irreversible_tool",
-          "level": "error",
-          "message": {
-            "text": "Irreversible tool get_order has no approval gate or dry-run mode. Add a human confirm step before it runs."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts"
-                },
-                "region": {
-                  "startLine": 237
                 }
               }
             }
@@ -581,25 +324,6 @@
           "ruleId": "actions.irreversible_tool",
           "level": "error",
           "message": {
-            "text": "Irreversible tool get_order has no approval gate or dry-run mode. Add a human confirm step before it runs."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/handler.py"
-                },
-                "region": {
-                  "startLine": 100
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "actions.irreversible_tool",
-          "level": "error",
-          "message": {
             "text": "Irreversible tool process_refund has no approval gate or dry-run mode. Add a human confirm step before it runs."
           },
           "locations": [
@@ -610,25 +334,6 @@
                 },
                 "region": {
                   "startLine": 215
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "actions.irreversible_tool",
-          "level": "error",
-          "message": {
-            "text": "Irreversible tool get_order has no approval gate or dry-run mode. Add a human confirm step before it runs."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/order_handler.py"
-                },
-                "region": {
-                  "startLine": 159
                 }
               }
             }
@@ -9755,44 +9460,6 @@
           ]
         },
         {
-          "ruleId": "governance.unbounded_loop",
-          "level": "error",
-          "message": {
-            "text": "Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/src/lambda_functions/infrastructure_costs/handler.py"
-                },
-                "region": {
-                  "startLine": 38
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.unbounded_loop",
-          "level": "error",
-          "message": {
-            "text": "Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/src/lambda_functions/token_usage/handler.py"
-                },
-                "region": {
-                  "startLine": 17
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "governance.no_owner",
           "level": "warning",
           "message": {
@@ -10167,486 +9834,6 @@
           ]
         },
         {
-          "ruleId": "health.retries_backoff",
-          "level": "error",
-          "message": {
-            "text": "Retries / backoff: No retry or backoff configuration detected."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.tracing_hooks",
-          "level": "error",
-          "message": {
-            "text": "Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.prompt_injection_sinks",
-          "level": "error",
-          "message": {
-            "text": "Prompt-injection sinks: Tools that execute free-form text detected without clear guard language."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.retries_backoff",
-          "level": "error",
-          "message": {
-            "text": "Retries / backoff: No retry or backoff configuration detected."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.tracing_hooks",
-          "level": "error",
-          "message": {
-            "text": "Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.prompt_injection_sinks",
-          "level": "error",
-          "message": {
-            "text": "Prompt-injection sinks: Tools that execute free-form text detected without clear guard language."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.retries_backoff",
-          "level": "error",
-          "message": {
-            "text": "Retries / backoff: No retry or backoff configuration detected."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.tracing_hooks",
-          "level": "error",
-          "message": {
-            "text": "Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.prompt_injection_sinks",
-          "level": "error",
-          "message": {
-            "text": "Prompt-injection sinks: Tools that execute free-form text detected without clear guard language."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.retries_backoff",
-          "level": "error",
-          "message": {
-            "text": "Retries / backoff: No retry or backoff configuration detected."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.tracing_hooks",
-          "level": "error",
-          "message": {
-            "text": "Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.retries_backoff",
-          "level": "error",
-          "message": {
-            "text": "Retries / backoff: No retry or backoff configuration detected."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.tracing_hooks",
-          "level": "error",
-          "message": {
-            "text": "Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.retries_backoff",
-          "level": "error",
-          "message": {
-            "text": "Retries / backoff: No retry or backoff configuration detected."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.tracing_hooks",
-          "level": "error",
-          "message": {
-            "text": "Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.retries_backoff",
-          "level": "error",
-          "message": {
-            "text": "Retries / backoff: No retry or backoff configuration detected."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.tracing_hooks",
-          "level": "error",
-          "message": {
-            "text": "Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.timeouts",
-          "level": "warning",
-          "message": {
-            "text": "Timeouts: No timeout / deadline settings found for LLM or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.tool_auth_notes",
-          "level": "warning",
-          "message": {
-            "text": "Tool auth / scope notes: Tool definitions lack auth/scope/permission notes. (0 of 6 tools: Web Search, Calculator, Date & Time, Database Query, Email Sender, Web Crawler)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.timeouts",
-          "level": "warning",
-          "message": {
-            "text": "Timeouts: No timeout / deadline settings found for LLM or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.timeouts",
-          "level": "warning",
-          "message": {
-            "text": "Timeouts: No timeout / deadline settings found for LLM or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.evals_tests",
-          "level": "warning",
-          "message": {
-            "text": "Evals / tests: No eval, dataset, or test references found in this config slice."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.timeouts",
-          "level": "warning",
-          "message": {
-            "text": "Timeouts: No timeout / deadline settings found for LLM or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.evals_tests",
-          "level": "warning",
-          "message": {
-            "text": "Evals / tests: No eval, dataset, or test references found in this config slice."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.timeouts",
-          "level": "warning",
-          "message": {
-            "text": "Timeouts: No timeout / deadline settings found for LLM or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.evals_tests",
-          "level": "warning",
-          "message": {
-            "text": "Evals / tests: No eval, dataset, or test references found in this config slice."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.timeouts",
-          "level": "warning",
-          "message": {
-            "text": "Timeouts: No timeout / deadline settings found for LLM or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.evals_tests",
-          "level": "warning",
-          "message": {
-            "text": "Evals / tests: No eval, dataset, or test references found in this config slice."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.timeouts",
-          "level": "warning",
-          "message": {
-            "text": "Timeouts: No timeout / deadline settings found for LLM or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "health.evals_tests",
-          "level": "warning",
-          "message": {
-            "text": "Evals / tests: No eval, dataset, or test references found in this config slice."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json"
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "observability.prometheus",
           "level": "note",
           "message": {
@@ -10673,63 +9860,6 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "."
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts"
-                },
-                "region": {
-                  "startLine": 166
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts"
-                },
-                "region": {
-                  "startLine": 447
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts"
-                },
-                "region": {
-                  "startLine": 499
                 }
               }
             }
@@ -10954,82 +10084,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/agent-stack/lib/agent-stack.ts"
-                },
-                "region": {
-                  "startLine": 32
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/agent-stack/lib/constructs/gateway-construct.ts"
-                },
-                "region": {
-                  "startLine": 167
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/frontend-stack/lib/frontend-stack.ts"
-                },
-                "region": {
-                  "startLine": 65
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/mcp-servers/lib/base-mcp-stack.ts"
-                },
-                "region": {
-                  "startLine": 39
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/components/DynamicMap.tsx"
                 },
                 "region": {
@@ -11220,82 +10274,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/agent-stack/lib/agent-stack.ts"
-                },
-                "region": {
-                  "startLine": 32
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/agent-stack/lib/constructs/gateway-construct.ts"
-                },
-                "region": {
-                  "startLine": 166
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/frontend-stack/lib/frontend-stack.ts"
-                },
-                "region": {
-                  "startLine": 65
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/mcp-servers/lib/base-mcp-stack.ts"
-                },
-                "region": {
-                  "startLine": 39
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "injection.templated_url",
-          "level": "error",
-          "message": {
-            "text": "URL with a template slot for the agent to fill in."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/components/DynamicMap.tsx"
                 },
                 "region": {
@@ -11414,6 +10392,215 @@
                 },
                 "region": {
                   "startLine": 104
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts"
+                },
+                "region": {
+                  "startLine": 166
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts"
+                },
+                "region": {
+                  "startLine": 447
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts"
+                },
+                "region": {
+                  "startLine": 499
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/agent-stack/lib/agent-stack.ts"
+                },
+                "region": {
+                  "startLine": 32
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/agent-stack/lib/constructs/gateway-construct.ts"
+                },
+                "region": {
+                  "startLine": 167
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/frontend-stack/lib/frontend-stack.ts"
+                },
+                "region": {
+                  "startLine": 65
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/mcp-servers/lib/base-mcp-stack.ts"
+                },
+                "region": {
+                  "startLine": 39
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/agent-stack/lib/agent-stack.ts"
+                },
+                "region": {
+                  "startLine": 32
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/agent-stack/lib/constructs/gateway-construct.ts"
+                },
+                "region": {
+                  "startLine": 166
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/frontend-stack/lib/frontend-stack.ts"
+                },
+                "region": {
+                  "startLine": 65
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.templated_url",
+          "level": "note",
+          "message": {
+            "text": "URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/mcp-servers/lib/base-mcp-stack.ts"
+                },
+                "region": {
+                  "startLine": 39
                 }
               }
             }
@@ -12763,177 +11950,6 @@
                 },
                 "region": {
                   "startLine": 4
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.sentence_length",
-          "level": "warning",
-          "message": {
-            "text": "Descriptive sentence has 31 words (limit 25). Split it."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 107
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 127
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 182
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 211
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 213
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 252
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 253
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 254
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 255
                 }
               }
             }
@@ -18311,348 +17327,6 @@
                 },
                 "region": {
                   "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 11
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.hedge",
-          "level": "note",
-          "message": {
-            "text": "Vague word \"etc\". Give the exact condition, value or action."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 12
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 14
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 14
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 15
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.word_hint",
-          "level": "note",
-          "message": {
-            "text": "\"via\" → through / with (plain-word hint)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 16
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 9 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 16
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 17
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.word_hint",
-          "level": "note",
-          "message": {
-            "text": "\"via\" → through / with (plain-word hint)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 18
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 103
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 5 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 132
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 5 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 213
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 6 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 220
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 6 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 223
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 6 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 228
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.hedge",
-          "level": "note",
-          "message": {
-            "text": "Vague word \"etc\". Give the exact condition, value or action."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 233
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.complex_tense",
-          "level": "note",
-          "message": {
-            "text": "Modal + be + past participle. Use an active verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 238
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.ing_verb",
-          "level": "note",
-          "message": {
-            "text": "\"deploying\" used as a verb (-ing clause). Use a full clause, e.g. \"when you ...\"."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md"
-                },
-                "region": {
-                  "startLine": 340
                 }
               }
             }

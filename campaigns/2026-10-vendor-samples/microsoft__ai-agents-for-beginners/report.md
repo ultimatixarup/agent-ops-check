@@ -1,31 +1,27 @@
 # Agent ops audit memo (self-run)
 
-_Generated locally by agent-ops-check 0.1.0 on 2026-10-13T08:09:39.167Z. No network calls were made. Nothing left this machine._
+_Generated locally by agent-ops-check 0.1.0 on 2026-10-13T08:21:52.646Z. No network calls were made. Nothing left this machine._
 
 > Heuristic regex and static checks, not a security audit. It can miss problems and can flag harmless code.
 
 Rules 2026.10.13 (2026-10-13). Rules are 0 day(s) old.
 
-**Overall score:** 16/100 · files scanned: 103 · agents: .agents, .devcontainer, microsoft__ai-agents-for-beginners, .github, .vscode, 00-course-setup, 01-intro-to-ai-agents, 02-explore-agentic-frameworks, 03-agentic-design-patterns, 04-tool-use, 05-agentic-rag, 06-building-trustworthy-agents, 07-planning-design, 08-multi-agent, 09-metacognition, 10-ai-agents-production, 11-agentic-protocols, 12-context-engineering, 13-agent-memory, 14-microsoft-agent-framework, 15-browser-use, 16-deploying-scalable-agents, 17-creating-local-ai-agents, 18-securing-ai-agents, tests
+**Overall score:** 19/100 · files scanned: 143 · agents: microsoft__ai-agents-for-beginners, 00-course-setup, 01-intro-to-ai-agents, 02-explore-agentic-frameworks, 03-agentic-design-patterns, 04-tool-use, 05-agentic-rag, 06-building-trustworthy-agents, 07-planning-design, 08-multi-agent, 09-metacognition, 10-ai-agents-production, 11-agentic-protocols, 12-context-engineering, 13-agent-memory, 14-microsoft-agent-framework, 15-browser-use, 16-deploying-scalable-agents, 17-creating-local-ai-agents, 18-securing-ai-agents
 
 | Area | Score | High | Medium | Low |
 |---|---|---|---|---|
-| Personal-to-work data crossover | 48 | 5 | 0 | 2 |
-| Irreversible actions | 0 | 18 | 39 | 0 |
-| Governance + cost | 0 | 3 | 71 | 50 |
-| Agent Health Checker + Labs tools | 0 | 15 | 21 | 1 |
-| Prompt-injection scan (ADSF) | 0 | 22 | 5 | 0 |
-| Simplified Technical English (STE) | 0 | 0 | 763 | 1577 |
+| Personal-to-work data crossover | 58 | 4 | 0 | 2 |
+| Irreversible actions | 0 | 28 | 50 | 0 |
+| Governance + cost | 0 | 0 | 69 | 53 |
+| Agent Health Checker + Labs tools | 0 | 9 | 11 | 1 |
+| Prompt-injection scan (ADSF) | 0 | 19 | 11 | 9 |
+| Simplified Technical English (STE) | 0 | 0 | 362 | 860 |
 
 ## 1. Agent and connector inventory
 
 | Agent | Connectors | Credentials (names only) | Scopes |
 |---|---|---|---|
-| .agents | - | AZURE_OPENAI_API_KEY | - |
-| .devcontainer | - | - | - |
 | microsoft__ai-agents-for-beginners | discord | AZURE_OPENAI_API_KEY, AZURE_SEARCH_API_KEY, MINIMAX_API_KEY, NOVITA_API_KEY | - |
-| .github | - | - | - |
-| .vscode | - | - | - |
 | 00-course-setup | - | - | - |
 | 01-intro-to-ai-agents | - | - | - |
 | 02-explore-agentic-frameworks | discord | - | - |
@@ -39,13 +35,12 @@ Rules 2026.10.13 (2026-10-13). Rules are 0 day(s) old.
 | 10-ai-agents-production | - | - | - |
 | 11-agentic-protocols | discord | AZURE_SEARCH_API_KEY, GITHUB_TOKEN | - |
 | 12-context-engineering | - | - | - |
-| 13-agent-memory | - | - | - |
-| 14-microsoft-agent-framework | - | MINIMAX_API_KEY, OPENAI_API_KEY | - |
+| 13-agent-memory | - | LLM_API_KEY | - |
+| 14-microsoft-agent-framework | slack | MINIMAX_API_KEY, OPENAI_API_KEY | - |
 | 15-browser-use | discord, generic_webhook, gmail, personal_calendar_contacts, slack | ANTHROPIC_API_KEY, API_KEY, AWS_SECRET_ACCESS_KEY, AZURE_OPENAI_API_KEY, AZURE_OPENAI_KEY, BROWSER_USE_API_KEY, GOOGLE_API_KEY, GROQ_API_KEY, MODELSCOPE_API_KEY, OPENAI_API_KEY, SECRET_KEY | - |
-| 16-deploying-scalable-agents | - | - | - |
+| 16-deploying-scalable-agents | - | AZURE_SEARCH_API_KEY | - |
 | 17-creating-local-ai-agents | - | - | - |
 | 18-securing-ai-agents | - | - | - |
-| tests | - | - | - |
 
 ### Source-to-sink matrix (personal data → work destinations)
 
@@ -63,17 +58,24 @@ Rules 2026.10.13 (2026-10-13). Rules are 0 day(s) old.
 | Agent | Action | Where | Approval | Dry-run | Rate limit | Domain allowlist |
 |---|---|---|---|---|---|---|
 | 02-explore-agentic-frameworks | `book_flight` | microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:82 | **no** | **no** | yes | **no** |
+| 04-tool-use | `book_flight` | microsoft__ai-agents-for-beginners/04-tool-use/code_samples/04-python-agent-framework.ipynb:166 | **no** | **no** | yes | **no** |
+| 07-planning-design | `book_flight` | microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-python-agent-framework.ipynb:109 | **no** | **no** | **no** | **no** |
+| 07-planning-design | `book_activity` | microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-python-agent-framework.ipynb:130 | **no** | **no** | **no** | **no** |
 | 11-agentic-protocols | `delete_tokens` | microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/client/utils.py:109 | **no** | **no** | **no** | yes |
 | 15-browser-use | `.fill(` | microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1396 | **no** | **no** | yes | **no** |
 | 15-browser-use | `.click(` | microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1449 | **no** | **no** | yes | **no** |
 | 15-browser-use | `.press(` | microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1454 | **no** | **no** | yes | **no** |
+| 16-deploying-scalable-agents | `refund_needs_approval` | microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/code_samples/16-python-agent-framework.ipynb:99 | **no** | **no** | yes | **no** |
+| 16-deploying-scalable-agents | `issue_refund` | microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/code_samples/16-python-agent-framework.ipynb:105 | **no** | **no** | yes | **no** |
+| 18-securing-ai-agents | `sign_receipt` | microsoft__ai-agents-for-beginners/18-securing-ai-agents/code_samples/18-signed-receipts.ipynb:107 | **no** | **no** | yes | **no** |
+| 18-securing-ai-agents | `sign_receipt` | microsoft__ai-agents-for-beginners/18-securing-ai-agents/code_samples/human-authorization-receipts.ipynb:64 | **no** | **no** | yes | **no** |
 | 18-securing-ai-agents | `sign_receipt` | microsoft__ai-agents-for-beginners/18-securing-ai-agents/code_samples/sample_receipts/generate_fixtures.py:36 | **no** | **no** | yes | **no** |
 
 ## 3. AI inventory
 
 - Providers: openai, azure_openai, ollama_local, mistral, cohere, anthropic, google_gemini, aws_bedrock, groq, openrouter
-- Frameworks/SDKs: langchain, langgraph
-- Models: `gpt-5`, `GPT-5`, `gpt-5.1`, `gpt-5.2`, `gpt-4.1`, `o4-mini`, `o1`, `o3-mini`, `o3`, `GPT-5-mini`, `gpt-5-mini`, `gpt-5-nano`, `Llama-3.1`, `O3`, `GPT-4.1`, `O4`, `gpt-4.1-mini`, `llama4`, `gemini-flash-latest`, `claude-sonnet-4-0`, `claude-3-5-sonnet-20240620-v1`, `llama-4-maverick-17b-128e-instruct`, `llama3.1`, `gemini-api-key-here`, `gemini-flash-lite-latest`, `gpt-4o`, `gpt-4o-mini`, `gpt-5.x`
+- Frameworks/SDKs: langchain, autogen, langgraph, mcp
+- Models: `gpt-5`, `GPT-5`, `gpt-5.1`, `gpt-5.2`, `gpt-4.1`, `o4-mini`, `o1`, `o3-mini`, `o3`, `GPT-5-mini`, `gpt-5-mini`, `gpt-5-nano`, `Llama-3.1`, `GPT-4`, `O3`, `GPT-4.1`, `O4`, `gpt-4.1-mini`, `llama4`, `gemini-flash-latest`, `claude-sonnet-4-0`, `claude-3-5-sonnet-20240620-v1`, `llama-4-maverick-17b-128e-instruct`, `llama3.1`, `gemini-api-key-here`, `gemini-flash-lite-latest`, `gpt-4o`, `gpt-4o-mini`, `gpt-5.x`
 
 ## STE (Simplified Technical English) style
 
@@ -93,26 +95,17 @@ _Style checks inspired by ASD-STE100 writing rules. Not a certified ASD-STE100 c
 - microsoft__ai-agents-for-beginners/.agents/skills/local-ai-agents/SKILL.md: 54 sentences, 15 findings
 - microsoft__ai-agents-for-beginners/.agents/skills/microsoft-docs/SKILL.md: 28 sentences, 7 findings
 - microsoft__ai-agents-for-beginners/.agents/skills/testing-course-samples/SKILL.md: 42 sentences, 10 findings
-- microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md: 24 sentences, 8 findings
 - microsoft__ai-agents-for-beginners/.github/agents/dotnet-notebook-migration.agent.md: 49 sentences, 14 findings
 - microsoft__ai-agents-for-beginners/.github/prompts/git-cherrypicking.prompt.md: 11 sentences, 3 findings
 - microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml: 2 sentences, 1 findings
-- microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md: 48 sentences, 11 findings
-- microsoft__ai-agents-for-beginners/00-course-setup/README.md: 124 sentences, 60 findings
 - microsoft__ai-agents-for-beginners/01-intro-to-ai-agents/README.md: 71 sentences, 22 findings
 - microsoft__ai-agents-for-beginners/01-intro-to-ai-agents/code_samples/01-dotnet-agent-framework.md: 28 sentences, 4 findings
-- microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md: 132 sentences, 83 findings
 - microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/azure-ai-foundry-agent-creation.md: 47 sentences, 21 findings
 - microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/code_samples/02-dotnet-agent-framework.md: 38 sentences, 6 findings
-- microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md: 76 sentences, 43 findings
 - microsoft__ai-agents-for-beginners/03-agentic-design-patterns/code_samples/03-dotnet-agent-framework.md: 64 sentences, 5 findings
-- microsoft__ai-agents-for-beginners/04-tool-use/README.md: 123 sentences, 76 findings
 - microsoft__ai-agents-for-beginners/04-tool-use/code_samples/04-dotnet-agent-framework.md: 37 sentences, 4 findings
-- microsoft__ai-agents-for-beginners/05-agentic-rag/README.md: 115 sentences, 83 findings
 - microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/05-dotnet-agent-framework.md: 96 sentences, 15 findings
-- microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/document.md: 5 sentences, 1 findings
 - microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md: 70 sentences, 38 findings
-- microsoft__ai-agents-for-beginners/07-planning-design/README.md: 58 sentences, 36 findings
 - microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-dotnet-agent-framework.md: 28 sentences, 9 findings
 - microsoft__ai-agents-for-beginners/08-multi-agent/README.md: 145 sentences, 87 findings
 - microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/08-dotnet-agent-framework.md: 30 sentences, 8 findings
@@ -123,34 +116,17 @@ _Style checks inspired by ASD-STE100 writing rules. Not a certified ASD-STE100 c
 - microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/workflows-agent-framework/dotNET/04.dotnet-agent-framework-workflow-aifoundry-condition.md: 101 sentences, 24 findings
 - microsoft__ai-agents-for-beginners/08-multi-agent/solution/solution-quiz.md: 6 sentences, 8 findings
 - microsoft__ai-agents-for-beginners/08-multi-agent/solution/solution.md: 16 sentences, 11 findings
-- microsoft__ai-agents-for-beginners/09-metacognition/README.md: 351 sentences, 133 findings
 - microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md: 125 sentences, 84 findings
-- microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md: 109 sentences, 59 findings
-- microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/MCP_SETUP.md: 27 sentences, 6 findings
-- microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/README.md: 21 sentences, 6 findings
-- microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/chainlit.md: 8 sentences, 1 findings
-- microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md: 62 sentences, 47 findings
 - microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md: 105 sentences, 86 findings
-- microsoft__ai-agents-for-beginners/12-context-engineering/README.md: 124 sentences, 82 findings
 - microsoft__ai-agents-for-beginners/12-context-engineering/code_samples/vacation_agent_scratchpad.md: 5 sentences, 0 findings
 - microsoft__ai-agents-for-beginners/13-agent-memory/README.md: 96 sentences, 70 findings
 - microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md: 127 sentences, 69 findings
-- microsoft__ai-agents-for-beginners/15-browser-use/README.md: 96 sentences, 41 findings
-- microsoft__ai-agents-for-beginners/15-browser-use/llms.txt: 882 sentences, 198 findings
 - microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md: 180 sentences, 82 findings
 - microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/README.md: 144 sentences, 64 findings
 - microsoft__ai-agents-for-beginners/18-securing-ai-agents/README.md: 219 sentences, 124 findings
 - microsoft__ai-agents-for-beginners/18-securing-ai-agents/code_samples/requirements.txt: 2 sentences, 0 findings
 - microsoft__ai-agents-for-beginners/18-securing-ai-agents/code_samples/sample_receipts/README.md: 23 sentences, 9 findings
 - microsoft__ai-agents-for-beginners/AGENTS.md: 152 sentences, 39 findings
-- microsoft__ai-agents-for-beginners/CHANGELOG.md: 77 sentences, 77 findings
-- microsoft__ai-agents-for-beginners/CODE_OF_CONDUCT.md: 4 sentences, 1 findings
-- microsoft__ai-agents-for-beginners/README.md: 94 sentences, 19 findings
-- microsoft__ai-agents-for-beginners/SECURITY.md: 22 sentences, 18 findings
-- microsoft__ai-agents-for-beginners/STUDY_GUIDE.md: 122 sentences, 16 findings
-- microsoft__ai-agents-for-beginners/SUPPORT.md: 16 sentences, 6 findings
-- microsoft__ai-agents-for-beginners/requirements.txt: 2 sentences, 0 findings
-- microsoft__ai-agents-for-beginners/tests/README.md: 35 sentences, 7 findings
 - microsoft__ai-agents-for-beginners/tests/lesson-01-smoke-tests.json: 9 sentences, 1 findings
 - microsoft__ai-agents-for-beginners/tests/lesson-04-smoke-tests.json: 7 sentences, 1 findings
 - microsoft__ai-agents-for-beginners/tests/lesson-05-smoke-tests.json: 10 sentences, 1 findings
@@ -160,7 +136,7 @@ _Style checks inspired by ASD-STE100 writing rules. Not a certified ASD-STE100 c
 
 _Regex and Unicode checks over every file. It flags suspicious content; a clean result does not prove a file is safe._
 
-103 files scanned, 27 findings.
+143 files scanned, 39 findings.
 
 ## Standards map (maps to, not compliance)
 
@@ -172,14 +148,14 @@ _Practices summarized from Anthropic's public docs and engineering posts on buil
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| AN-CONFIRM Ask a human before consequential or irreversible actions | ✅ | 57 (18 high) | Gate map |
-| AN-LEASTPRIV Least-privilege tools and credentials | ✅ | 19 (5 high) | Shared tokens, reach, wildcards |
-| AN-UNTRUSTED Treat tool results and web/doc content as untrusted (prompt injection) | ✅ | 29 (22 high) | Injection scan |
-| AN-SANDBOX Run in a sandbox / isolated environment | 🟡 | 12 (12 high) | Real browser profile use |
-| AN-PROMPT Clear system prompt with explicit constraints | ✅ | 2365 | Deny-list check, STE clarity |
+| AN-CONFIRM Ask a human before consequential or irreversible actions | ✅ | 78 (28 high) | Gate map |
+| AN-LEASTPRIV Least-privilege tools and credentials | ✅ | 29 (4 high) | Shared tokens, reach, wildcards |
+| AN-UNTRUSTED Treat tool results and web/doc content as untrusted (prompt injection) | ✅ | 40 (19 high) | Injection scan |
+| AN-SANDBOX Run in a sandbox / isolated environment | 🟡 | 15 (15 high) | Real browser profile use |
+| AN-PROMPT Clear system prompt with explicit constraints | ✅ | 1247 | Deny-list check, STE clarity |
 | AN-EVALS Build evaluations with test cases | ✅ | - | Generates functional + security eval sets (not run) |
-| AN-LIMITS Limit cost and steps | ✅ | 46 | Caps and budgets |
-| AN-OBSERVE Log and monitor agent actions | ✅ | 12 | Tracing |
+| AN-LIMITS Limit cost and steps | ✅ | 41 | Caps and budgets |
+| AN-OBSERVE Log and monitor agent actions | ✅ | 14 | Tracing |
 
 ### Microsoft Copilot Studio governance areas (summarized)
 
@@ -188,14 +164,14 @@ _Areas summarized from Microsoft's public documentation. This tool scans exporte
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | CS-DLP Data policies for connectors | 🟡 | 1 (1 high) | Source-to-sink reach in exported configs |
-| CS-AUTH Agent authentication | 🟡 | 4 (4 high) | Credentials in files |
+| CS-AUTH Agent authentication | 🟡 | 3 (3 high) | Credentials in files |
 | CS-SHARE Maker permissions and sharing | ⬜ | - | Not checked (tenant setting) |
 | CS-ENV Environment strategy (dev/test/prod) | ⬜ | - | Not checked |
-| CS-AUDIT Audit logging and monitoring | 🟡 | 12 | Tracing references |
-| CS-KNOW Knowledge sources for generative answers | 🟡 | 27 (22 high) | Injection scan over knowledge files you point it at |
-| CS-MOD Content moderation and instructions | 🟡 | 63 (37 high) | Prompt checks |
-| CS-HANDOFF Escalation / human handoff | ✅ | 2 | Handoff rules and transcripts |
-| CS-ACTIONS Actions and flows that change data | ✅ | 57 (18 high) | Gate map |
+| CS-AUDIT Audit logging and monitoring | 🟡 | 14 | Tracing references |
+| CS-KNOW Knowledge sources for generative answers | 🟡 | 39 (19 high) | Injection scan over knowledge files you point it at |
+| CS-MOD Content moderation and instructions | 🟡 | 59 (28 high) | Prompt checks |
+| CS-HANDOFF Escalation / human handoff | ✅ | 1 | Handoff rules and transcripts |
+| CS-ACTIONS Actions and flows that change data | ✅ | 78 (28 high) | Gate map |
 
 ### CSA AI Controls Matrix (AICM) domains
 
@@ -204,22 +180,22 @@ _Domain names only._ (3 ✅ · 9 🟡 · 6 ⬜)
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | A&A Audit & Assurance | 🟡 | - | Audit memo + SARIF |
-| AIS Application & Interface Security | 🟡 | 84 (40 high) | Gates, injection |
+| AIS Application & Interface Security | 🟡 | 117 (47 high) | Gates, injection |
 | BCR Business Continuity & Operational Resilience | 🟡 | - | Single-LLM fallback |
-| CCC Change Control & Configuration | 🟡 | 27 | Pinning, review record |
+| CCC Change Control & Configuration | 🟡 | 28 | Pinning, review record |
 | CEK Cryptography, Encryption & Key Management | 🟡 | - | Hardcoded keys |
 | DCS Datacenter Security | ⬜ | - | Not checked |
-| DSP Data Security & Privacy Lifecycle | ✅ | 7 (5 high) | PII, secrets, data paths |
+| DSP Data Security & Privacy Lifecycle | ✅ | 6 (4 high) | PII, secrets, data paths |
 | GRC Governance, Risk & Compliance | 🟡 | - | Owner, inventory |
 | HRS Human Resources | ⬜ | - | Not checked |
-| IAM Identity & Access Management | ✅ | 17 (17 high) | Shared credentials, scopes, profiles |
+| IAM Identity & Access Management | ✅ | 19 (19 high) | Shared credentials, scopes, profiles |
 | IPY Interoperability & Portability | ⬜ | - | Not checked |
 | I&S Infrastructure Security | ⬜ | - | Not checked |
-| LOG Logging & Monitoring | ✅ | 13 | Tracing, observability gaps |
-| MDS Model Security | 🟡 | 54 (22 high) | Injection, pinning |
+| LOG Logging & Monitoring | ✅ | 15 | Tracing, observability gaps |
+| MDS Model Security | 🟡 | 67 (19 high) | Injection, pinning |
 | SEF Security Incident Management & Forensics | ⬜ | - | Not checked |
-| STA Supply Chain, Transparency & Accountability | 🟡 | 126 (3 high) | Inventory, disclosure |
-| TVM Threat & Vulnerability Management | 🟡 | 84 (40 high) | Static findings |
+| STA Supply Chain, Transparency & Accountability | 🟡 | 123 | Inventory, disclosure |
+| TVM Threat & Vulnerability Management | 🟡 | 117 (47 high) | Static findings |
 | UEM Universal Endpoint Management | ⬜ | - | Not checked |
 
 ### EU AI Act basics (selected articles)
@@ -232,11 +208,11 @@ _Selected articles for orientation. Not legal advice; maps to, not compliant wit
 | Art.5 Prohibited practices | ⬜ | - | Not checked |
 | Art.9 Risk management system (high-risk) | 🟡 | - | Audit memo is an input |
 | Art.10 Data and data governance | 🟡 | 1 | Personal data in agent files |
-| Art.12 Record-keeping (logging) | ✅ | 13 | Tracing/logging checks |
+| Art.12 Record-keeping (logging) | ✅ | 15 | Tracing/logging checks |
 | Art.13 Transparency and information to deployers | 🟡 | - | Owner docs |
-| Art.14 Human oversight | ✅ | 59 (18 high) | Approval gates, handoff |
-| Art.15 Accuracy, robustness and cybersecurity | 🟡 | 29 (22 high) | Injection, secrets, grounding |
-| Art.50 Transparency: tell people they are talking to AI | ✅ | 2 | Bot disclosure checks |
+| Art.14 Human oversight | ✅ | 79 (28 high) | Approval gates, handoff |
+| Art.15 Accuracy, robustness and cybersecurity | 🟡 | 40 (19 high) | Injection, secrets, grounding |
+| Art.50 Transparency: tell people they are talking to AI | ✅ | 1 | Bot disclosure checks |
 
 ### ISO/IEC 42001:2023 Annex A control areas
 
@@ -246,13 +222,13 @@ _Annex A area names only (the standard text is copyrighted and not included). Ma
 |---|---|---|---|
 | A.2 Policies related to AI | ⬜ | - | Not checked |
 | A.3 Internal organization (roles, responsibilities) | 🟡 | - | Owner/maintainer recorded |
-| A.4 Resources for AI systems (inventory of tools, data, compute) | ✅ | 131 (8 high) | AI and connector inventory |
+| A.4 Resources for AI systems (inventory of tools, data, compute) | ✅ | 128 (4 high) | AI and connector inventory |
 | A.5 Assessing impacts of AI systems | 🟡 | - | Audit memo is a starting input |
-| A.6 AI system life cycle (verification, deployment, operation, monitoring) | 🟡 | 40 | Tracing, pinning; generated eval sets |
+| A.6 AI system life cycle (verification, deployment, operation, monitoring) | 🟡 | 43 | Tracing, pinning; generated eval sets |
 | A.7 Data for AI systems | 🟡 | 2 (1 high) | Personal data reach |
-| A.8 Information for interested parties | 🟡 | 2 | Bot disclosure |
-| A.9 Use of AI systems (responsible use, human oversight) | ✅ | 59 (18 high) | Approval gates, handoff rules |
-| A.10 Third-party and customer relationships | 🟡 | 124 (3 high) | Provider inventory |
+| A.8 Information for interested parties | 🟡 | 1 | Bot disclosure |
+| A.9 Use of AI systems (responsible use, human oversight) | ✅ | 79 (28 high) | Approval gates, handoff rules |
+| A.10 Third-party and customer relationships | 🟡 | 122 | Provider inventory |
 
 ### MITRE ATLAS (selected techniques)
 
@@ -260,19 +236,19 @@ _Selected agent techniques; IDs/names per ATLAS data (via framework-pitch resear
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| AML.T0051 LLM Prompt Injection (direct and indirect) | ✅ | 29 (22 high) | Injection scan + untrusted-input rules + eval cases |
+| AML.T0051 LLM Prompt Injection (direct and indirect) | ✅ | 40 (19 high) | Injection scan + untrusted-input rules + eval cases |
 | AML.T0054 LLM Jailbreak | 🟡 | - | Obeyed overrides in transcripts; jailbreak eval cases |
 | AML.T0056 LLM Meta Prompt Extraction | ✅ | - | Secrets in prompts, leaks in transcripts |
-| AML.T0057 LLM Data Leakage | ✅ | 7 (5 high) | Personal-to-work paths, other customers' data |
-| AML.T0053 AI Agent Tool Invocation | ✅ | 61 (22 high) | Tool gates and credential sharing |
-| AML.T0034 Cost Harvesting | ✅ | 32 (3 high) | Caps and budgets |
-| AML.T0029 Denial of ML Service | 🟡 | 30 | Timeouts and step caps |
+| AML.T0057 LLM Data Leakage | ✅ | 6 (4 high) | Personal-to-work paths, other customers' data |
+| AML.T0053 AI Agent Tool Invocation | ✅ | 81 (31 high) | Tool gates and credential sharing |
+| AML.T0034 Cost Harvesting | ✅ | 24 | Caps and budgets |
+| AML.T0029 Denial of ML Service | 🟡 | 31 | Timeouts and step caps |
 | AML.T0055 Unsecured Credentials | ✅ | - | Hardcoded secrets |
-| AML.T0010 ML Supply Chain Compromise | 🟡 | 27 | Pinning only |
+| AML.T0010 ML Supply Chain Compromise | 🟡 | 28 | Pinning only |
 | AML.T0083 Credentials from AI Agent Configuration | ✅ | - | Secrets in agent/MCP configs, .env present |
 | AML.T0086 Exfiltration via AI Agent Tool Invocation | ✅ | 2 (2 high) | Source-to-sink paths, hardcoded webhooks, exfil instructions/links in docs |
-| AML.T0101 Data Destruction via AI Agent Tool Invocation | ✅ | 3 (3 high) | Ungated delete/drop/destroy/purge tools |
-| AML.T0100 AI Agent Clickbait | 🟡 | 17 (3 high) | Browser writes, shorteners, allowlists |
+| AML.T0101 Data Destruction via AI Agent Tool Invocation | ✅ | 10 (10 high) | Ungated delete/drop/destroy/purge tools |
+| AML.T0100 AI Agent Clickbait | 🟡 | 28 (3 high) | Browser writes, shorteners, allowlists |
 
 ### NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks
 
@@ -281,15 +257,15 @@ _Function names from AI RMF 1.0; risk names from the GenAI Profile. This tool su
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | GOVERN Govern: policies, accountability, oversight | 🟡 | - | Owner and review records; AI inventory |
-| MAP Map: context, components, third parties | ✅ | 131 (8 high) | AI inventory (providers, SDKs, models), connector inventory and source-to-sink map |
-| MEASURE Measure: test and evaluate | 🟡 | 13 | Generates eval sets (functional + security) from the source; does not run them |
+| MAP Map: context, components, third parties | ✅ | 128 (4 high) | AI inventory (providers, SDKs, models), connector inventory and source-to-sink map |
+| MEASURE Measure: test and evaluate | 🟡 | 15 | Generates eval sets (functional + security) from the source; does not run them |
 | MANAGE Manage: prioritize and respond to risks | 🟡 | - | P0–P2 audit memo and SARIF for CI; no incident workflow |
-| GAI-Confabulation GenAI risk: Confabulation | 🟡 | 2 | Grounding rule checks |
-| GAI-DataPrivacy GenAI risk: Data Privacy | ✅ | 7 (5 high) | PII, secrets, personal-to-work paths |
-| GAI-HumanAI GenAI risk: Human-AI Configuration | ✅ | 61 (18 high) | Approval gates, disclosure, handoff |
+| GAI-Confabulation GenAI risk: Confabulation | 🟡 | 1 | Grounding rule checks |
+| GAI-DataPrivacy GenAI risk: Data Privacy | ✅ | 6 (4 high) | PII, secrets, personal-to-work paths |
+| GAI-HumanAI GenAI risk: Human-AI Configuration | ✅ | 80 (28 high) | Approval gates, disclosure, handoff |
 | GAI-InfoIntegrity GenAI risk: Information Integrity | 🟡 | - | FAQ grounding; STE information-loss compare |
-| GAI-InfoSecurity GenAI risk: Information Security | ✅ | 27 (22 high) | Injection scan, secrets, token lifting |
-| GAI-ValueChain GenAI risk: Value Chain and Component Integration | 🟡 | 27 | Provider/SDK/model inventory and pinning |
+| GAI-InfoSecurity GenAI risk: Information Security | ✅ | 39 (19 high) | Injection scan, secrets, token lifting |
+| GAI-ValueChain GenAI risk: Value Chain and Component Integration | 🟡 | 28 | Provider/SDK/model inventory and pinning |
 | GAI-Harmful GenAI risks: CBRN, violent/hateful, obscene, bias, IP, environmental | ⬜ | - | Not checked |
 
 ### OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)
@@ -298,16 +274,16 @@ _Item names as listed in the OWASP GenAI Security Project document (via framewor
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| ASI01 Agent Goal Hijack | ✅ | 54 (22 high) | ADSF injection scan over all docs, untrusted-input rule, deny-list check |
-| ASI02 Tool Misuse and Exploitation | ✅ | 57 (18 high) | Gate map, rate limits, allowlists, wildcard domains, URL shorteners |
-| ASI03 Identity and Privilege Abuse | ✅ | 17 (17 high) | Shared credentials, scopes, browser profiles, cookie reads |
-| ASI04 Agentic Supply Chain Vulnerabilities | 🟡 | 27 | MCP/provider inventory, unpinned models; no registry integrity check |
+| ASI01 Agent Goal Hijack | ✅ | 65 (19 high) | ADSF injection scan over all docs, untrusted-input rule, deny-list check |
+| ASI02 Tool Misuse and Exploitation | ✅ | 78 (28 high) | Gate map, rate limits, allowlists, wildcard domains, URL shorteners |
+| ASI03 Identity and Privilege Abuse | ✅ | 19 (19 high) | Shared credentials, scopes, browser profiles, cookie reads |
+| ASI04 Agentic Supply Chain Vulnerabilities | 🟡 | 28 | MCP/provider inventory, unpinned models; no registry integrity check |
 | ASI05 Unexpected Code Execution | 🟡 | - | Free-form shell/exec/SQL tools |
-| ASI06 Memory and Context Poisoning | 🟡 | 27 (22 high) | ADSF scan of knowledge/memory files you point it at; no runtime memory check |
+| ASI06 Memory and Context Poisoning | 🟡 | 39 (19 high) | ADSF scan of knowledge/memory files you point it at; no runtime memory check |
 | ASI07 Insecure Inter-Agent Communication | ⬜ | - | Not checked |
-| ASI08 Cascading Failures | 🟡 | 49 (3 high) | Step, loop and retry caps, timeouts, single-provider fallback |
-| ASI09 Human-Agent Trust Exploitation | 🟡 | 2 | Bot disclosure, human claims, unrecorded handoffs |
-| ASI10 Rogue Agents | 🟡 | 13 | Tracing, owner, observability; no stop-switch check |
+| ASI08 Cascading Failures | 🟡 | 48 | Step, loop and retry caps, timeouts, single-provider fallback |
+| ASI09 Human-Agent Trust Exploitation | 🟡 | 1 | Bot disclosure, human claims, unrecorded handoffs |
+| ASI10 Rogue Agents | 🟡 | 15 | Tracing, owner, observability; no stop-switch check |
 
 ### OWASP Agentic AI – Threats and Mitigations (T1–T15)
 
@@ -315,21 +291,21 @@ _Threat names from the OWASP Agentic Security Initiative taxonomy._ (5 ✅ · 7 
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| T1 Memory Poisoning | 🟡 | 27 (22 high) | Hidden instructions in files an agent may load as memory/knowledge |
-| T2 Tool Misuse | ✅ | 57 (18 high) | Gate map: approval, dry-run, rate limit, allowlist per tool |
-| T3 Privilege Compromise | ✅ | 17 (17 high) | Shared tokens, broad reach, real browser profiles, cookie reads |
-| T4 Resource Overload | ✅ | 62 (3 high) | Caps, timeouts, loops, budgets |
-| T5 Cascading Hallucination Attacks | 🟡 | 2 | Grounding rules only |
-| T6 Intent Breaking & Goal Manipulation | ✅ | 29 (22 high) | Injection scan, untrusted-input rule, obeyed overrides |
-| T7 Misaligned & Deceptive Behaviors | 🟡 | 2 | Bot-disclosure / human-persona checks |
-| T8 Repudiation & Untraceability | ✅ | 13 | Tracing and logging checks |
-| T9 Identity Spoofing & Impersonation | 🟡 | 4 (4 high) | Shared credentials; claims to be human |
+| T1 Memory Poisoning | 🟡 | 39 (19 high) | Hidden instructions in files an agent may load as memory/knowledge |
+| T2 Tool Misuse | ✅ | 78 (28 high) | Gate map: approval, dry-run, rate limit, allowlist per tool |
+| T3 Privilege Compromise | ✅ | 19 (19 high) | Shared tokens, broad reach, real browser profiles, cookie reads |
+| T4 Resource Overload | ✅ | 55 | Caps, timeouts, loops, budgets |
+| T5 Cascading Hallucination Attacks | 🟡 | 1 | Grounding rules only |
+| T6 Intent Breaking & Goal Manipulation | ✅ | 40 (19 high) | Injection scan, untrusted-input rule, obeyed overrides |
+| T7 Misaligned & Deceptive Behaviors | 🟡 | 1 | Bot-disclosure / human-persona checks |
+| T8 Repudiation & Untraceability | ✅ | 15 | Tracing and logging checks |
+| T9 Identity Spoofing & Impersonation | 🟡 | 3 (3 high) | Shared credentials; claims to be human |
 | T10 Overwhelming Human in the Loop | ⬜ | - | Not checked |
 | T11 Unexpected RCE and Code Attacks | 🟡 | - | Shell/exec/SQL tools fed by model output |
-| T12 Agent Communication Poisoning | 🟡 | 27 (22 high) | Injection patterns in shared files only; no runtime message checks |
+| T12 Agent Communication Poisoning | 🟡 | 39 (19 high) | Injection patterns in shared files only; no runtime message checks |
 | T13 Rogue Agents in Multi-Agent Systems | ⬜ | - | Not checked |
 | T14 Human Attacks on Multi-Agent Systems | ⬜ | - | Not checked |
-| T15 Human Manipulation | 🟡 | 2 | Persona, unsafe advice |
+| T15 Human Manipulation | 🟡 | 1 | Persona, unsafe advice |
 
 ### OWASP Top 10 for LLM Applications 2025
 
@@ -337,29 +313,28 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| LLM01 Prompt Injection | ✅ | 54 (22 high) | Document-wide injection scan (ADSF tab), untrusted-input rule in prompts, obeyed overrides in transcripts, injection eval cases |
-| LLM02 Sensitive Information Disclosure | ✅ | 7 (5 high) | Secrets/PII in files, personal-to-work source-to-sink paths, confidential text in prompts, leaks in transcripts |
-| LLM03 Supply Chain | 🟡 | 27 | Model pinning and SDK inventory only; no dependency or model-provenance scan |
-| LLM04 Data and Model Poisoning | 🟡 | 27 (22 high) | Poisoned instructions hidden in docs/knowledge files; no training-data checks |
-| LLM05 Improper Output Handling | 🟡 | 3 (3 high) | Shell/SQL/exec tools and ungated actions that consume model output; no taint tracking |
-| LLM06 Excessive Agency | ✅ | 62 (23 high) | Gate map for irreversible tools and browser actions, shared credentials, scopes |
+| LLM01 Prompt Injection | ✅ | 65 (19 high) | Document-wide injection scan (ADSF tab), untrusted-input rule in prompts, obeyed overrides in transcripts, injection eval cases |
+| LLM02 Sensitive Information Disclosure | ✅ | 6 (4 high) | Secrets/PII in files, personal-to-work source-to-sink paths, confidential text in prompts, leaks in transcripts |
+| LLM03 Supply Chain | 🟡 | 28 | Model pinning and SDK inventory only; no dependency or model-provenance scan |
+| LLM04 Data and Model Poisoning | 🟡 | 39 (19 high) | Poisoned instructions hidden in docs/knowledge files; no training-data checks |
+| LLM05 Improper Output Handling | 🟡 | 10 (10 high) | Shell/SQL/exec tools and ungated actions that consume model output; no taint tracking |
+| LLM06 Excessive Agency | ✅ | 82 (32 high) | Gate map for irreversible tools and browser actions, shared credentials, scopes |
 | LLM07 System Prompt Leakage | ✅ | - | Secrets and internal notes in prompts; leaked prompt text in transcripts |
 | LLM08 Vector and Embedding Weaknesses | ⬜ | - | Not checked |
-| LLM09 Misinformation | 🟡 | 2342 | 'I don't know' rule, made-up prices/policies vs your FAQ; STE clarity checks |
-| LLM10 Unbounded Consumption | ✅ | 78 (3 high) | Token caps, timeouts, retry/step caps, infinite loops, budget alerts, bill smells |
+| LLM09 Misinformation | 🟡 | 1223 | 'I don't know' rule, made-up prices/policies vs your FAQ; STE clarity checks |
+| LLM10 Unbounded Consumption | ✅ | 72 | Token caps, timeouts, retry/step caps, infinite loops, budget alerts, bill smells |
 
 
 ## Generated eval sets
 
-6 functional and 60 security test cases in `evals/` (JSONL + README.md). Generated from the source; not run.
+6 functional and 67 security test cases in `evals/` (JSONL + README.md). Generated from the source; not run.
 
 ## 4. Findings (P0 = fix before real traffic)
 
 ### Personal-to-work data crossover
 
-- **P0** `crossover.shared_credential` (across agents) — Credential AZURE_OPENAI_API_KEY is used by 4 agents: .agents, microsoft__ai-agents-for-beginners, 04-tool-use, 15-browser-use. They are not really separate agents if they share connections. Give each its own scoped token. (`AZURE_OPENAI_API_KEY`)
-- **P0** `crossover.shared_credential` (across agents) — Credential AZURE_SEARCH_API_KEY is used by 2 agents: microsoft__ai-agents-for-beginners, 11-agentic-protocols. They are not really separate agents if they share connections. Give each its own scoped token. (`AZURE_SEARCH_API_KEY`)
-- **P0** `crossover.shared_credential` (across agents) — Credential MINIMAX_API_KEY is used by 2 agents: microsoft__ai-agents-for-beginners, 14-microsoft-agent-framework. They are not really separate agents if they share connections. Give each its own scoped token. (`MINIMAX_API_KEY`)
+- **P0** `crossover.shared_credential` (across agents) — Credential AZURE_OPENAI_API_KEY is used by 3 agents: microsoft__ai-agents-for-beginners, 04-tool-use, 15-browser-use. They are not really separate agents if they share connections. Give each its own scoped token. (`AZURE_OPENAI_API_KEY`)
+- **P0** `crossover.shared_credential` (across agents) — Credential AZURE_SEARCH_API_KEY is used by 2 agents: 11-agentic-protocols, 16-deploying-scalable-agents. They are not really separate agents if they share connections. Give each its own scoped token. (`AZURE_SEARCH_API_KEY`)
 - **P0** `crossover.shared_credential` (across agents) — Credential OPENAI_API_KEY is used by 2 agents: 14-microsoft-agent-framework, 15-browser-use. They are not really separate agents if they share connections. Give each its own scoped token. (`OPENAI_API_KEY`)
 - **P0** `crossover.source_to_sink` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:539 — Agent '15-browser-use' can read personal sources (gmail, personal_calendar_contacts) and write to work sinks (slack, discord, generic_webhook). Split the connections, scope tokens read-only, and allowlist output channels. (`15-browser-use`)
 - **P2** `crossover.slack_channel_id` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:576 — Work channel hardcoded as an output target. Check it can't be confused with a personal chat. (`credential`)
@@ -368,7 +343,13 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 ### Irreversible actions
 
 - **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:82 — Irreversible tool book_flight has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (`def book_flight(date: str, location: str) -> str:`)
+- **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/04-tool-use/code_samples/04-python-agent-framework.ipynb:166 — Irreversible tool book_flight has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (notebook cell 13, line 2) (`def book_flight(`)
+- **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-python-agent-framework.ipynb:109 — Irreversible tool book_flight has no approval gate or dry-run mode. Add a human confirm step before it runs. (notebook cell 11, line 2) (`def book_flight(`)
+- **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-python-agent-framework.ipynb:130 — Irreversible tool book_activity has no approval gate or dry-run mode. Add a human confirm step before it runs. (notebook cell 11, line 23) (`def book_activity(`)
 - **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/client/utils.py:109 — Irreversible tool delete_tokens has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (`def delete_tokens(self) -> bool:`)
+- **P0** `actions.browser_profile` microsoft__ai-agents-for-beginners/15-browser-use/15-browser-user.ipynb:616 — Uses a real browser profile, so the agent acts with your logged-in sessions. (notebook cell 20, line 11) (`user_data_dir`)
+- **P0** `actions.browser_profile` microsoft__ai-agents-for-beginners/15-browser-use/15-browser-user.ipynb:650 — Uses a real browser profile, so the agent acts with your logged-in sessions. (notebook cell 20, line 45) (`user-data-dir`)
+- **P0** `actions.browser_profile` microsoft__ai-agents-for-beginners/15-browser-use/15-browser-user.ipynb:650 — Uses a real browser profile, so the agent acts with your logged-in sessions. (notebook cell 20, line 45) (`user_data_dir`)
 - **P0** `actions.browser_write` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1396 — Browser write action .fill( has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (`await email_input.fill("your-username")`)
 - **P0** `actions.browser_write` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1449 — Browser write action .click( has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (`await elements[0].click()`)
 - **P0** `actions.browser_write` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1454 — Browser write action .press( has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (`await page.press("Enter")`)
@@ -384,6 +365,10 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P0** `actions.browser_profile` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3839 — Uses a real browser profile, so the agent acts with your logged-in sessions. (`user_data_dir`)
 - **P0** `actions.browser_profile` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3871 — Uses a real browser profile, so the agent acts with your logged-in sessions. (`user-data-dir`)
 - **P0** `actions.browser_profile` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3871 — Uses a real browser profile, so the agent acts with your logged-in sessions. (`user_data_dir`)
+- **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/code_samples/16-python-agent-framework.ipynb:99 — Irreversible tool refund_needs_approval has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (notebook cell 6, line 34) (`def refund_needs_approval(amount: float) -> bool:`)
+- **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/code_samples/16-python-agent-framework.ipynb:105 — Irreversible tool issue_refund has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (notebook cell 6, line 40) (`def issue_refund(`)
+- **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/18-securing-ai-agents/code_samples/18-signed-receipts.ipynb:107 — Irreversible tool sign_receipt has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (notebook cell 12, line 1) (`def sign_receipt(payload: dict, signing_key: signing.SigningKey, verify_key) -> dict:`)
+- **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/18-securing-ai-agents/code_samples/human-authorization-receipts.ipynb:64 — Irreversible tool sign_receipt has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (notebook cell 6, line 13) (`def sign_receipt(payload: dict, sk: SigningKey, key_id: str) -> dict:`)
 - **P0** `actions.irreversible_tool` microsoft__ai-agents-for-beginners/18-securing-ai-agents/code_samples/sample_receipts/generate_fixtures.py:36 — Irreversible tool sign_receipt has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (`def sign_receipt(payload: dict, signing_key, verify_key) -> dict:`)
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
 - **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/scripts/detect_legacy.py:98 — Wildcard domain or host permission. (`"*"`)
@@ -400,10 +385,19 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/04-tool-use/code_samples/04-dotnet-agent-framework.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/04-tool-use/README.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/05-python-agent-framework.ipynb:87 — Wildcard domain or host permission. (notebook cell 8, line 19) (`"**{destination}**: {info}"`)
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/07-planning-design/README.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/08-python-agent-framework.ipynb:76 — Wildcard domain or host permission. (notebook cell 9, line 14) (`'*50}"`)
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/08-python-agent-framework.ipynb:78 — Wildcard domain or host permission. (notebook cell 9, line 16) (`'*50}"`)
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/08-python-agent-framework.ipynb:109 — Wildcard domain or host permission. (notebook cell 11, line 20) (`'*50}"`)
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/08-python-agent-framework.ipynb:111 — Wildcard domain or host permission. (notebook cell 11, line 22) (`'*50}"`)
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/workflows-agent-framework/dotNET/04.dotnet-agent-framework-workflow-aifoundry-condition.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/workflows-agent-framework/README.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/10-ai-agents-production/code_samples/10-expense_claim-demo.ipynb:216 — Wildcard domain or host permission. (notebook cell 15, line 29) (`'*50}"`)
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/10-ai-agents-production/code_samples/10-expense_claim-demo.ipynb:218 — Wildcard domain or host permission. (notebook cell 15, line 31) (`'*50}"`)
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/11-a2a-agent-framework.ipynb:110 — Wildcard domain or host permission. (notebook cell 10, line 18) (`'*50}"`)
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/11-a2a-agent-framework.ipynb:112 — Wildcard domain or host permission. (notebook cell 10, line 20) (`'*50}"`)
 - **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/app.py:361 — Wildcard domain or host permission. (`"**{author}**: "`)
 - **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/app.py:365 — Wildcard domain or host permission. (`"**{author}**: {update.text}"`)
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
@@ -414,6 +408,8 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:157 — Wildcard domain or host permission. (`"** Due to the sheer number of tools, the agent gets confused and attempts to ca`)
 - **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:167 — Wildcard domain or host permission. (`"** Later in the conversation, you change your mind and say, **"`)
 - **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/13-agent-memory/README.md:147 — Wildcard domain or host permission. (`"**. This separate agent observes the main conversation between the user and the`)
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/code-samples/14-human-loop.ipynb:744 — Wildcard domain or host permission. (notebook cell 21, line 52) (`'*60}"`)
+- **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/code-samples/14-human-loop.ipynb:746 — Wildcard domain or host permission. (notebook cell 21, line 54) (`'*60}"`)
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
 - **P1** `actions.no_deny_list` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1 — Prompt has no explicit deny-list such as "never submit, pay or send without asking me first". Agents treat what isn't forbidden as allowed.
 - **P1** `actions.wildcard_domain` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2054 — Wildcard domain or host permission. (`'*.example.com'`)
@@ -429,11 +425,8 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 
 ### Governance + cost
 
-- **P0** `governance.unbounded_loop` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/client/client.py:176 — Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices.
-- **P0** `governance.unbounded_loop` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:376 — Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices.
-- **P0** `governance.unbounded_loop` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3445 — Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices.
-- **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/SKILL.md:55 — [.agents] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/SKILL.md:55 — [.agents] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
+- **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/SKILL.md:55 — [microsoft__ai-agents-for-beginners] No step / iteration / recursion cap for the agent loop.
+- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/SKILL.md:55 — [microsoft__ai-agents-for-beginners] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
 - **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:1 — [00-course-setup] No max_tokens / output cap set on model calls.
 - **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:1 — [00-course-setup] No timeout on model or tool calls.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:1 — [00-course-setup] No step / iteration / recursion cap for the agent loop.
@@ -452,7 +445,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:1 — [03-agentic-design-patterns] No max_tokens / output cap set on model calls.
 - **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:1 — [03-agentic-design-patterns] No timeout on model or tool calls.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:1 — [03-agentic-design-patterns] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:1 — [03-agentic-design-patterns] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
 - **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:1 — [03-agentic-design-patterns] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
 - **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/04-tool-use/README.md:116 — [04-tool-use] No max_tokens / output cap set on model calls.
 - **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/04-tool-use/README.md:116 — [04-tool-use] No timeout on model or tool calls.
@@ -462,31 +454,33 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:1 — [05-agentic-rag] No max_tokens / output cap set on model calls.
 - **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:1 — [05-agentic-rag] No timeout on model or tool calls.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:1 — [05-agentic-rag] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:1 — [05-agentic-rag] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
 - **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:1 — [05-agentic-rag] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
-- **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:1 — [06-building-trustworthy-agents] No max_tokens / output cap set on model calls.
-- **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:1 — [06-building-trustworthy-agents] No timeout on model or tool calls.
-- **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:1 — [06-building-trustworthy-agents] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:1 — [06-building-trustworthy-agents] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
-- **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:1 — [06-building-trustworthy-agents] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
+- **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/code_samples/06-human-in-the-loop.ipynb:229 — [06-building-trustworthy-agents] No timeout on model or tool calls. (notebook cell 8, line 23)
+- **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/code_samples/06-human-in-the-loop.ipynb:229 — [06-building-trustworthy-agents] No step / iteration / recursion cap for the agent loop. (notebook cell 8, line 23)
+- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/code_samples/06-human-in-the-loop.ipynb:229 — [06-building-trustworthy-agents] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here. (notebook cell 8, line 23)
+- **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/code_samples/06-human-in-the-loop.ipynb:229 — [06-building-trustworthy-agents] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost. (notebook cell 8, line 23)
 - **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/07-planning-design/README.md:1 — [07-planning-design] No max_tokens / output cap set on model calls.
 - **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/07-planning-design/README.md:1 — [07-planning-design] No timeout on model or tool calls.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/07-planning-design/README.md:1 — [07-planning-design] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/07-planning-design/README.md:1 — [07-planning-design] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
 - **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/07-planning-design/README.md:1 — [07-planning-design] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
 - **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/08-multi-agent/README.md:1 — [08-multi-agent] No max_tokens / output cap set on model calls.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/08-multi-agent/README.md:1 — [08-multi-agent] No step / iteration / recursion cap for the agent loop.
 - **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1 — [09-metacognition] No timeout on model or tool calls.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1 — [09-metacognition] No step / iteration / recursion cap for the agent loop.
 - **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1 — [09-metacognition] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
-- **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:1 — [10-ai-agents-production] No max_tokens / output cap set on model calls.
 - **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:1 — [10-ai-agents-production] No timeout on model or tool calls.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:1 — [10-ai-agents-production] No step / iteration / recursion cap for the agent loop.
 - **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:1 — [10-ai-agents-production] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:1 — [11-agentic-protocols] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:1 — [11-agentic-protocols] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
 - **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:1 — [11-agentic-protocols] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
-- **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:402 — [14-microsoft-agent-framework] No timeout on model or tool calls.
+- **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:1 — [12-context-engineering] No max_tokens / output cap set on model calls.
+- **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:1 — [12-context-engineering] No timeout on model or tool calls.
+- **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:1 — [12-context-engineering] No step / iteration / recursion cap for the agent loop.
+- **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:1 — [12-context-engineering] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
+- **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/13-agent-memory/13-agent-memory-cognee.ipynb:1 — [13-agent-memory] No max_tokens / output cap set on model calls. (notebook cell 1, line 1)
+- **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/13-agent-memory/13-agent-memory-cognee.ipynb:1 — [13-agent-memory] No timeout on model or tool calls. (notebook cell 1, line 1)
+- **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/13-agent-memory/13-agent-memory-cognee.ipynb:1 — [13-agent-memory] No step / iteration / recursion cap for the agent loop. (notebook cell 1, line 1)
+- **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/13-agent-memory/13-agent-memory-cognee.ipynb:1 — [13-agent-memory] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost. (notebook cell 1, line 1)
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:402 — [14-microsoft-agent-framework] No step / iteration / recursion cap for the agent loop.
 - **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:402 — [14-microsoft-agent-framework] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
 - **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1389 — [15-browser-use] No max_tokens / output cap set on model calls.
@@ -496,13 +490,10 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:1 — [16-deploying-scalable-agents] No timeout on model or tool calls.
 - **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:1 — [16-deploying-scalable-agents] No step / iteration / recursion cap for the agent loop.
 - **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:1 — [16-deploying-scalable-agents] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
-- **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/README.md:1 — [17-creating-local-ai-agents] No max_tokens / output cap set on model calls.
-- **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/README.md:1 — [17-creating-local-ai-agents] No timeout on model or tool calls.
-- **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/README.md:1 — [17-creating-local-ai-agents] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/README.md:1 — [17-creating-local-ai-agents] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
-- **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/README.md:1 — [17-creating-local-ai-agents] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
-- **P1** `governance.no_recursion_cap` microsoft__ai-agents-for-beginners/CHANGELOG.md:65 — [microsoft__ai-agents-for-beginners] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/CHANGELOG.md:65 — [microsoft__ai-agents-for-beginners] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
+- **P1** `governance.no_max_tokens` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:52 — [17-creating-local-ai-agents] No max_tokens / output cap set on model calls. (notebook cell 6, line 2)
+- **P1** `governance.no_timeout` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:52 — [17-creating-local-ai-agents] No timeout on model or tool calls. (notebook cell 6, line 2)
+- **P1** `governance.no_budget` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:52 — [17-creating-local-ai-agents] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here. (notebook cell 6, line 2)
+- **P1** `governance.no_tracing` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:52 — [17-creating-local-ai-agents] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost. (notebook cell 6, line 2)
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:466 — Model 'o4-mini' is not pinned to a dated version, so behavior and price can change under you. (`o4-mini`)
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/troubleshooting.md:36 — Model 'o1' is not pinned to a dated version, so behavior and price can change under you. (`o1`)
 - **P2** `governance.expensive_model` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/troubleshooting.md:36 — Premium model 'o1'. Check it isn't used for simple routing or classification calls. (`o1`)
@@ -525,14 +516,18 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:1 — [03-agentic-design-patterns] No explicit retry limit or backoff.
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/04-tool-use/README.md:116 — [04-tool-use] No explicit retry limit or backoff.
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:1 — [05-agentic-rag] No explicit retry limit or backoff.
-- **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:1 — [06-building-trustworthy-agents] No explicit retry limit or backoff.
+- **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/code_samples/06-human-in-the-loop.ipynb:229 — [06-building-trustworthy-agents] No explicit retry limit or backoff. (notebook cell 8, line 23)
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/07-planning-design/README.md:1 — [07-planning-design] No explicit retry limit or backoff.
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/08-multi-agent/README.md:1 — [08-multi-agent] No explicit retry limit or backoff.
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1 — [09-metacognition] No explicit retry limit or backoff.
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:1 — [10-ai-agents-production] No explicit retry limit or backoff.
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:38 — Model 'Llama-3.1' is not pinned to a dated version, so behavior and price can change under you. (`Llama-3.1`)
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:1 — [11-agentic-protocols] No explicit retry limit or backoff.
+- **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:1 — [12-context-engineering] No explicit retry limit or backoff.
+- **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/13-agent-memory/13-agent-memory-cognee.ipynb:1 — [13-agent-memory] No explicit retry limit or backoff. (notebook cell 1, line 1)
 - **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:402 — [14-microsoft-agent-framework] No explicit retry limit or backoff.
+- **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/15-browser-use/15-browser-user.ipynb:46 — Model 'GPT-4' is not pinned to a dated version, so behavior and price can change under you. (notebook cell 2, line 29) (`GPT-4`)
+- **P2** `governance.expensive_model` microsoft__ai-agents-for-beginners/15-browser-use/15-browser-user.ipynb:46 — Premium model 'GPT-4'. Check it isn't used for simple routing or classification calls. (notebook cell 2, line 29) (`GPT-4`)
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:934 — Model 'O3' is not pinned to a dated version, so behavior and price can change under you. (`O3`)
 - **P2** `governance.expensive_model` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:934 — Premium model 'O3'. Check it isn't used for simple routing or classification calls. (`O3`)
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:940 — Model 'GPT-4.1' is not pinned to a dated version, so behavior and price can change under you. (`GPT-4.1`)
@@ -548,20 +543,13 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1945 — Model 'llama3.1' is not pinned to a dated version, so behavior and price can change under you. (`llama3.1`)
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3229 — Model 'gemini-api-key-here' is not pinned to a dated version, so behavior and price can change under you. (`gemini-api-key-here`)
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3628 — Model 'gemini-flash-lite-latest' is not pinned to a dated version, so behavior and price can change under you. (`gemini-flash-lite-latest`)
-- **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/README.md:1 — [17-creating-local-ai-agents] No explicit retry limit or backoff.
+- **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:52 — [17-creating-local-ai-agents] No explicit retry limit or backoff. (notebook cell 6, line 2)
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/CHANGELOG.md:43 — Model 'gpt-4o' is not pinned to a dated version, so behavior and price can change under you. (`gpt-4o`)
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/CHANGELOG.md:43 — Model 'gpt-4o-mini' is not pinned to a dated version, so behavior and price can change under you. (`gpt-4o-mini`)
-- **P2** `governance.no_retry_cap` microsoft__ai-agents-for-beginners/CHANGELOG.md:65 — [microsoft__ai-agents-for-beginners] No explicit retry limit or backoff.
 - **P2** `governance.unpinned_model` microsoft__ai-agents-for-beginners/CHANGELOG.md:100 — Model 'gpt-5.x' is not pinned to a dated version, so behavior and price can change under you. (`gpt-5.x`)
 
 ### Agent Health Checker + Labs tools
 
-- **P0** `health.retries_backoff` microsoft__ai-agents-for-beginners/.agents/skills/jupyter-notebook/agents/openai.yaml — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` microsoft__ai-agents-for-beginners/.agents/skills/jupyter-notebook/agents/openai.yaml — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P0** `health.retries_backoff` microsoft__ai-agents-for-beginners/.devcontainer/devcontainer.json — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` microsoft__ai-agents-for-beginners/.devcontainer/devcontainer.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P0** `health.retries_backoff` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
 - **P0** `health.retries_backoff` microsoft__ai-agents-for-beginners/tests/lesson-01-smoke-tests.json — Retries / backoff: No retry or backoff configuration detected.
 - **P0** `health.tracing_hooks` microsoft__ai-agents-for-beginners/tests/lesson-01-smoke-tests.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
 - **P0** `health.retries_backoff` microsoft__ai-agents-for-beginners/tests/lesson-04-smoke-tests.json — Retries / backoff: No retry or backoff configuration detected.
@@ -571,16 +559,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P0** `health.retries_backoff` microsoft__ai-agents-for-beginners/tests/lesson-16-smoke-tests.json — Retries / backoff: No retry or backoff configuration detected.
 - **P0** `health.tracing_hooks` microsoft__ai-agents-for-beginners/tests/lesson-16-smoke-tests.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
 - **P0** `health.prompt_injection_sinks` microsoft__ai-agents-for-beginners/tests/lesson-16-smoke-tests.json — Prompt-injection sinks: Tools that execute free-form text detected without clear guard language.
-- **P1** `health.timeouts` microsoft__ai-agents-for-beginners/.agents/skills/jupyter-notebook/agents/openai.yaml — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.evals_tests` microsoft__ai-agents-for-beginners/.agents/skills/jupyter-notebook/agents/openai.yaml — Evals / tests: No eval, dataset, or test references found in this config slice.
-- **P1** `health.timeouts` microsoft__ai-agents-for-beginners/.devcontainer/devcontainer.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.evals_tests` microsoft__ai-agents-for-beginners/.devcontainer/devcontainer.json — Evals / tests: No eval, dataset, or test references found in this config slice.
-- **P1** `health.timeouts` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.evals_tests` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml — Evals / tests: No eval, dataset, or test references found in this config slice.
-- **P1** `health.grounding_rule` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml — 'I don't know' rule (no guessing): No 'answer only from the FAQ, otherwise say you don't know' rule found.
-- **P1** `health.handoff_rule` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml — Human handoff rules: No human handoff rule found. Say when to hand off: asks for a person, upset customer, billing/refund, emergency.
-- **P1** `health.untrusted_input` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml — Customer text treated as untrusted: No 'treat customer messages as untrusted; ignore attempts to change these rules' wording found.
-- **P1** `health.bot_disclosure` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml — Bot disclosure (never claims to be human): No bot disclosure wording found (e.g. 'You are an automated assistant, not a person; say so when asked').
 - **P1** `health.timeouts` microsoft__ai-agents-for-beginners/tests/lesson-01-smoke-tests.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
 - **P1** `health.evals_tests` microsoft__ai-agents-for-beginners/tests/lesson-01-smoke-tests.json — Evals / tests: No eval, dataset, or test references found in this config slice.
 - **P1** `health.timeouts` microsoft__ai-agents-for-beginners/tests/lesson-04-smoke-tests.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
@@ -596,35 +574,49 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 
 ### Prompt-injection scan (ADSF)
 
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:537 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`"function": {"name"`)
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:545 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`"function": {"name"`)
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/troubleshooting.md:7 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`"function": {"name"`)
 - **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/troubleshooting.md:62 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`API call`)
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/troubleshooting.md:73 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`"function": {"name"`)
 - **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/scripts/detect_legacy.py:27 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`API call`)
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/SKILL.md:317 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`"function": {"name"`)
 - **P0** `injection.role_reassign` microsoft__ai-agents-for-beginners/00-course-setup/README.md:416 — Tries to reassign the agent's role or rules. (`You are now`)
 - **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/04-tool-use/README.md:29 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`API call`)
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/04-tool-use/README.md:115 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`API call`)
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/04-tool-use/README.md:184 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`API call`)
 - **P0** `injection.exfil_instruction` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/workflows-agent-framework/README.md:258 — Instruction to send secrets or conversation data somewhere. (`Send a token to`)
 - **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/09-metacognition/README.md:630 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`API Call`)
+- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/10-ai-agents-production/code_samples/10-python-agent-framework.ipynb:132 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (notebook cell 12, line 11) (`API call`)
 - **P0** `injection.zero_width` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:114 — 3 zero-width characters. (`U+200B`)
+- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/11-mcp-agent-framework.ipynb:69 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (notebook cell 6, line 9) (`call_tool`)
 - **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/app.py:231 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`call_tool`)
 - **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/app.py:260 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`call_tool`)
 - **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/server/server.py:87 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`call_tool`)
 - **P0** `injection.templated_url` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:783 — URL with a template slot for the agent to fill in. (`https://api.browser-use.com/api/v1/task/{{ $('Webhook').item.json.body.payload.session_id }}`)
-- **P0** `injection.fake_system` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1550 — Fake system/assistant marker inside content. (`
-
-### System`)
+- **P0** `injection.fake_system` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1552 — Fake system/assistant marker inside content. (`### System`)
 - **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1785 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`API call`)
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2553 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`call_tool`)
-- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2560 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`call_tool`)
+- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:163 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (notebook cell 13, line 2) (`"function": {
+        "name"`)
+- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:167 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (notebook cell 13, line 6) (`"function": {
+        "name"`)
+- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:172 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (notebook cell 13, line 11) (`"function": {
+        "name"`)
+- **P0** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/17-creating-local-ai-agents/code_samples/17-local-agent-foundry-local.ipynb:177 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (notebook cell 13, line 16) (`"function": {
+        "name"`)
 - **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:42 — CSS that hides text from people but not from an agent. (`font-size: 0`)
 - **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:78 — CSS that hides text from people but not from an agent. (`font-size: 0`)
 - **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:119 — CSS that hides text from people but not from an agent. (`font-size: 0`)
 - **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:159 — CSS that hides text from people but not from an agent. (`font-size: 0`)
 - **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:444 — CSS that hides text from people but not from an agent. (`font-size: 0`)
+- **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/code-samples/14-concurrent.ipynb:202 — CSS that hides text from people but not from an agent. (notebook cell 13, line 21) (`opacity: 0`)
+- **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/code-samples/14-concurrent.ipynb:402 — CSS that hides text from people but not from an agent. (notebook cell 17, line 65) (`opacity: 0`)
+- **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/code-samples/14-concurrent.ipynb:407 — CSS that hides text from people but not from an agent. (notebook cell 17, line 70) (`opacity: 0`)
+- **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/code-samples/14-concurrent.ipynb:413 — CSS that hides text from people but not from an agent. (notebook cell 17, line 76) (`opacity: 0`)
+- **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/code-samples/14-sequential.ipynb:168 — CSS that hides text from people but not from an agent. (notebook cell 11, line 24) (`opacity: 0`)
+- **P1** `injection.css_hidden` microsoft__ai-agents-for-beginners/15-browser-use/15-browser-user.ipynb:713 — CSS that hides text from people but not from an agent. (notebook cell 20, line 108) (`opacity: 0`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:537 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`"function": {"name"`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:545 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`"function": {"name"`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/troubleshooting.md:7 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`"function": {"name"`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/troubleshooting.md:73 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`"function": {"name"`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/SKILL.md:317 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`"function": {"name"`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/04-tool-use/README.md:115 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`API call`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/04-tool-use/README.md:184 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`API call`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2553 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`call_tool`)
+- **P2** `injection.llmail_tool_call_syntax` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2560 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (inside a docs code block: lowered) (`call_tool`)
 
 ### Simplified Technical English (STE)
 
@@ -677,31 +669,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/.agents/skills/testing-course-samples/SKILL.md:63 — Passive voice. Say who does the action (active voice). (`is bounded`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/.github/agents/dotnet-notebook-migration.agent.md:12 — Passive voice. Say who does the action (active voice). (`is detected`)
 - **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/.github/agents/dotnet-notebook-migration.agent.md:46 — More than one instruction in one sentence. Write one instruction per sentence. (`Add the shebang CODE at the top of the .cs file and make it executable (if on Linux/Unix/MacOS).`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:35 — Descriptive sentence has 35 words (limit 25). Split it. (`The samples in this guide create/update indexes and upload documents, which require the **Search Service Contributor** and **Search Index Data Contributor** rol`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:35 — More than one instruction in one sentence. Write one instruction per sentence. (`Only if you cannot use RBAC, open the **Settings > Keys** pane and copy the **primary admin key**.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:9 — Descriptive sentence has 32 words (limit 25). Split it. (`Before you begin cloning your repo, join the [AI Agents For Beginners Discord channel](URL to get any help with setup, any questions about the course, or to con`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:61 — Descriptive sentence has 31 words (limit 25). Split it. (`After cloning and verifying the files, if you only need files and want to free space (no git history), please delete the repository metadata (💀irreversible — y`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:77 — Descriptive sentence has 29 words (limit 25). Split it. (`In the terminal of the newly created codespace, run one of the shallow/sparse clone commands above to bring only the lesson folders you need into the Codespace `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:79 — Descriptive sentence has 31 words (limit 25). Split it. (`Note: If you prefer to open the repo directly in Codespaces (without an extra clone), be aware Codespaces will construct the devcontainer environment and may st`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:92 — Passive voice. Say who does the action (active voice). (`are labelled`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:97 — Passive voice. Say who does the action (active voice). (`are installed`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/00-course-setup/README.md:97 — More than one instruction in one sentence. Write one instruction per sentence. (`Then create your venv using python3.12 to ensure the correct versions are installed from the requirements.txt file.`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/00-course-setup/README.md:119 — More than one instruction in one sentence. Write one instruction per sentence. (`Then, check your installed .NET SDK version:`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:168 — Descriptive sentence has 29 words (limit 25). Split it. (`Most notebooks authenticate through your **Azure CLI sign-in** — using CODE or CODE (both pick up your CODE session) from the CODE package — so they do not requ`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:168 — Passive voice. Say who does the action (active voice). (`be signed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:232 — Descriptive sentence has 61 words (limit 25). Split it. (`If you want to back them with a real **Azure AI Search** index, note that the **Lesson 16 notebook currently uses key-based authentication**: it switches from i`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:232 — Passive voice. Say who does the action (active voice). (`are set`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:232 — Descriptive sentence has 27 words (limit 25). Split it. (`Keyless authentication with Microsoft Entra ID (RBAC) is the recommended approach for your own production code, consistent with the CODE flow used everywhere el`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:256 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:262 — Passive voice. Say who does the action (active voice). (`is deprecated`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:270 — Passive voice. Say who does the action (active voice). (`is required`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:286 — Passive voice. Say who does the action (active voice). (`is set`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:300 — Descriptive sentence has 32 words (limit 25). Split it. (`Novita AI also hosts many other open-source model families (Llama, Qwen, GLM, and more) — check the [Novita AI model library](URL for the current list of availa`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:306 — Descriptive sentence has 26 words (limit 25). Split it. (`[Foundry Local](URL is a lightweight runtime that downloads, manages, and serves language models **entirely on your own machine** through an OpenAI-compatible A`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/00-course-setup/README.md:320 — More than one instruction in one sentence. Write one instruction per sentence. (`Download and run a model** (this also starts the local service):`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/00-course-setup/README.md:374 — Passive voice. Say who does the action (active voice). (`are not automatically trusted`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/00-course-setup/README.md:403 — More than one instruction in one sentence. Write one instruction per sentence. (`Then add the following at the top of your notebook or script before making any network calls:`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/00-course-setup/README.md:412 — Descriptive sentence has 31 words (limit 25). Split it. (`If you have any issues running this setup, hop into our <a href="URL target="_blank">Azure AI Community Discord</a> or <a href="URL target="_blank">create an is`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/01-intro-to-ai-agents/README.md:9 — Descriptive sentence has 28 words (limit 25). Split it. (`Come say hi in the <a href="URL target="_blank">Azure AI Discord Community</a> — it's full of learners and AI builders who are happy to answer questions.`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/01-intro-to-ai-agents/README.md:11 — Procedural sentence has 24 words (limit 20). Split it. (`Before we jump into building, let's make sure we actually understand what an AI Agent *is* and when it makes sense to use one.`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/01-intro-to-ai-agents/README.md:39 — Descriptive sentence has 29 words (limit 25). Split it. (`> **AI Agents are systems that let Large Language Models (LLMs) actually *do things* — by giving them tools and knowledge to act on the world, not just respond `)
@@ -716,109 +683,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/azure-ai-foundry-agent-creation.md:73 — Passive voice. Say who does the action (active voice). (`be displayed`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/azure-ai-foundry-agent-creation.md:83 — Passive voice. Say who does the action (active voice). (`being used`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/azure-ai-foundry-agent-creation.md:92 — Procedural sentence has 23 words (limit 20). Split it. (`Open the [Azure portal](URL and view the contents of the resource group where you deployed the hub resources used in this exercise.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:17 — Descriptive sentence has 33 words (limit 25). Split it. (`What are the differences between the frameworks and tools created by Microsoft (<a href="URL target="_blank">Microsoft Foundry Agent Service</a> and the <a href`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:39 — Descriptive sentence has 27 words (limit 25). Split it. (`Example: Virtual assistants like Siri and Google Assistant use AI to understand and respond to voice commands, making it easier for users to interact with their`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:43 — Passive voice. Say who does the action (active voice). (`are designed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:49 — Descriptive sentence has 29 words (limit 25). Split it. (`So in summary, agents allow you to do more, to take automation to the next level, to create more intelligent systems that can adapt and learn from their environ`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:53 — Descriptive sentence has 34 words (limit 25). Split it. (`This is a fast-moving landscape, but there are some things that are common across most AI Agent Frameworks that can help you quickly prototype and iterate namel`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:55 — Procedural sentence has 26 words (limit 20). Split it. (`**Use Modular Components**: AI SDKs offer pre-built components such as AI and Memory connectors, function calling using natural language or code plugins, prompt`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:63 — Descriptive sentence has 26 words (limit 25). Split it. (`**How teams can use these**: Teams can quickly assemble these components to create a functional prototype without starting from scratch, allowing for rapid expe`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:65 — Descriptive sentence has 42 words (limit 25). Split it. (`**How it works in practice**: You can use a pre-built parser to extract information from user input, a memory module to store and retrieve data, and a prompt ge`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:67 — Descriptive sentence has 27 words (limit 25). Split it. (`Let's look at an example of how you can use the Microsoft Agent Framework with CODE to have the model respond to user input with tool calling:`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:108 — Descriptive sentence has 34 words (limit 25). Split it. (`What you can see from this example is how you can leverage a pre-built parser to extract key information from user input, such as the origin, destination, and d`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:114 — Descriptive sentence has 27 words (limit 25). Split it. (`**How teams can use these**: Teams can design agents with specific roles and tasks, enabling them to test and refine collaborative workflows and improve overall`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:116 — Descriptive sentence has 26 words (limit 25). Split it. (`**How it works in practice**: You can create a team of agents where each agent has a specialized function, such as data retrieval, analysis, or decision-making.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:153 — Passive voice. Say who does the action (active voice). (`is executed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:159 — Descriptive sentence has 28 words (limit 25). Split it. (`**How teams can use these**: Teams can implement feedback loops where agents learn from interactions and adjust their behavior dynamically, leading to continuou`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:161 — Descriptive sentence has 28 words (limit 25). Split it. (`**How it works in practice**: Agents can analyze user feedback, environmental data, and task outcomes to update their knowledge base, adjust decision-making alg`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:175 — Passive voice. Say who does the action (active voice). (`is created`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:201 — Passive voice. Say who does the action (active voice). (`are registered`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:323 — Passive voice. Say who does the action (active voice). (`is created`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:323 — Passive voice. Say who does the action (active voice). (`is equipped`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:343 — Passive voice. Say who does the action (active voice). (`is created`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:343 — Passive voice. Say who does the action (active voice). (`is sent`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:343 — Passive voice. Say who does the action (active voice). (`is asked`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:343 — Passive voice. Say who does the action (active voice). (`are fetched`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:343 — Descriptive sentence has 37 words (limit 25). Split it. (`It's also important to understand that the messages can be of different types such as text, image, or file, that is the agents work has resulted in for example `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:345 — Descriptive sentence has 29 words (limit 25). Split it. (`Microsoft Foundry Agent Service works seamlessly with the Microsoft Agent Framework, which means you can build agents using CODE and deploy them through the Age`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:347 — Passive voice. Say who does the action (active voice). (`is designed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:373 — Descriptive sentence has 28 words (limit 25). Split it. (`> A: Start with the Microsoft Agent Framework to build your agents, and then use Microsoft Foundry Agent Service when you need to deploy and scale them in produ`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:384 — Descriptive sentence has 31 words (limit 25). Split it. (`The answer is yes, you can integrate your existing Azure ecosystem tools directly with Microsoft Foundry Agent Service especially, as it has been built to work `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:384 — Passive voice. Say who does the action (active voice). (`been built`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:8 — Descriptive sentence has 26 words (limit 25). Split it. (`Given that ambiguity is a feature and not a bug in Generative AI design, it’s sometimes difficult for engineers to figure out where to even start.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:15 — Procedural sentence has 23 words (limit 20). Split it. (`Make us better versions of ourselves (e.g., life coach/task master, helping us learn emotional regulation and mindfulness skills, building resilience, etc.)`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:41 — Passive voice. Say who does the action (active voice). (`are not designed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:62 — Passive voice. Say who does the action (active voice). (`is shaped`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:69 — Passive voice. Say who does the action (active voice). (`is expected`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:77 — Passive voice. Say who does the action (active voice). (`is involved`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:79 — Procedural sentence has 36 words (limit 20). Split it. (`Use familiar UI/UX elements where possible (e.g., microphone icon for voice interaction) and reduce the customer’s cognitive load as much as possible (e.g., aim`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:86 — Passive voice. Say who does the action (active voice). (`been created`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:7 — Descriptive sentence has 27 words (limit 25). Split it. (`Instead of the agent having a limited set of actions it can perform, by adding a tool, the agent can now perform a wide range of actions.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:29 — Descriptive sentence has 27 words (limit 25). Split it. (`A tool can be a simple function such as a calculator, or an API call to a third-party service such as stock price lookup or weather forecast.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:29 — Passive voice. Say who does the action (active voice). (`are designed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:29 — Passive voice. Say who does the action (active voice). (`be executed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:35 — Descriptive sentence has 29 words (limit 25). Split it. (`**Dynamic Information Retrieval:** Agents can query external APIs or databases to fetch up-to-date data (e.g., querying a SQLite database for data analysis, fet`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:47 — Passive voice. Say who does the action (active voice). (`are invoked`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:61 — Passive voice. Say who does the action (active voice). (`be invoked`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:61 — Passive voice. Say who does the action (active voice). (`is sent`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:61 — Passive voice. Say who does the action (active voice). (`is invoked`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:61 — Passive voice. Say who does the action (active voice). (`is sent`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:73 — Descriptive sentence has 29 words (limit 25). Split it. (`Not all models support function calling, so it's important to check that the LLM you are using does.     <a href="URL target="_blank">Azure OpenAI</a> supports `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:86 — Descriptive sentence has 27 words (limit 25). Split it. (`Next we will define a JSON schema that contains the function name, description of what the function does, and the names and descriptions of the function paramet`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:87 — Descriptive sentence has 26 words (limit 25). Split it. (`We will then take this schema and pass it to the client created previously, along with the users request to find the time in San Francisco.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:87 — Passive voice. Say who does the action (active voice). (`is returned`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:140 — Passive voice. Say who does the action (active voice). (`be run`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:140 — Passive voice. Say who does the action (active voice). (`be implemented`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:216 — Passive voice. Say who does the action (active voice). (`are defined`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:243 — Descriptive sentence has 36 words (limit 25). Split it. (`A server that speaks the Model Context Protocol (MCP, covered in [Lesson 11](../11-agentic-protocols/README.md)) publishes its tools together with their schemas`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:245 — Descriptive sentence has 29 words (limit 25). Split it. (`It is free to use without an account or API key (requests are rate limited per IP), so the only credentials you need are the ones for your model.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:245 — Passive voice. Say who does the action (active voice). (`are sent`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:266 — Descriptive sentence has 32 words (limit 25). Split it. (`When a question needs current information, the model calls CODE, gets back titles, URLs and text snippets, and writes its answer from them, the same loop as in `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:270 — Descriptive sentence has 42 words (limit 25). Split it. (`<a href="URL target="_blank">Microsoft Foundry Agent Service</a> is a newer agentic framework that is designed to empower developers to securely build, deploy, `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:270 — Passive voice. Say who does the action (active voice). (`is designed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:299 — Descriptive sentence has 30 words (limit 25). Split it. (`The LLM will be able to look at the toolset and decide whether to use the user created function, CODE, or the pre-built Code Interpreter depending on the user r`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:331 — Descriptive sentence has 28 words (limit 25). Split it. (`A common concern with SQL dynamically generated by LLMs is security, particularly the risk of SQL injection or malicious actions, such as dropping or tampering `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:331 — Passive voice. Say who does the action (active voice). (`be effectively mitigated`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/04-tool-use/README.md:333 — Passive voice. Say who does the action (active voice). (`is typically extracted`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/04-tool-use/README.md:352 — Descriptive sentence has 31 words (limit 25). Split it. (`After you learn to deploy agents in [Lesson 16](../16-deploying-scalable-agents/README.md), you can smoke-test this lesson's CODE (does it still call its tools `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:7 — Descriptive sentence has 32 words (limit 25). Split it. (`This lesson provides a comprehensive overview of Agentic Retrieval-Augmented Generation (Agentic RAG), an emerging AI paradigm where large language models (LLMs`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:7 — Passive voice. Say who does the action (active voice). (`is achieved`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:13 — Descriptive sentence has 27 words (limit 25). Split it. (`**Understand Agentic RAG:**  Learn about the emerging paradigm in AI where large language models (LLMs) autonomously plan their next steps while pulling informa`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:14 — Descriptive sentence has 30 words (limit 25). Split it. (`**Grasp Iterative Maker-Checker Style:** Comprehend the loop of iterative calls to the LLM, interspersed with tool or function calls and structured outputs, des`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:21 — Descriptive sentence has 27 words (limit 25). Split it. (`**Understanding Agentic RAG:** Learn about the emerging paradigm in AI where large language models (LLMs) autonomously plan their next steps while pulling infor`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:22 — Descriptive sentence has 32 words (limit 25). Split it. (`**Iterative Maker-Checker Style:** Grasp the concept of a loop of iterative calls to the LLM, interspersed with tool or function calls and structured outputs, d`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:24 — Descriptive sentence has 26 words (limit 25). Split it. (`**Workflow:** Understand how an agentic model independently decides to retrieve market trend reports, identify competitor data, correlate internal sales metrics`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:25 — Descriptive sentence has 30 words (limit 25). Split it. (`**Iterative Loops, Tool Integration, and Memory:** Learn about the system's reliance on a looped interaction pattern, maintaining state and memory across steps `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:33 — Descriptive sentence has 26 words (limit 25). Split it. (`Agentic Retrieval-Augmented Generation (Agentic RAG) is an emerging AI paradigm where large language models (LLMs) autonomously plan their next steps while pull`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:33 — Passive voice. Say who does the action (active voice). (`is achieved`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:35 — Descriptive sentence has 35 words (limit 25). Split it. (`The system actively owns its reasoning process, rewriting failed queries, choosing different retrieval methods, and integrating multiple tools—such as vector se`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:35 — Descriptive sentence has 26 words (limit 25). Split it. (`Traditional RAG implementations rely on pre-defined paths, but an agentic system autonomously determines the sequence of steps based on the quality of the infor`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:39 — Descriptive sentence has 29 words (limit 25). Split it. (`Agentic Retrieval-Augmented Generation (Agentic RAG) is an emerging paradigm in AI development where LLMs not only pull information from external data sources b`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:39 — Descriptive sentence has 29 words (limit 25). Split it. (`Unlike static retrieval-then-read patterns or carefully scripted prompt sequences, Agentic RAG involves a loop of iterative calls to the LLM, interspersed with `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:39 — Descriptive sentence has 32 words (limit 25). Split it. (`At every turn, the system evaluates the results it has obtained, decides whether to refine its queries, invokes additional tools if needed, and continues this c`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:41 — Passive voice. Say who does the action (active voice). (`is designed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:41 — Descriptive sentence has 31 words (limit 25). Split it. (`It can rewrite queries that fail, choose different retrieval methods, and integrate multiple tools—such as vector search in Azure AI Search, SQL databases, or c`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:49 — Descriptive sentence has 27 words (limit 25). Split it. (`For example, if it’s asked to create a product launch strategy, it doesn’t rely solely on a prompt that spells out the entire research and decision-making workf`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:56 — Passive voice. Say who does the action (active voice). (`are decided`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:64 — Passive voice. Say who does the action (active voice). (`is presented`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:68 — Descriptive sentence has 30 words (limit 25). Split it. (`**Memory & State:** Because the system maintains state and memory across steps, it can recall previous attempts and their outcomes, avoiding repetitive loops an`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:70 — Descriptive sentence has 28 words (limit 25). Split it. (`Over time, this creates a sense of evolving understanding, enabling the model to navigate complex, multi-step tasks without requiring a human to constantly inte`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:77 — Procedural sentence has 24 words (limit 20). Split it. (`**Use Diagnostic Tools:** The system may invoke additional functions designed to help it debug its reasoning steps or confirm the correctness of retrieved data.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:80 — Descriptive sentence has 30 words (limit 25). Split it. (`This iterative and dynamic approach allows the model to improve continuously, ensuring that it’s not just a one-shot system but one that learns from its misstep`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:86 — Passive voice. Say who does the action (active voice). (`are confined`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:86 — Passive voice. Say who does the action (active voice). (`been set`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:89 — Descriptive sentence has 26 words (limit 25). Split it. (`**Domain-Specific Autonomy:** Agentic RAG systems are focused on achieving user-defined goals within a known domain, employing strategies like query rewriting o`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:89 — Passive voice. Say who does the action (active voice). (`are focused`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:97 — Descriptive sentence has 30 words (limit 25). Split it. (`**Correctness-First Environments:** In compliance checks, regulatory analysis, or legal research, the agentic model can repeatedly verify facts, consult multipl`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:98 — Descriptive sentence has 39 words (limit 25). Split it. (`**Complex Database Interactions:** When dealing with structured data where queries might often fail or need adjustment, the system can autonomously refine its q`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:105 — Descriptive sentence has 28 words (limit 25). Split it. (`**Explainable Reasoning:** The model can provide an audit trail of the queries it made, the sources it consulted, and the reasoning steps it took to reach its c`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:106 — Descriptive sentence has 40 words (limit 25). Split it. (`**Bias Control and Balanced Retrieval:** Developers can tune retrieval strategies to ensure balanced, representative data sources are considered, and regularly `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:106 — Passive voice. Say who does the action (active voice). (`are considered`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:115 — Descriptive sentence has 29 words (limit 25). Split it. (`By adopting a looped interaction pattern, autonomously selecting tools, and refining queries until achieving a high-quality result, the system moves beyond stat`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:115 — Descriptive sentence has 27 words (limit 25). Split it. (`While still bounded by human-defined infrastructures and ethical guidelines, these agentic capabilities enable richer, more dynamic, and ultimately more useful `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:123 — Descriptive sentence has 26 words (limit 25). Split it. (`<a href="URL target="_blank">Implement Retrieval Augmented Generation (RAG) with Azure OpenAI Service: Learn how to use your own data with the Azure OpenAI Serv`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:124 — Descriptive sentence has 34 words (limit 25). Split it. (`<a href="URL target="_blank">Evaluation of generative AI applications with Microsoft Foundry: This article covers the evaluation and comparison of models on pub`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:142 — Descriptive sentence has 33 words (limit 25). Split it. (`After you learn to deploy agents in [Lesson 16](../16-deploying-scalable-agents/README.md), you can smoke-test this lesson's CODE — checking that its answers st`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:20 — Passive voice. Say who does the action (active voice). (`are properly managed`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:29 — Descriptive sentence has 26 words (limit 25). Split it. (`If you have ever built an AI application using Large Language Models (LLMs), you know the importance of designing a robust system prompt or system message.`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:31 — Descriptive sentence has 28 words (limit 25). Split it. (`For AI Agents, the system prompt is even more important as the AI Agents will need highly specific instructions to complete the tasks we have designed for them.`)
@@ -837,18 +701,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:193 — Descriptive sentence has 26 words (limit 25). Split it. (`As AI continues to evolve, maintaining a proactive stance on security, privacy, and ethical considerations will be key to fostering trust and reliability in AI-`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-dotnet-agent-framework.md:87 — Passive voice. Say who does the action (active voice). (`is configured`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-dotnet-agent-framework.md:117 — Descriptive sentence has 35 words (limit 25). Split it. (`When you run the agent with a travel planning request, it will analyze the request and generate a structured plan with appropriate task assignments to specializ`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/07-planning-design/README.md:19 — Passive voice. Say who does the action (active voice). (`be achieved`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/07-planning-design/README.md:21 — Descriptive sentence has 27 words (limit 25). Split it. (`Equip agents with the right tools (e.g., search tools or data analytics tools), decide when and how they are used, and handle unexpected situations that arise.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/07-planning-design/README.md:21 — Passive voice. Say who does the action (active voice). (`are used`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/07-planning-design/README.md:32 — Descriptive sentence has 33 words (limit 25). Split it. (`The clearer the goal, the better the agent (and any human collaborators) can focus on achieving the right outcome, such as creating a comprehensive itinerary wi`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/07-planning-design/README.md:44 — Passive voice. Say who does the action (active voice). (`be tackled`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/07-planning-design/README.md:50 — Passive voice. Say who does the action (active voice). (`is received`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/07-planning-design/README.md:121 — Descriptive sentence has 30 words (limit 25). Split it. (`Lists Agents and Their Tools: The agent registry holds a list of agents (e.g., for flight, hotel, car rental, and activities) along with the functions or tools `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/07-planning-design/README.md:122 — Descriptive sentence has 37 words (limit 25). Split it. (`Routes the Plan to the Respective Agents: Depending on the number of subtasks, the planner either sends the message directly to a dedicated agent (for single-ta`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/07-planning-design/README.md:192 — Descriptive sentence has 30 words (limit 25). Split it. (`What follows is the output from the previous code and you can then use this structured output to route to CODE and summarize the travel plan to the end user.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/07-planning-design/README.md:227 — Descriptive sentence has 26 words (limit 25). Split it. (`For example, if the agent discovers an unexpected data format while booking flights, it might need to adapt its strategy before moving on to hotel bookings.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/07-planning-design/README.md:263 — Passive voice. Say who does the action (active voice). (`is assumed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/07-planning-design/README.md:263 — Passive voice. Say who does the action (active voice). (`are required`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/workflows-agent-framework/dotNET/02.dotnet-agent-framework-workflow-ghmodel-sequential.md:5 — Descriptive sentence has 27 words (limit 25). Split it. (`You'll learn how to build sophisticated, step-by-step processing pipelines where agents execute in a specific order, with each stage building upon the results o`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/workflows-agent-framework/dotNET/03.dotnet-agent-framework-workflow-ghmodel-concurrent.md:171 — Passive voice. Say who does the action (active voice). (`are collected`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/workflows-agent-framework/dotNET/04.dotnet-agent-framework-workflow-aifoundry-condition.md:319 — Passive voice. Say who does the action (active voice). (`is preserved`)
@@ -919,45 +771,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/08-multi-agent/solution/solution-quiz.md:5 — Procedural sentence has 23 words (limit 20). Split it. (`**Answer: A2.** Multiple agents are useful when a task has distinct specialist roles, separate tools or permissions, and clear handoffs that need coordination.`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/08-multi-agent/solution/solution-quiz.md:9 — Procedural sentence has 24 words (limit 20). Split it. (`**Answer: A1.** A single agent is usually easier to test, observe, and operate when one set of instructions and tools can handle the task.`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/08-multi-agent/solution/solution.md:10 — Passive voice. Say who does the action (active voice). (`being carried`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:8 — Passive voice. Say who does the action (active voice). (`is designed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:8 — Passive voice. Say who does the action (active voice). (`be equipped`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:20 — Descriptive sentence has 35 words (limit 25). Split it. (`This self-awareness can help AI systems make better decisions, identify errors, and improve their performance over time- again linking back to the Turing test a`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:35 — Descriptive sentence has 36 words (limit 25). Split it. (`Diagnosing patterns like, “Whenever I see the user mention ‘too crowded,’ I should not only remove certain attractions but also reflect that my method of pickin`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:35 — Passive voice. Say who does the action (active voice). (`is flawed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:59 — Descriptive sentence has 26 words (limit 25). Split it. (`Consider a travel agent, agent services that not only plans your holiday but also adjusts its path based on real-time data and past customer journey experiences`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/09-metacognition/README.md:74 — More than one instruction in one sentence. Write one instruction per sentence. (`**Adjust Based on Feedback**: Ask the user for feedback on the recommendations and make necessary adjustments.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:87 — Descriptive sentence has 26 words (limit 25). Split it. (`**Adaptability**: If a user has previously mentioned a dislike for crowded places, Travel Agent will avoid recommending popular tourist spots during peak hours `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:88 — Descriptive sentence has 31 words (limit 25). Split it. (`**Error Correction**: If Travel Agent made an error in a past booking, such as suggesting a hotel that was fully booked, it learns to check availability more ri`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:88 — Passive voice. Say who does the action (active voice). (`was fully booked`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:249 — Descriptive sentence has 31 words (limit 25). Split it. (`When a query is made, the retrieval system fetches relevant documents or data from an external source, and this retrieved information is used to augment the inp`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:249 — Passive voice. Say who does the action (active voice). (`is made`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:249 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:404 — Descriptive sentence has 29 words (limit 25). Split it. (`This means the model has access to this information from the start, which can help it generate more informed responses without needing to retrieve additional da`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:439 — Descriptive sentence has 26 words (limit 25). Split it. (`By pre-loading the context, the travel agent application can quickly respond to user queries without having to retrieve this information from an external source`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:513 — Passive voice. Say who does the action (active voice). (`is initialized`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:519 — Descriptive sentence has 31 words (limit 25). Split it. (`**Iterating the Plan (CODE method)**: This method refines the initial plan by trying to replace each destination in the plan with a better match, considering th`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:528 — Descriptive sentence has 33 words (limit 25). Split it. (`By bootstrapping the plan with a clear goal (e.g., maximizing client satisfaction) and iterating to refine the plan, the travel agent can create a customized an`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:536 — Passive voice. Say who does the action (active voice). (`is presented`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:542 — Descriptive sentence has 27 words (limit 25). Split it. (`Here's an example of how a travel agent might use a Large Language Model (LLM) for re-ranking and scoring travel destinations based on user preferences in Pytho`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:546 — Passive voice. Say who does the action (active voice). (`are presented`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:624 — Passive voice. Say who does the action (active voice). (`is initialized`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:626 — Descriptive sentence has 36 words (limit 25). Split it. (`**Getting Recommendations (CODE method)**: This method generates a prompt for the Azure OpenAI service based on the user's preferences and makes an HTTP POST re`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:630 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:632 — Descriptive sentence has 31 words (limit 25). Split it. (`**Example Usage**: The travel agent collects user preferences (e.g., interest in sightseeing and diverse culture) and uses the Azure OpenAI service to get re-ra`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:634 — Procedural sentence has 24 words (limit 20). Split it. (`Make sure to replace CODE with your actual Azure OpenAI API key and CODE with the actual endpoint URL of your Azure OpenAI deployment.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:665 — Descriptive sentence has 32 words (limit 25). Split it. (`As a tool, RAG is an integrated system that automates the retrieval and generation process, making it easier for developers to implement complex AI functionalit`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/09-metacognition/README.md:781 — More than one instruction in one sentence. Write one instruction per sentence. (`Collect user feedback on the provided recommendations and use it to adjust future relevance evaluations.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:859 — Descriptive sentence has 26 words (limit 25). Split it. (`Searching with intent involves understanding and interpreting the underlying purpose or goal behind a user's query to retrieve and generate the most relevant an`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:873 — Passive voice. Say who does the action (active voice). (`are employed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1122 — Passive voice. Say who does the action (active voice). (`be updated`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1191 — Descriptive sentence has 27 words (limit 25). Split it. (`**Generating and Executing Queries**: The system generates code to fetch updated flight and hotel data based on the adjusted preferences and simulates the execu`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1194 — Descriptive sentence has 30 words (limit 25). Split it. (`By making the system environment-aware and reasoning based on the schema, it can generate more accurate and relevant queries, leading to better travel recommend`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1198 — Descriptive sentence has 27 words (limit 25). Split it. (`When used as part of a Retrieval-Augmented Generation (RAG) approach, SQL can retrieve relevant data from databases to inform and generate responses or actions `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1203 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1207 — Passive voice. Say who does the action (active voice). (`are generated`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1322 — Descriptive sentence has 29 words (limit 25). Split it. (`By leveraging SQL as part of the Retrieval-Augmented Generation (RAG) technique, AI agents like Travel Agent can dynamically retrieve and utilize relevant data `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1326 — Descriptive sentence has 35 words (limit 25). Split it. (`For this example, we'll build a system where an agent tries to optimize the choice of a hotel, but then evaluates its own reasoning and adjusts its strategy whe`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1328 — Descriptive sentence has 30 words (limit 25). Split it. (`We'll simulate this using a basic example where the agent selects hotels based on a combination of price and quality, but it will "reflect" on its decisions and`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:5 — Descriptive sentence has 26 words (limit 25). Split it. (`As AI agents move from experimental prototypes to real-world applications, the ability to understand their behavior, monitor their performance, and systematical`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:30 — Descriptive sentence has 27 words (limit 25). Split it. (`Without observability, an AI agent can feel like a "black box" - its internal state and reasoning are opaque, making it difficult to diagnose issues or optimize`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:36 — Descriptive sentence has 26 words (limit 25). Split it. (`**Debugging and Root-Cause Analysis**: When an agent fails or produces an unexpected output, observability tools provide the traces needed to pinpoint the sourc`)
@@ -978,32 +791,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:151 — Descriptive sentence has 31 words (limit 25). Split it. (`As mentioned earlier, building an evaluation system to determine and compare performance vs larger models is the best way to understand how well an SLM will per`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:155 — Descriptive sentence has 29 words (limit 25). Split it. (`**Caching Responses:** Identifying common requests and tasks and providing the responses before they go through your agentic system is a good way to reduce the `)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:159 — Descriptive sentence has 28 words (limit 25). Split it. (`In the [example notebook of this section](./code_samples/10-expense_claim-demo.ipynb), we’ll see examples of how we can use observability tools to monitor and e`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:5 — Descriptive sentence has 27 words (limit 25). Split it. (`In this session, you'll learn how to build your own code-first AI agent with Azure that can answer questions, perform data analysis, and integrate external data`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:27 — Descriptive sentence has 26 words (limit 25). Split it. (`We will cover an overview of the new AutoGen v0.4 architecture and walk you through how to build a multi-agent team with a web-based user interface.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:39 — Descriptive sentence has 27 words (limit 25). Split it. (`In this session, we'll demonstrate how to connect to GitHub Models from Python, and then build agents using popular Python packages like PydanticAI, AutoGen, an`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:42 — Passive voice. Say who does the action (active voice). (`is deprecated`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:53 — Descriptive sentence has 31 words (limit 25). Split it. (`While using an off the shelf model to get you started, as developers use more sophisticated workflows, they can leverage specialized models to make the job in t`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:53 — Descriptive sentence has 31 words (limit 25). Split it. (`In this presentation we go over the model catalog offering, and how you can build agents that sit of top of an army of models - while not costing you a fortune.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:64 — Descriptive sentence has 39 words (limit 25). Split it. (`In this session, we’ll take a deep dive into a production-grade multi-agent application built with LangGraph for agent orchestration, FastAPI for an API layer, `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:66 — Descriptive sentence has 27 words (limit 25). Split it. (`Through a detailed code walkthrough, you’ll see how to design and implement an agent-driven workflow that seamlessly integrates retrieval-augmented generation (`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:72 — Descriptive sentence has 31 words (limit 25). Split it. (`By the end of this session, you’ll have a clear blueprint for building and deploying your own scalable, cloud-native multi-agent applications that harness the p`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:72 — Descriptive sentence has 29 words (limit 25). Split it. (`Whether you're an AI engineer, cloud architect, or Python developer, this talk will equip you with practical insights and battle-tested patterns to build the ne`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:94 — Descriptive sentence has 29 words (limit 25). Split it. (`In this talk, we’ll explore how GenAIScript makes AI automation agents feel as intuitive as writing JavaScript, helping you streamline repetitive work without t`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:105 — Passive voice. Say who does the action (active voice). (`is known`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:116 — Descriptive sentence has 35 words (limit 25). Split it. (`In this session we’ll show you how to embed advanced AI Agent capabilities into your Java applications using Microsoft Foundry, including setting project goals `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:116 — Descriptive sentence has 35 words (limit 25). Split it. (`Along the way, you’ll learn how GitHub Copilot (in IntelliJ, VS Code, and Eclipse) can streamline coding and prompt creation, while best practices in model sele`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:116 — Descriptive sentence has 27 words (limit 25). Split it. (`Whether you’re new to AI Agents or looking for advanced agent-building techniques, this session will equip you to deliver next-level experiences with the toolin`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:127 — Descriptive sentence has 26 words (limit 25). Split it. (`Unlock the potential of AI Agents in your Java applications by combining LangChain4j with Azure Container Apps (ACA) dynamic sessions connected to Azure AI serv`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:138 — Descriptive sentence has 26 words (limit 25). Split it. (`This session dives deep into examples of irresponsible AI agents—showcasing jaw-dropping examples of model failures, adversarial jailbreaks, and other risks tha`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:140 — Descriptive sentence has 32 words (limit 25). Split it. (`We'll explore Microsoft’s cutting-edge tools for trustworthy AI, including content filters, red teaming strategies, and evaluations—featuring live demos of AI a`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:158 — Descriptive sentence has 29 words (limit 25). Split it. (`In this session, you'll learn how to build your own code-first AI agent with Azure and C# that can answer questions, perform data analysis, and integrate extern`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:180 — Passive voice. Say who does the action (active voice). (`is built`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:180 — Descriptive sentence has 28 words (limit 25). Split it. (`You will understand the concepts behind agentic applications, understand the implementation details and nuances, and learn how to integrate Azure Cosmos DB as t`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/MCP_SETUP.md:40 — Passive voice. Say who does the action (active voice). (`are properly configured`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/MCP_SETUP.md:51 — Passive voice. Say who does the action (active voice). (`is properly connected`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/README.md:7 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/README.md:8 — Passive voice. Say who does the action (active voice). (`is done`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/README.md:11 — Descriptive sentence has 35 words (limit 25). Split it. (`**Hackathon Agent** - Takes the data from the Github Agent and comes up with creative hackathon project ideas based on the projects, languages used by the user `)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:5 — Descriptive sentence has 30 words (limit 25). Split it. (`With recent enhancements including [resumable streams](URL [elicitation](URL [sampling](URL and notifications ([progress](URL and [resources](URL MCP now provid`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:9 — Descriptive sentence has 39 words (limit 25). Split it. (`As more developers explore tools with agentic behaviors (run for long periods, may require additional input mid-execution, etc.), a common misconception is that`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:11 — Passive voice. Say who does the action (active voice). (`is outdated`)
@@ -1021,80 +808,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:187 — Descriptive sentence has 33 words (limit 25). Split it. (`As part of this article, we provide a [code repository](URL that contains a complete implementation of long-running agents using the MCP Python SDK with Streama`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:350 — Passive voice. Say who does the action (active voice). (`is implemented`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:523 — Passive voice. Say who does the action (active voice). (`is encouraged`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:7 — Descriptive sentence has 26 words (limit 25). Split it. (`In this lesson, we will cover 3 protocols looking to meet this need - Model Context Protocol (MCP), Agent to Agent (A2A) and Natural Language Web (NLWeb).`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:31 — Descriptive sentence has 26 words (limit 25). Split it. (`Let’s look at the components of MCP, the benefits compared to direct API usage, and an example of how AI agents might use an MCP server.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:47 — Passive voice. Say who does the action (active voice). (`are read`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:49 — Passive voice. Say who does the action (active voice). (`are predefined`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:69 — Descriptive sentence has 26 words (limit 25). Split it. (`**Tool Discovery**: The client asks the airline's MCP server, "What tools do you have available?" The server responds with tools like "search flights" and "book`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:71 — Descriptive sentence has 44 words (limit 25). Split it. (`**Tool Invocation**: You then ask the AI assistant, "Please search for a flight from Portland to Honolulu." The AI assistant, using its LLM, identifies that it `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:79 — Descriptive sentence has 27 words (limit 25). Split it. (`While MCP focuses on connecting LLMs to tools, the **Agent-to-Agent (A2A) protocol** takes it a step further by enabling communication and collaboration between`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:92 — Descriptive sentence has 26 words (limit 25). Split it. (`A **list of specific skills** with descriptions to help other agents (or even human users) understand when and why they would want to call that agent.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:98 — Descriptive sentence has 31 words (limit 25). Split it. (`The Agent Executor is responsible for **passing the context of the user chat to the remote agent**, the remote agent needs this to understand the task that need`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:98 — Passive voice. Say who does the action (active voice). (`be completed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:98 — Descriptive sentence has 26 words (limit 25). Split it. (`In an A2A server, an agent uses its own Large Language Model (LLM) to parse incoming requests and execute tasks using its own internal tools.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:102 — Passive voice. Say who does the action (active voice). (`is created`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:102 — Passive voice. Say who does the action (active voice). (`was completed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:102 — Passive voice. Say who does the action (active voice). (`is sent`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:102 — Passive voice. Say who does the action (active voice). (`is sent`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:102 — Passive voice. Say who does the action (active voice). (`is closed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:102 — Passive voice. Say who does the action (active voice). (`is needed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:106 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:106 — Descriptive sentence has 33 words (limit 25). Split it. (`It is particularly important in production for agentic systems to prevent the connection between agents from being closed before a task is completed, especially`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:106 — Passive voice. Say who does the action (active voice). (`being closed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:106 — Passive voice. Say who does the action (active voice). (`is completed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:112 — Descriptive sentence has 34 words (limit 25). Split it. (`• **Model Selection Flexibility**: Each A2A agent can decide which LLM it uses to service its requests, allowing for optimized or fine-tuned models per agent, u`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:114 — Passive voice. Say who does the action (active voice). (`is integrated`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:122 — Descriptive sentence has 36 words (limit 25). Split it. (`**User Request to Multi-Agent**: A user interacts with a "Travel Agent" A2A client/agent, perhaps by saying, "Please book an entire trip to Honolulu for next we`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:126 — Descriptive sentence has 35 words (limit 25). Split it. (`**Inter-Agent Communication**: The Travel Agent then uses the A2A protocol to connect to downstream agents, such as an "Airline Agent," a "Hotel Agent," and a "`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:126 — Passive voice. Say who does the action (active voice). (`are created`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:128 — Descriptive sentence has 27 words (limit 25). Split it. (`Each of these specialized agents, running their own LLMs and utilizing their own tools (which could be MCP servers themselves), performs its specific part of th`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:130 — Descriptive sentence has 32 words (limit 25). Split it. (`**Consolidated Response**: Once all downstream agents complete their tasks, the Travel Agent compiles the results (flight details, hotel confirmation, car renta`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:136 — Procedural sentence has 26 words (limit 20). Split it. (`Let us look at the different components of NLWeb, the benefits of NLWeb and an example how our NLWeb works by looking at our travel application.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:146 — Passive voice. Say who does the action (active voice). (`are used`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:146 — Passive voice. Say who does the action (active voice). (`are stored`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:156 — Descriptive sentence has 26 words (limit 25). Split it. (`**Data Ingestion**: The travel website's existing product catalogs (e.g., flight listings, hotel descriptions, tour packages) are formatted using Schema.org or `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:156 — Passive voice. Say who does the action (active voice). (`are formatted`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:158 — Descriptive sentence has 32 words (limit 25). Split it. (`**Natural Language Query (Human)**: A user visits the website and, instead of navigating menus, types into a chat interface: "Find me a family-friendly hotel in`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:162 — Descriptive sentence has 31 words (limit 25). Split it. (`**Accurate Results**: The LLM helps to interpret the search results from the database, identify the best matches based on "family-friendly," "pool," and "Honolu`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:35 — Descriptive sentence has 30 words (limit 25). Split it. (`The context window is limited in size, so as agent builders we need to build systems and processes to manage adding, removing, and condensing the information in`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:35 — Passive voice. Say who does the action (active voice). (`is limited`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:39 — Passive voice. Say who does the action (active voice). (`is focused`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:39 — Descriptive sentence has 27 words (limit 25). Split it. (`Context engineering is how to manage a dynamic set of information, including the initial prompt, to ensure that the AI Agent has what it needs over time.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:45 — Descriptive sentence has 30 words (limit 25). Split it. (`The information  that the AI Agent needs can come from a variety of different sources and it is up to us to ensure the agent has access to these sources:`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:49 — Descriptive sentence has 26 words (limit 25). Split it. (`• **Instructions:** These are like the agent's "rules" – prompts, system messages, few-shot examples (showing the AI how to do something), and descriptions of t`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:53 — Descriptive sentence has 27 words (limit 25). Split it. (`• **Tools:** These are the definitions of external functions, APIs and MCP Servers that the agent can call, along with the feedback (results) it gets from using`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:67 — Passive voice. Say who does the action (active voice). (`be clearly defined`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:67 — Procedural sentence has 36 words (limit 20). Split it. (`Answer the question - "What will the world look like when the AI Agent is done with its task?" In other words, what change, information, or response should the `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:67 — Passive voice. Say who does the action (active voice). (`is done`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:68 — Descriptive sentence has 33 words (limit 25). Split it. (`**Map the Context** - Once you have defined the results of the AI Agent, you need to answer the question of "What information does the AI Agent need in order to`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:69 — Procedural sentence has 24 words (limit 20). Split it. (`**Create Context Pipelines** - Now that you know where the information is, you need to answer the question "How will the Agent get this information?".`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:77 — Descriptive sentence has 31 words (limit 25). Split it. (`While some information will be added to the context window automatically, context engineering is about taking a more active role of this information which can b`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:89 — Passive voice. Say who does the action (active voice). (`is shared`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:92 — Descriptive sentence has 29 words (limit 25). Split it. (`If an agent needs to run some code or process large amounts of information in a document, this can take a large amount of tokens to process the results.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:92 — Descriptive sentence has 33 words (limit 25). Split it. (`Instead of having this all stored in the context window, the agent can use a sandbox environment that is able to run this code and only read the results and oth`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:95 — Passive voice. Say who does the action (active voice). (`is done`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:95 — Descriptive sentence has 30 words (limit 25). Split it. (`For a complex task, this would enable an Agent to store the results of each subtask step by step, allowing the context to remain connected only to that specific`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:105 — Descriptive sentence has 27 words (limit 25). Split it. (`**Selection:** Track how many candidate chunks, tools, or memories were considered, how many were selected, and which rule or score caused the others to be filt`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:105 — Passive voice. Say who does the action (active voice). (`were considered`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:105 — Passive voice. Say who does the action (active voice). (`were selected`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:105 — Passive voice. Say who does the action (active voice). (`be filtered`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:106 — Descriptive sentence has 30 words (limit 25). Split it. (`**Compression:** Record the source range or trace id, the summary id, an estimated token count before and after compression, and whether the raw content was exc`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:106 — Passive voice. Say who does the action (active voice). (`was excluded`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:107 — Descriptive sentence has 28 words (limit 25). Split it. (`**Isolation:** Note which subtask ran in a separate agent, session, or sandbox, what bounded summary was returned, and whether large tool output stayed outside `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:107 — Passive voice. Say who does the action (active voice). (`was returned`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:111 — Descriptive sentence has 27 words (limit 25). Split it. (`It is to leave enough evidence that a developer can tell which context strategy ran and whether it changed the next model call in the intended way.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:133 — Descriptive sentence has 33 words (limit 25). Split it. (`**What it is:** When a hallucination (false information generated by the LLM) or an error enters the context and is repeatedly referenced, causing the agent to `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:133 — Passive voice. Say who does the action (active voice). (`is repeatedly referenced`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:135 — Passive voice. Say who does the action (active voice). (`is detected`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:143 — Descriptive sentence has 33 words (limit 25). Split it. (`**What it is:** When the context becomes so large that the model focuses too much on the accumulated history instead of using what it learned during training, l`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:147 — Descriptive sentence has 26 words (limit 25). Split it. (`**Travel Booking Example:** You've been discussing various dream travel destinations for a long time, including a detailed recounting of your backpacking trip f`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:147 — Descriptive sentence has 37 words (limit 25). Split it. (`When you finally ask to **"find me a cheap flight for** **next month****,"** the agent gets bogged down in the old, irrelevant details and keeps asking about yo`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:149 — Descriptive sentence has 51 words (limit 25). Split it. (`**Solution:** After a certain number of turns or when the context grows too large, the agent should **summarize the most recent and relevant parts of the conver`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:153 — Descriptive sentence has 26 words (limit 25). Split it. (`**What it is:** When unnecessary context, often in the form of too many available tools, causes the model to generate bad responses or call irrelevant tools.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:157 — Descriptive sentence has 50 words (limit 25). Split it. (`You ask, **"What's the best way to get around Paris?"** Due to the sheer number of tools, the agent gets confused and attempts to call CODE _within_ Paris, or C`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:159 — Descriptive sentence has 33 words (limit 25). Split it. (`When you ask about getting around Paris, the system dynamically retrieves _only_ the most relevant tools like CODE or CODE based on your query, presenting a foc`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:167 — Descriptive sentence has 54 words (limit 25). Split it. (`**Travel Booking Example:** You initially tell your agent, **"I want to fly economy class."** Later in the conversation, you change your mind and say, **"Actual`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:169 — Passive voice. Say who does the action (active voice). (`is removed`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/13-agent-memory/README.md:4 — Descriptive sentence has 29 words (limit 25). Split it. (`When discussing the unique benefits of creating AI Agents, two things are mainly discussed: the ability to call tools to complete tasks and the ability to impro`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/13-agent-memory/README.md:4 — Passive voice. Say who does the action (active voice). (`are mainly discussed`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/13-agent-memory/README.md:6 — Descriptive sentence has 28 words (limit 25). Split it. (`In this lesson, we will look at what memory is for AI Agents and how we can manage it and use it for the benefit of our applications.`)
@@ -1149,73 +862,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:423 — Descriptive sentence has 28 words (limit 25). Split it. (`If your graph is compiled with a LangGraph checkpointer, Foundry keys conversation state to the checkpoint (use a durable checkpointer in production; CODE is fi`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:423 — Passive voice. Say who does the action (active voice). (`is compiled`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:424 — Descriptive sentence has 26 words (limit 25). Split it. (`**Human-in-the-loop**: If your graph uses LangGraph CODE, CODE surfaces the pending interrupt as a Responses CODE / CODE item, and clients resume with a matchin`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:15 — Passive voice. Say who does the action (active voice). (`is authenticated`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:67 — Passive voice. Say who does the action (active voice). (`be included`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:151 — Passive voice. Say who does the action (active voice). (`was paused`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:167 — Passive voice. Say who does the action (active voice). (`be resumed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:167 — Passive voice. Say who does the action (active voice). (`being stopped`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:203 — Procedural sentence has 25 words (limit 20). Split it. (`Keep your API keys secure and do not share them in publicly accessible areas such as GitHub, client-side code, or in your browser's developer tools.`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:203 — More than one instruction in one sentence. Write one instruction per sentence. (`Keep your API keys secure and do not share them in publicly accessible areas such as GitHub, client-side code, or in your browser's developer tools.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:234 — Passive voice. Say who does the action (active voice). (`been compromised`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:247 — Passive voice. Say who does the action (active voice). (`is recommended`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:970 — Descriptive sentence has 38 words (limit 25). Split it. (`<img className="block dark:hidden rounded-2xl" src="URL alt="Browser Use Cloud Banner" data-og-width="1660" width="1660" data-og-height="548" height="548" data-`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:972 — Descriptive sentence has 38 words (limit 25). Split it. (`<img className="hidden dark:block rounded-2xl" src="URL alt="Browser Use Cloud Banner" data-og-width="1660" width="1660" data-og-height="548" height="548" data-`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1194 — Passive voice. Say who does the action (active voice). (`were provided`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1194 — Passive voice. Say who does the action (active voice). (`was created`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1407 — Passive voice. Say who does the action (active voice). (`is built`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1548 — Passive voice. Say who does the action (active voice). (`is reached`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1550 — Passive voice. Say who does the action (active voice). (`is enabled`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1607 — Passive voice. Say who does the action (active voice). (`is executed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1702 — Passive voice. Say who does the action (active voice). (`be clicked`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1759 — Passive voice. Say who does the action (active voice). (`is recommended`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1959 — Passive voice. Say who does the action (active voice). (`is recommended`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2059 — Passive voice. Say who does the action (active voice). (`are automatically optimized`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2059 — Passive voice. Say who does the action (active voice). (`is disabled`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2059 — Passive voice. Say who does the action (active voice). (`are checked`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2060 — Passive voice. Say who does the action (active voice). (`are set`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2063 — Passive voice. Say who does the action (active voice). (`are automatically optimized`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2066 — Passive voice. Say who does the action (active voice). (`be automatically set`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2402 — Passive voice. Say who does the action (active voice). (`is focused`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2410 — Procedural sentence has 21 words (limit 20). Split it. (`**Avoid blocking operations**: Since hooks run in the same execution thread as the agent, keep them efficient and avoid blocking operations.`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2410 — More than one instruction in one sentence. Write one instruction per sentence. (`**Avoid blocking operations**: Since hooks run in the same execution thread as the agent, keep them efficient and avoid blocking operations.`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2411 — Passive voice. Say who does the action (active voice). (`are fairly advanced`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2573 — Passive voice. Say who does the action (active voice). (`is required`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2587 — Passive voice. Say who does the action (active voice). (`is set`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2917 — Passive voice. Say who does the action (active voice). (`be automatically traced`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2942 — Passive voice. Say who does the action (active voice). (`is synced`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2943 — Passive voice. Say who does the action (active voice). (`are highlighted`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2945 — Descriptive sentence has 31 words (limit 25). Split it. (`<img className="block" src="URL alt="Laminar" data-og-width="3022" width="3022" data-og-height="1708" height="1708" data-path="images/laminar.png" data-optimize`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2953 — Passive voice. Say who does the action (active voice). (`is required`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2964 — Passive voice. Say who does the action (active voice). (`is enabled`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2997 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3052 — Passive voice. Say who does the action (active voice). (`are overwhelmed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3125 — Passive voice. Say who does the action (active voice). (`is installed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3187 — Passive voice. Say who does the action (active voice). (`are saved`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3220 — Passive voice. Say who does the action (active voice). (`is installed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3348 — Passive voice. Say who does the action (active voice). (`is installed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3385 — Passive voice. Say who does the action (active voice). (`are displayed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3401 — Passive voice. Say who does the action (active voice). (`are saved`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:4258 — Passive voice. Say who does the action (active voice). (`are injected`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:4272 — Descriptive sentence has 37 words (limit 25). Split it. (`<img className="block dark:hidden rounded-2xl" src="URL alt="Browser Use Logo" data-og-width="1245" width="1245" data-og-height="411" height="411" data-path="im`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:4274 — Descriptive sentence has 37 words (limit 25). Split it. (`<img className="hidden dark:block rounded-2xl" src="URL alt="Browser Use Logo" data-og-width="2490" width="2490" data-og-height="822" height="822" data-path="im`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:4340 — More than one instruction in one sentence. Write one instruction per sentence. (`Create a CODE file and add your API key.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:3 — Descriptive sentence has 30 words (limit 25). Split it. (`Computer use agents can interact with websites the same way a person would: by opening a browser, inspecting the page, and taking the next best action from what`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:5 — Descriptive sentence has 26 words (limit 25). Split it. (`The lesson combines Browser-Use for AI-driven navigation, Playwright and Chrome DevTools Protocol (CDP) for browser control, Azure OpenAI for vision-enabled rea`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:29 — Descriptive sentence has 28 words (limit 25). Split it. (`[15-browser-user.ipynb](./15-browser-user.ipynb): Launches a Chrome session over CDP, searches Airbnb for Stockholm listings, extracts prices with Browser-Use v`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/README.md:64 — Passive voice. Say who does the action (active voice). (`is inspected`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/README.md:85 — Passive voice. Say who does the action (active voice). (`is validated`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:96 — Descriptive sentence has 34 words (limit 25). Split it. (`**Separate observation from action.** Let the agent search, read, and extract data first; require an explicit approval step before it submits forms, sends messa`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:97 — Procedural sentence has 23 words (limit 20). Split it. (`**Keep secrets out of prompts and traces.** Do not place passwords, payment details, session cookies, or raw personal data in the model context.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:99 — Procedural sentence has 30 words (limit 20). Split it. (`**Use deterministic checks around risky steps.** Verify the current URL, page title, selected item, price, recipient, and action summary with code before asking`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/15-browser-use/README.md:100 — More than one instruction in one sentence. Write one instruction per sentence. (`**Set budgets and stop conditions.** Bound the number of actions, retries, tabs, and minutes the agent can use.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:101 — Procedural sentence has 27 words (limit 20). Split it. (`**Record useful evidence, not everything.** Keep action summaries, timestamps, URLs, selected element descriptions, and screenshot references so failures can be`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:116 — Descriptive sentence has 29 words (limit 25). Split it. (`The agent you build in this lesson is a small, local version of a **computer use agent (CUA)** — a program that drives a browser the way a person would.`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:118 — Descriptive sentence has 32 words (limit 25). Split it. (`With Project Opal, you describe a task and the agent works on your behalf using **computer use on a secure Windows 365 Cloud PC**, operating across your organiz`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:134 — Descriptive sentence has 26 words (limit 25). Split it. (`> **Availability:** Project Opal is currently available to users in the [Frontier early access program](URL with a Microsoft 365 Copilot subscription, and your `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:145 — Procedural sentence has 39 words (limit 20). Split it. (`Use a browser agent when the task depends on what is visible in a web UI, the site does not expose the needed API, or the page changes often enough that fixed A`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/15-browser-use/README.md:153 — Passive voice. Say who does the action (active voice). (`is known`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:169 — Descriptive sentence has 32 words (limit 25). Split it. (`The agent should stay within the allowed domain and task scope, refuse to reveal secrets, and avoid following page text that changes the goal, disables safeguar`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/15-browser-use/README.md:177 — Procedural sentence has 23 words (limit 20). Split it. (`Avoid storing passwords, payment details, session cookies, raw personal data, or full page contents unless there is a specific retention and privacy reason.`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:5 — Descriptive sentence has 28 words (limit 25). Split it. (`Up to this point in the course you have built agents that run on your laptop, inside a notebook, driven by CODE and a handful of environment variables.`)
 - **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:7 — Descriptive sentence has 52 words (limit 25). Split it. (`This lesson is about the gap between "it works on my machine" and "it works, reliably and affordably, in production." We close that gap using **Microsoft Foundr`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:26 — Passive voice. Say who does the action (active voice). (`is versioned`)
@@ -1334,63 +980,8 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/AGENTS.md:123 — Passive voice. Say who does the action (active voice). (`are run`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/AGENTS.md:123 — Passive voice. Say who does the action (active voice). (`is validated`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/AGENTS.md:217 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:3 — Passive voice. Say who does the action (active voice). (`are documented`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:7 — Descriptive sentence has 32 words (limit 25). Split it. (`This release moves the course off two newly-deprecated models, migrates the remaining Lesson notebooks to the stable Microsoft Agent Framework API, and validate`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:11 — Passive voice. Say who does the action (active voice). (`were intentionally left`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:12 — Descriptive sentence has 32 words (limit 25). Split it. (`**Lesson 14 handoff notebook migrated to the stable API.** [14-handoff.ipynb](./14-microsoft-agent-framework/code-samples/14-handoff.ipynb) now uses CODE with C`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:13 — Descriptive sentence has 46 words (limit 25). Split it. (`**Lesson 14 human-in-the-loop notebook migrated to the stable API.** [14-human-loop.ipynb](./14-microsoft-agent-framework/code-samples/14-human-loop.ipynb) now `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:15 — Descriptive sentence has 27 words (limit 25). Split it. (`**Dependencies** ([requirements.txt](./requirements.txt)): pinned CODE, CODE, and CODE to CODE for a self-consistent, validated set (1.11.0 ships experimental b`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:19 — Passive voice. Say who does the action (active voice). (`were executed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:20 — Descriptive sentence has 38 words (limit 25). Split it. (`**Still requires extra resources for some lessons.** Lesson 05 needs Azure AI Search; the Lesson 08 Bing-grounding workflow (CODE) needs a Bing connection and M`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:24 — Descriptive sentence has 36 words (limit 25). Split it. (`This release adds two new lessons that complete the deployment arc — scaling agents up to Microsoft Foundry and down to a single workstation — plus a smoke-test`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:28 — Descriptive sentence has 59 words (limit 25). Split it. (`**Lesson 16 — Deploying Scalable Agents with Microsoft Foundry.** New lesson [16-deploying-scalable-agents/README.md](./16-deploying-scalable-agents/README.md) `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:29 — Descriptive sentence has 62 words (limit 25). Split it. (`**Lesson 17 — Creating Local AI Agents with Foundry Local and Qwen.** New lesson [17-creating-local-ai-agents/README.md](./17-creating-local-ai-agents/README.md`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:30 — Descriptive sentence has 44 words (limit 25). Split it. (`**Smoke-test pipeline.** New [AI Smoke Test](URL workflow [.github/workflows/smoke-test.yml](./.github/workflows/smoke-test.yml) plus per-lesson catalogs under `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:31 — Descriptive sentence has 45 words (limit 25). Split it. (`**Learner skills.** New Agent Skills under CODE: [deploying-scalable-agents](./.agents/skills/deploying-scalable-agents/SKILL.md), [local-ai-agents](./.agents/s`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:32 — Descriptive sentence has 26 words (limit 25). Split it. (`**Notebook validation runner.** New [scripts/validate-notebooks.ps1](./scripts/validate-notebooks.ps1) that executes every Python notebook headlessly with CODE `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:32 — Descriptive sentence has 29 words (limit 25). Split it. (`It auto-detects the repo root and Python, excludes non-course notebooks (CODE, CODE, CODE, skill template assets) and CODE notebooks by default, and supports CO`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:34 — Descriptive sentence has 29 words (limit 25). Split it. (`**New thumbnails.** Lesson thumbnails for Lessons 16 and 17, plus a refreshed repository social image [images/repo-thumbnailv3.png](./images/repo-thumbnailv3.pn`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:43 — Descriptive sentence has 29 words (limit 25). Split it. (`**Standardized model references on non-deprecated models.** Replaced all CODE / CODE references across the course (docs, CODE, Python/.NET notebooks and samples`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:47 — Descriptive sentence has 28 words (limit 25). Split it. (`The smoke-test workflow requires you to deploy the lesson's agent and configure Azure OIDC secrets (CODE, CODE, CODE) with the **Azure AI User** role at Foundry`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:52 — Descriptive sentence has 42 words (limit 25). Split it. (`This release migrates the course to the **Azure OpenAI Responses API**, standardizes product naming on **Microsoft Foundry** and the **Microsoft Agent Framework`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:57 — Descriptive sentence has 35 words (limit 25). Split it. (`**Foundry Local (run models on-device)** — New "Alternative Provider: Foundry Local" section in [00-course-setup/README.md](./00-course-setup/README.md) coverin`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:58 — Descriptive sentence has 38 words (limit 25). Split it. (`**Hosting LangChain / LangGraph agents on Microsoft Foundry** — New section in [14-microsoft-agent-framework/README.md](./14-microsoft-agent-framework/README.md`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:59 — Descriptive sentence has 35 words (limit 25). Split it. (`**Microsoft Project Opal** — New "Real-World Example: Microsoft Project Opal" section in [15-browser-use/README.md](./15-browser-use/README.md) framing Opal as `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:60 — Descriptive sentence has 28 words (limit 25). Split it. (`**Second Lesson 02 Python sample** — Added [02-python-agent-framework-azure-openai.ipynb](./02-explore-agentic-frameworks/code_samples/02-python-agent-framework`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:65 — Descriptive sentence has 35 words (limit 25). Split it. (`**Chat Completions → Responses API (Python).** Samples that called the model directly were migrated from Chat Completions to the Responses API (CODE, CODE), usi`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:65 — Passive voice. Say who does the action (active voice). (`were migrated`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:69 — Passive voice. Say who does the action (active voice). (`is deprecated`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:69 — Passive voice. Say who does the action (active voice). (`were converted`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:73 — Descriptive sentence has 28 words (limit 25). Split it. (`**Standardized on CODE + CODE.** README and notebook code that referenced CODE were standardized on the canonical pattern used by Lesson 01 and the framework's `)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:73 — Passive voice. Say who does the action (active voice). (`were standardized`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:81 — Passive voice. Say who does the action (active voice). (`was only used`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:83 — Descriptive sentence has 34 words (limit 25). Split it. (`**Docs** — Updated [00-course-setup/README.md](./00-course-setup/README.md), [AGENTS.md](./AGENTS.md), [README.md](./README.md), and [STUDY_GUIDE.md](./STUDY_GU`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:91 — Descriptive sentence has 27 words (limit 25). Split it. (`Cleared Jupyter notebook execution outputs that leaked a real **Azure subscription ID**, resource-group / resource names, and Bing connection ID, plus developer`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:95 — Descriptive sentence has 44 words (limit 25). Split it. (`Verified no API keys, tokens, subscription IDs, or personal paths remain in the tracked English content (the CODE references that remain are the GitHub Actions `)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:99 — Descriptive sentence has 30 words (limit 25). Split it. (`**Not executed/compiled.** These are educational samples updated for API/naming correctness; they were not run against live Azure resources, and the .NET sample`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:99 — Passive voice. Say who does the action (active voice). (`were not run`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:99 — Passive voice. Say who does the action (active voice). (`were not compiled`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:101 — Passive voice. Say who does the action (active voice). (`were validated`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/CHANGELOG.md:104 — Descriptive sentence has 26 words (limit 25). Split it. (`**Foundry Local** exposes an OpenAI-compatible **Chat Completions** endpoint and is intended for local development; use Azure OpenAI / Microsoft Foundry for the`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/CHANGELOG.md:104 — Passive voice. Say who does the action (active voice). (`is intended`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/README.md:18 — Descriptive sentence has 286 words (limit 25). Split it. (`[Arabic](./translations/ar/README.md) | [Bengali](./translations/bn/README.md) | [Bulgarian](./translations/bg/README.md) | [Burmese (Myanmar)](./translations/m`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/README.md:41 — Passive voice. Say who does the action (active voice). (`are listed`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/README.md:56 — Procedural sentence has 27 words (limit 20). Split it. (`If this is your first time building with Generative AI models, check out our [Generative AI For Beginners](URL course, which includes 21 lessons on building wit`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/SECURITY.md:5 — Descriptive sentence has 35 words (limit 25). Split it. (`Microsoft takes the security of our software products and services seriously, which includes all source code repositories managed through our GitHub organizatio`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/SECURITY.md:7 — Descriptive sentence has 30 words (limit 25). Split it. (`If you believe you have found a security vulnerability in any Microsoft-owned repository that meets [Microsoft's definition of a security vulnerability](URL ple`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/SECURITY.md:19 — Procedural sentence has 26 words (limit 20). Split it. (`Please include the requested information listed below (as much as you can provide) to help us better understand the nature and scope of the possible issue:`)
-- **P1** `ste.sentence_length` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:59 — Descriptive sentence has 38 words (limit 25). Split it. (`The course code samples use the **Microsoft Agent Framework (MAF)** and target the **Azure OpenAI Responses API** — the recommended API going forward, which com`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:67 — Passive voice. Say who does the action (active voice). (`is deprecated`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:67 — Passive voice. Say who does the action (active voice). (`been updated`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:197 — Passive voice. Say who does the action (active voice). (`is misused`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:223 — Passive voice. Say who does the action (active voice). (`were used`)
-- **P1** `ste.multiple_instructions` microsoft__ai-agents-for-beginners/SUPPORT.md:9 — More than one instruction in one sentence. Write one instruction per sentence. (`*Then remove this first heading from this SUPPORT.MD file before publishing your repo.*`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/SUPPORT.md:25 — Passive voice. Say who does the action (active voice). (`is limited`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/tests/lesson-05-smoke-tests.json:6 — Passive voice. Say who does the action (active voice). (`is known`)
 - **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/tests/lesson-16-smoke-tests.json:7 — Passive voice. Say who does the action (active voice). (`be politely redirected`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/tests/README.md:10 — Passive voice. Say who does the action (active voice). (`are consumed`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/tests/README.md:38 — Passive voice. Say who does the action (active voice). (`be asserted`)
-- **P1** `ste.passive_voice` microsoft__ai-agents-for-beginners/tests/README.md:39 — Passive voice. Say who does the action (active voice). (`are intentionally excluded`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:211 — "migrating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`When migrating a`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:211 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`backend serialization format changes`)
 - **P2** `ste.hedge` microsoft__ai-agents-for-beginners/.agents/skills/azure-openai-to-responses/references/cheat-sheet.md:213 — Vague word "typically". Give the exact condition, value or action. (`typically`)
@@ -1564,64 +1155,10 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/.github/agents/dotnet-notebook-migration.agent.md:65 — Semicolon. Use two sentences. (`Count cells; abort if none.`)
 - **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/.github/agents/dotnet-notebook-migration.agent.md:67 — Semicolon. Use two sentences. (`Confirm at least one markdown or code cell; else emit an error note.`)
 - **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/agents/dotnet-notebook-migration.agent.md:73 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md:27 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md:28 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md:29 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md:32 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md:33 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md:34 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md:35 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/.github/ISSUE_TEMPLATE/bug_report.md:37 — "Additional" → more (plain-word hint). (`Additional`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/.github/prompts/git-cherrypicking.prompt.md:2 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`given commit between branches using Git`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/.github/prompts/git-cherrypicking.prompt.md:8 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`given commit between branches`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/.github/prompts/git-cherrypicking.prompt.md:8 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Git command line interface`)
 - **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml:2 — Semicolon. Use two sentences. (`Deployed hosted agent name (must match the catalog's lesson; comma-separate for multiple)`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:3 — Phrasal verb "set up". Try: prepare / install. (`set up`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:7 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:14 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:34 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`search service overview pane`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:35 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:35 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Search Index Data Contributor roles`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:36 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:44 — "following" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by following the`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/00-course-setup/AzureSearch.md:192 — Phrasal verb "set up". Try: prepare / install. (`set up`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/00-course-setup/README.md:15 — Modal + be + past participle. Use an active verb. (`can be done`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/00-course-setup/README.md:15 — "clicking" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by clicking the`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/00-course-setup/README.md:23 — Vague word "a few". Give the exact condition, value or action. (`a few`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/README.md:55 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`want example below shows`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:75 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/README.md:78 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`reclaim extra space see`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:84 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/README.md:88 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`get hands-on experience building`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/README.md:90 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service V`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:97 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:97 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:119 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/README.md:126 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:127 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/00-course-setup/README.md:129 — Perfect tense. Use simple past or present. (`have included`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/00-course-setup/README.md:131 — "running" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by running the`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/00-course-setup/README.md:141 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:154 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:164 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/00-course-setup/README.md:168 — Phrasal verb "pick up". Try: take. (`pick up`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:168 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/00-course-setup/README.md:168 — Semicolon. Use two sentences. (`A few lessons and optional integrations use API keys; check each lesson's prerequisites for any additional environment variables.`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/00-course-setup/README.md:168 — Vague word "A few". Give the exact condition, value or action. (`A few`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:168 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:168 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/00-course-setup/README.md:208 — Phrasal verb "fill in". Try: write / enter. (`fill in`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/00-course-setup/README.md:234 — Semicolon. Use two sentences. (`They do not enable keyless authentication in the Lesson 16 notebook; Lesson 16 still requires both the endpoint and admin key to use Azure AI Search.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:256 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/README.md:256 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Why keyless Admin keys grant full`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:256 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:286 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/README.md:300 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`open-source model families Llama`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/00-course-setup/README.md:302 — Progressive tense (be + -ing). Use simple present. (`are running`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/00-course-setup/README.md:354 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/00-course-setup/README.md:358 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/00-course-setup/README.md:358 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`uses Bing grounding via Microsoft Foundry`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/00-course-setup/README.md:403 — "making" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`before making any`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/01-intro-to-ai-agents/code_samples/01-dotnet-agent-framework.md:5 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`intelligent travel planning agent using`)
 - **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/01-intro-to-ai-agents/code_samples/01-dotnet-agent-framework.md:20 — "via" → through / with (plain-word hint). (`via`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/01-intro-to-ai-agents/code_samples/01-dotnet-agent-framework.md:28 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Real-time response generation capabilities`)
@@ -1661,152 +1198,15 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/code_samples/02-dotnet-agent-framework.md:48 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Agent Framework approach`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/code_samples/02-dotnet-agent-framework.md:220 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Agent Framework provides`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/code_samples/02-dotnet-agent-framework.md:222 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Session management enables multi-turn conversations`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:9 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`frameworks help developers focus`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:18 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`I integrate my existing Azure ecosystem tools`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:19 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:28 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:39 — "making" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, making it`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:43 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Agent frameworks represent something`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:46 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`dynamic task management among agents`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:55 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`offer pre-built components such`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:56 — "enabling" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, enabling them`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:61 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`Microsoft Agent Framework offer pre-built components such`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:112 — "facilitate" → help (plain-word hint). (`facilitate`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:112 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Agent Framework facilitate`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:114 — "enabling" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, enabling them`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:114 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`improve overall system efficiency`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:118 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Example code Microsoft Agent Framework`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:153 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`involves multiple agents working together`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:153 — "coordinating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by coordinating the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:169 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Agent Framework provides`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:169 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`enterprise-grade security through Azure identity`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:175 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:176 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`generate responses using Azure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:178 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Maintain conversation state across multiple interactions`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:201 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`framework supports defining tools`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:201 — "creating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`when creating the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:233 — "eliminating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, eliminating the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:237 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:239 — "making" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, making it`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:239 — Possible noun cluster of 9 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service provides stronger enterprise security mechanisms`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:245 — "Using" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Using the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:245 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service Python`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:309 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:311 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service integrates`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:311 — Modal + be + past participle. Use an active verb. (`can be used`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:311 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:311 — "combining" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by combining the`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:323 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:323 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`perform code interpretation tasks`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:325 — Modal + be + past participle. Use an active verb. (`can be used`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:343 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:343 — "indicate" → show (plain-word hint). (`indicate`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:343 — Perfect tense. Use simple past or present. (`has resulted`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:345 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service works`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:347 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:347 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:354 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:365 — Vague word "a few". Give the exact condition, value or action. (`a few`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:365 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:367 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Azure integrations like Search`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:369 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:373 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:373 — "having" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`while having a`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:373 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`agent logic while having`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:384 — Perfect tense. Use simple past or present. (`has been built`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/02-explore-agentic-frameworks/README.md:384 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/code_samples/03-dotnet-agent-framework.md:5 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`example demonstrates enterprise-grade design patterns`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/code_samples/03-dotnet-agent-framework.md:35 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Enterprise agent orchestration framework`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/code_samples/03-dotnet-agent-framework.md:62 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Event-driven agent lifecycle management`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/code_samples/03-dotnet-agent-framework.md:107 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Concurrent agent execution support`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/code_samples/03-dotnet-agent-framework.md:120 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`build enterprise-grade intelligent agents`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:8 — Phrasal verb "figure out". Try: find / calculate. (`figure out`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:8 — Perfect tense. Use simple past or present. (`have created`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:8 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`build customer-centric agentic systems`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:8 — Progressive tense (be + -ing). Use simple present. (`are defining`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:8 — Vague word "rather". Give the exact condition, value or action. (`rather`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:12 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:12 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`scale human capacities brainstorming`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:13 — Phrasal verb "Fill in". Try: write / enter. (`Fill in`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:13 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:13 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`knowledge gaps get me`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:14 — "Facilitate" → help (plain-word hint). (`Facilitate`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:15 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:15 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:25 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:28 — "using" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`for using the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:41 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Agents bring people closer together`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:42 — Vague word "appropriate". Give the exact condition, value or action. (`appropriate`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:44 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:45 — Semicolon. Use two sentences. (`Agent can seamlessly transition between foreground and background; between proactive and reactive, depending on its sensing of user needs.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:50 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`design agents interacting across`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:56 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Agent goes beyond static notification`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:77 — "modify" → change (plain-word hint). (`modify`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:77 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`functions including past actions`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:79 — Vague word "where possible". Give the exact condition, value or action. (`where possible`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:79 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:79 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:83 — Progressive tense (be + -ing). Use simple present. (`are designing`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:85 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:85 — Perfect tense. Use simple past or present. (`has asked`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:85 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:86 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:86 — "modify" → change (plain-word hint). (`modify`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:87 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:87 — "indicate" → show (plain-word hint). (`indicate`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/03-agentic-design-patterns/README.md:87 — "indicate" → show (plain-word hint). (`indicate`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/code_samples/04-dotnet-agent-framework.md:5 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`notebook demonstrates enterprise-grade tool integration patterns using`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/code_samples/04-dotnet-agent-framework.md:18 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Strong typing ensures tool parameter correctness`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/code_samples/04-dotnet-agent-framework.md:66 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Secure file system operations`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/code_samples/04-dotnet-agent-framework.md:67 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Third-party service integration patterns`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:7 — Progressive tense (be + -ing). Use simple present. (`are interesting`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:7 — "adding" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by adding a`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:7 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:7 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:14 — Modal + be + past participle. Use an active verb. (`can be applied`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:16 — "using" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`for using the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:20 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:29 — Modal + be + past participle. Use an active verb. (`can be executed`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:29 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:33 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`scenarios requiring dynamic interaction`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:33 — "a number of" → some / (give the number) (plain-word hint). (`a number of`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:35 — "querying" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, querying a`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:35 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:36 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:37 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`tools like task schedulers`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:39 — "assist" → help (plain-word hint). (`assist`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:39 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`leverage tools like grammar checkers`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:43 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:49 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`flow between user inputs`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/04-tool-use/README.md:55 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:55 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`ensure consistency across multi-turn interactions`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:61 — Phrasal verb "carry out". Try: do. (`carry out`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/04-tool-use/README.md:61 — Vague word "appropriate". Give the exact condition, value or action. (`appropriate`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:66 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`schema containing function descriptions`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:73 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`models support function calling`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:73 — "initiating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by initiating the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:87 — Modal + be + past participle. Use an active verb. (`will be passed`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:138 — Phrasal verb "carry out". Try: do. (`carry out`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:140 — Perfect tense. Use simple past or present. (`has chosen`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:201 — Progressive tense (be + -ing). Use simple present. (`be challenging`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:202 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`agentic frameworks provide us`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:206 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Design Pattern using different agentic frameworks`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:210 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`pre-built tools like File Search`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:216 — "using" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by using the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:216 — "creating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, creating the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:266 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`question needs current information`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:272 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service provides`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/04-tool-use/README.md:274 — Semicolon. Use two sentences. (`Automatic tool calling – no need to parse a tool call, invoke the tool, and handle the response; all of this is now done server-side`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:278 — Modal + be + past participle. Use an active verb. (`can be divided`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:278 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:291 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Agent Service allows us`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:295 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:299 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`pre-built Code Interpreter depending`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:331 — Modal + be + past participle. Use an active verb. (`should be assigned`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/04-tool-use/README.md:333 — "Running" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Running the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/04-tool-use/README.md:333 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`secure environment further enhances protection`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/04-tool-use/README.md:333 — Vague word "typically". Give the exact condition, value or action. (`typically`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/04-tool-use/README.md:333 — Perfect tense. Use simple past or present. (`has restricted`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/05-dotnet-agent-framework.md:38 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`secure Azure service access`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/05-dotnet-agent-framework.md:51 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Efficient Azure service connection management`)
 - **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/05-dotnet-agent-framework.md:86 — "via" → through / with (plain-word hint). (`via`)
@@ -1822,52 +1222,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/05-dotnet-agent-framework.md:191 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`complete working code sample`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/05-dotnet-agent-framework.md:213 — "Uploading" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`: Uploading a`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/05-dotnet-agent-framework.md:214 — "Creating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`: Creating a`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/code_samples/document.md:1 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Contoso Travel offers luxury vacation packages`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:7 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`next steps while pulling information`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:7 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Unlike static retrieval-then-read patterns`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:7 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:13 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`next steps while pulling information`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:19 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:21 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`next steps while pulling information`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:23 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`approach problems without relying`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:24 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`retrieve market trend reports`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:33 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`next steps while pulling information`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:33 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Unlike static retrieval-then-read patterns`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:33 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:33 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`maker-checker style improves correctness`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:39 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Unlike static retrieval-then-read patterns`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:39 — Perfect tense. Use simple past or present. (`has obtained`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:39 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:41 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:41 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:41 — Vague word "Rather". Give the exact condition, value or action. (`Rather`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:48 — Semicolon. Use two sentences. (`It’s not just executing a script; it’s autonomously determining the sequence of steps based on the quality of the information it finds.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:51 — Possible noun cluster of 9 words. Break it up with "of", "for" or a verb. (`Retrieve current market trend reports using Bing Web Grounding`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:52 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Identify relevant competitor data using Azure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:53 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`sales metrics using Azure`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:54 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:65 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:65 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`model identifies missing information`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:66 — "reviewing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After reviewing the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:70 — "enabling" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, enabling the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:70 — "requiring" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`without requiring a`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:70 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`multi-step tasks without requiring`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:74 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`involves robust self-correction mechanisms`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:77 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:80 — "ensuring" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, ensuring that`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:86 — Perfect tense. Use simple past or present. (`have been set`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:86 — Vague word "Rather". Give the exact condition, value or action. (`Rather`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:89 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`strategies like query rewriting`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:90 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`boundaries without human intervention`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:98 — "ensuring" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, ensuring the`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:106 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:106 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`patterns using custom models`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:106 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`data science organizations using Azure Machine Learning`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:109 — "debugging" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, debugging a`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:115 — "adopting" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`By adopting a`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:115 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`system moves beyond static prompt-following`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:123 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Learn module provides`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/05-agentic-rag/README.md:131 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:17 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
 - **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:20 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
 - **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/06-building-trustworthy-agents/README.md:31 — Perfect tense. Use simple past or present. (`have designed`)
@@ -1897,30 +1251,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-dotnet-agent-framework.md:56 — "Creating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Creating an`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-dotnet-agent-framework.md:63 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`agent uses C classes`)
 - **P2** `ste.hedge` microsoft__ai-agents-for-beginners/07-planning-design/code_samples/07-dotnet-agent-framework.md:117 — Vague word "appropriate". Give the exact condition, value or action. (`appropriate`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/07-planning-design/README.md:11 — "Defining" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Defining a`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/07-planning-design/README.md:13 — "Applying" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Applying an`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/07-planning-design/README.md:17 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/07-planning-design/README.md:19 — "ensuring" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, ensuring it`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:21 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/07-planning-design/README.md:44 — Vague word "and so on". Give the exact condition, value or action. (`and so on`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:50 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/07-planning-design/README.md:52 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`simple planning agent decomposing`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:116 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/07-planning-design/README.md:116 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Semantic Router Agent receives`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:121 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:122 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/07-planning-design/README.md:124 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Python code sample illustrates`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:227 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/07-planning-design/README.md:227 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`data format while booking flights`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:229 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/07-planning-design/README.md:263 — Perfect tense. Use simple past or present. (`have looked`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/07-planning-design/README.md:263 — Modal + be + past participle. Use an active verb. (`can be executed`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:263 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:263 — "In addition" → also (plain-word hint). (`In addition`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/07-planning-design/README.md:267 — Perfect tense. Use simple past or present. (`has achieved`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/07-planning-design/README.md:267 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`multiple challenging agentic benchmarks`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/07-planning-design/README.md:267 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`orchestrator creates task specific plans`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/07-planning-design/README.md:267 — "In addition" → also (plain-word hint). (`In addition`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/08-dotnet-agent-framework.md:5 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`enterprise-grade multi-agent systems using`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/08-dotnet-agent-framework.md:5 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`agents working together through`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/08-multi-agent/code_samples/08-dotnet-agent-framework.md:56 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`multi-agent workflow system creates`)
@@ -2089,100 +1419,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/08-multi-agent/solution/solution.md:15 — "ensuring" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`for ensuring that`)
 - **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/08-multi-agent/solution/solution.md:16 — "assist" → help (plain-word hint). (`assist`)
 - **P2** `ste.hedge` microsoft__ai-agents-for-beginners/08-multi-agent/solution/solution.md:18 — Vague word "a few". Give the exact condition, value or action. (`a few`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:12 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:20 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`time again linking back`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/09-metacognition/README.md:22 — Vague word "several". Give the exact condition, value or action. (`several`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:23 — "Ensuring" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`: Ensuring that`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:24 — "Enhancing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`: Enhancing the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:26 — "Improving" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`: Improving the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/09-metacognition/README.md:32 — Progressive tense (be + -ing). Use simple present. (`be missing`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:32 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`cheaper flights because I`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:34 — "Noting" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Noting that`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/09-metacognition/README.md:39 — Vague word "several". Give the exact condition, value or action. (`several`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:44 — "modify" → change (plain-word hint). (`modify`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/09-metacognition/README.md:50 — Vague word "typically". Give the exact condition, value or action. (`typically`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:53 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:56 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:59 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`past customer journey experiences`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:63 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Travel Agent assists users`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:71 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:84 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Travel Agent uses metacognition`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:86 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Travel Agent reviews user feedback`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:87 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`popular tourist spots during peak hours`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:138 — "modify" → change (plain-word hint). (`modify`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:142 — "enhancing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, enhancing the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:148 — "considering" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, considering the`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:155 — "Utilize" → use (plain-word hint). (`Utilize`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:158 — "assist" → help (plain-word hint). (`assist`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:158 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`steps Travel Agent needs`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:185 — "Modify" → change (plain-word hint). (`Modify`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:197 — "assist" → help (plain-word hint). (`assist`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:197 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:243 — "understanding" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by understanding the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:249 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`system fetches relevant documents`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/09-metacognition/README.md:251 — Vague word "appropriate". Give the exact condition, value or action. (`appropriate`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:251 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`agent retrieves relevant information`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:271 — "correcting" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`while correcting any`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:271 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`generate information while correcting`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:275 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Technique Using specific prompts`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:295 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Travel Agent retrieves information`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:333 — "emphasizing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, emphasizing the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:333 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Travel Agent uses algorithms`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:358 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Python code example incorporating`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:404 — "processing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`before processing a`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:404 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Context Load involves loading relevant context`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:404 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:435 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`dictionary includes details like`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:439 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`user queries without having`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:443 — "Bootstrapping" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Bootstrapping a`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:443 — "defining" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`By defining this`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:443 — "making" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, making the`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:443 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:519 — "considering" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, considering the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:521 — "including" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, including a`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:528 — "bootstrapping" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`By bootstrapping the`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:528 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/09-metacognition/README.md:532 — Modal + be + past participle. Use an active verb. (`can be used`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:532 — "evaluating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by evaluating the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:540 — "improving" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, improving the`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:546 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:628 — "including" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, including the`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:632 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:632 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`travel agent collects user preferences`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:634 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:636 — "leveraging" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`By leveraging the`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:640 — "Understanding" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Understanding the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:646 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`involves formulating specific queries`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/09-metacognition/README.md:658 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:665 — "making" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, making it`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:669 — "allowing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, allowing it`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:670 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`without requiring explicit prompts`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:671 — "streamlining" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by streamlining the`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/09-metacognition/README.md:721 — Vague word "appropriate". Give the exact condition, value or action. (`appropriate`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/09-metacognition/README.md:731 — Vague word "rather". Give the exact condition, value or action. (`rather`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/09-metacognition/README.md:864 — Modal + be + past participle. Use an active verb. (`can be categorized`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:865 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:866 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:867 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:867 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:870 — "Analyzing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Analyzing the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:873 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`includes tasks like entity recognition`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:876 — "Personalizing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Personalizing the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/09-metacognition/README.md:880 — Modal + be + past participle. Use an active verb. (`can be implemented`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:999 — "assist" → help (plain-word hint). (`assist`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1003 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Collects user input such`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1119 — Modal + be + past participle. Use an active verb. (`can be done`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1188 — Modal + be + past participle. Use an active verb. (`should be adjusted`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1194 — "making" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`By making the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1198 — Modal + be + past participle. Use an active verb. (`can be used`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1322 — "utilize" → use (plain-word hint). (`utilize`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1322 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`agents like Travel Agent`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1326 — "solving" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`while solving a`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1326 — "demonstrate" → show (plain-word hint). (`demonstrate`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1332 — "understanding" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`without understanding the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1333 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`choice using user feedback`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1416 — "i.e." → that is (plain-word hint). (`i.e.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/09-metacognition/README.md:1422 — "additional" → more (plain-word hint). (`additional`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:9 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:11 — "improving" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`for improving the`)
 - **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:18 — Phrasal verb "Check out". Try: examine. (`Check out`)
@@ -2247,40 +1483,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:151 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`while reserving larger models`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:153 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`help reduce costs while`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/10-ai-agents-production/README.md:155 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Responses Identifying common requests`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/chainlit.md:14 — "modify" → change (plain-word hint). (`modify`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:5 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:5 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:5 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`multiple agents working together`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:16 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Semantic Kernel Process Framework`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:16 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`project management using Python`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:39 — "demonstrate" → show (plain-word hint). (`demonstrate`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:39 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`build agents using popular Python packages like`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:42 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry models instead`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:53 — "using" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`While using an`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:53 — Phrasal verb "go over". Try: examine. (`go over`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:64 — Progressive tense (be + -ing). Use simple present. (`is transforming`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:64 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`production-grade multi-agent application built`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:69 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`Real-time chat history storage using Azure Cosmos`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:83 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:94 — Vague word "rather". Give the exact condition, value or action. (`rather`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:94 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`once made web development easier`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:94 — Progressive tense (be + -ing). Use simple present. (`be overwhelming`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:94 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`automate tasks using simple`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:105 — "making" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`for making it`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:116 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Java applications using Microsoft Foundry`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:116 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:143 — Modal + be + past participle. Use an active verb. (`can be exploited`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:158 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:158 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:158 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`multiple agents working together`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/event-descriptions.md:180 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`concepts behind agentic applications`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/MCP_SETUP.md:24 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/MCP_SETUP.md:40 — "Ensure" → make sure → verify (plain-word hint). (`Ensure`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/MCP_SETUP.md:45 — Progressive tense (be + -ing). Use simple present. (`is running`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/MCP_SETUP.md:47 — Perfect tense. Use simple past or present. (`has required`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/README.md:17 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`demo uses Microsoft Agent Framework`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/README.md:19 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/github-mcp/README.md:42 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`message here chat box`)
 - **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:3 — Semicolon. Use two sentences. (`> TL;DR - Can You Build Agent2Agent Communication on MCP?`)
 - **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:5 — Perfect tense. Use simple past or present. (`has evolved`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:5 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`complex agent-to-agent communication systems`)
@@ -2350,73 +1552,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:521 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`enables intelligent agent behaviors while maintaining`)
 - **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:523 — Progressive tense (be + -ing). Use simple present. (`is evolving`)
 - **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/11-agentic-protocols/code_samples/mcp-agents/README.md:523 — Semicolon. Use two sentences. (`Overall, the MCP protocol spec is evolving rapidly; the reader is encouraged to review the official documentation website for the most recent updates - URL`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:7 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:45 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:55 — "meaning" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, meaning any`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:55 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:55 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`often require static coding`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:55 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`change necessitates code updates`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:59 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:69 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`tools like search flights`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:73 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:75 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, completing the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:79 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`agents across different organizations`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:81 — Modal + be + past participle. Use an active verb. (`could be applied`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:102 — Perfect tense. Use simple past or present. (`has completed`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:114 — "providing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, providing a`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:122 — Vague word "perhaps". Give the exact condition, value or action. (`perhaps`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:128 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:128 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Travel Agent sends specific tasks`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:140 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Application Core Service Code`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:144 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Server Model Context Protocol Endpoint`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:144 — "allowing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, allowing the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:148 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`different vector storage systems such`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:154 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`travel booking website again`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:156 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/11-agentic-protocols/README.md:156 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:7 — Progressive tense (be + -ing). Use simple present. (`are building`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:7 — "Understanding" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Understanding the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:7 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`address complex needs beyond prompt engineering`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:23 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:31 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Recognize common context failures such`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:39 — "including" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, including the`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:39 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:39 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`main idea around context engineering`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:45 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:51 — Perfect tense. Use simple past or present. (`has accumulated`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:57 — Modal + be + past participle. Use an active verb. (`could be stored`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:67 — Modal + be + past participle. Use an active verb. (`will be assigned`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:68 — Perfect tense. Use simple past or present. (`have defined`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:68 — "in order to" → to (plain-word hint). (`in order to`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:68 — Modal + be + past participle. Use an active verb. (`can be located`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:69 — Modal + be + past participle. Use an active verb. (`can be done`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:77 — Modal + be + past participle. Use an active verb. (`will be added`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:77 — Modal + be + past participle. Use an active verb. (`can be done`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:77 — Vague word "a few". Give the exact condition, value or action. (`a few`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:83 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`retrieve relevant information across multiple sessions`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:86 — Modal + be + past participle. Use an active verb. (`can be used`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:86 — Progressive tense (be + -ing). Use simple present. (`is nearing`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:95 — "allowing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, allowing the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:101 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`agent load too much context`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:121 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`dates retrieving real-time data`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:123 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Recall past travel preferences`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:133 — "causing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, causing the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:137 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`non-existent flight detail gets`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:143 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`model focuses too much`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:143 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`begin making mistakes even`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:145 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`important details while removing redundant history`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:147 — Progressive tense (be + -ing). Use simple present. (`been discussing`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:147 — "including" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, including a`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:147 — "neglecting" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, neglecting your`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:149 — "discarding" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, discarding the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:155 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Implement tool loadout management using`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:155 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Research shows limiting tool selections`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:157 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:157 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`get around Paris Due`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:159 — "presenting" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, presenting a`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:165 — "cluttering" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`without cluttering the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:165 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`process information without cluttering`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/12-context-engineering/README.md:169 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Solution Implement context pruning`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/13-agent-memory/README.md:4 — "discussing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`When discussing the`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/13-agent-memory/README.md:22 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Implements memory using Mem`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/13-agent-memory/README.md:28 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
@@ -2502,178 +1637,6 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:425 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Foundry Project Manager role`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:427 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`full walkthrough Invocations protocol`)
 - **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/14-microsoft-agent-framework/README.md:431 — Modal + be + past participle. Use an active verb. (`can be found`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:6 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:6 — Vague word "sufficient". Give the exact condition, value or action. (`sufficient`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:6 — "sufficient" → enough (plain-word hint). (`sufficient`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:23 — "uploading" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`for uploading a`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:24 — "uploading" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After uploading a`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:59 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`profile includes configuration like ad blocker settings`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:108 — "downloading" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`for downloading a`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:125 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`full task details endpoint`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:134 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`task includes basic information like status`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:143 — Modal + be + past participle. Use an active verb. (`can be resumed`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:159 — Modal + be + past participle. Use an active verb. (`can be used`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:176 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`browser-use Python library version`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:184 — Progressive tense (be + -ing). Use simple present. (`is running`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:193 — "obtain" → get (plain-word hint). (`obtain`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:203 — Modal + be + past participle. Use an active verb. (`should be stored`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:203 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`secure key management system`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:222 — "making" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by making a`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:226 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:231 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Implement proper access controls`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:234 — Perfect tense. Use simple past or present. (`has been compromised`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:240 — Phrasal verb "set up". Try: prepare / install. (`set up`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:248 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:524 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`implement proper error handling`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:532 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`workflow example competitor research`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:534 — Semicolon. Use two sentences. (`> **TL;DR** – In **3 minutes** you can have an n8n workflow that:`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:538 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:654 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`complex web browsing while`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:930 — "Additional" → more (plain-word hint). (`Additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:970 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Cloud Banner data-og-width width data-og-height height`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:972 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Cloud Banner data-og-width width data-og-height height`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1000 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`full implementation guide see`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1021 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1098 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`explores multiple navigation levels`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1122 — Phrasal verb "set up". Try: prepare / install. (`set up`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1137 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1140 — "adding" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`When adding a`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1141 — Progressive tense (be + -ing). Use simple present. (`is working`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1141 — "creating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`before creating the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1194 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`webhook payload now includes`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1198 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1249 — "verifying" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`without verifying the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1249 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`process webhook payloads without verifying`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1253 — Phrasal verb "Set up". Try: prepare / install. (`Set up`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1254 — Modal + be + past participle. Use an active verb. (`may be added`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1269 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Main browser session manager`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1360 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Low-level Playwright-like browser automation`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1410 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`requires arrow function format`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1416 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Browser Actor automation tasks including forms`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1546 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1546 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Maximum actions per step`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1548 — "attempt" → try (plain-word hint). (`attempt`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1555 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1783 — "passing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by passing the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1839 — Modal + be + past participle. Use an active verb. (`should be called`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1866 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`multiple model providers through`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1960 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:1960 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`incorrect action schema formats`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2018 — Modal + be + past participle. Use an active verb. (`can be called`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2018 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2033 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2033 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`direct browser control page management`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2038 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2057 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2071 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2071 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Chrome profile subdirectory name`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2072 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Browser storage state cookies`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2080 — "Additional" → more (plain-word hint). (`Additional`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2088 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2089 — "Additional" → more (plain-word hint). (`Additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2104 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`elements hidden behind others`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2114 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Custom user agent string`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2205 — "running" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`before running this`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2210 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Chrome profile folder keeps cookies`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2211 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2211 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Specific profile name Default`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2270 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2270 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`favorite browser provider like`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2304 — Modal + be + past participle. Use an active verb. (`can be used`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2304 — "modify" → change (plain-word hint). (`modify`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2304 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`modify agent state while running`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2391 — Modal + be + past participle. Use an active verb. (`can be updated`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2391 — "modify" → change (plain-word hint). (`modify`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2393 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2394 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2411 — Modal + be + past participle. Use an active verb. (`can be implemented`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2411 — Vague word "fairly". Give the exact condition, value or action. (`fairly`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2420 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2420 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`Expose browser-use capabilities via Model Context Protocol`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2420 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`assistants like Claude Desktop`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2424 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`assistants like Claude Desktop`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2424 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2424 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`perform web automation tasks`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2438 — Progressive tense (be + -ing). Use simple present. (`is integrating`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2438 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Claude Desktop config file`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2478 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`configure browser-use through environment variables`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2491 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`complete browser automation task`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2498 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Get current page state`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2520 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2520 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`perform browser automation tasks`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2583 — "Ensure" → make sure → verify (plain-word hint). (`Ensure`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2616 — Phrasal verb "Check out". Try: examine. (`Check out`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2656 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2666 — Modal + be + past participle. Use an active verb. (`can be used`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2710 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`precise browser automation alongside`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2732 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2736 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Switch between browser tabs`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2745 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Get dropdown option values`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2833 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Tool completes entire task`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2942 — "indicate" → show (plain-word hint). (`indicate`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2945 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`data-og-width width data-og-height height`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2949 — Phrasal verb "check out". Try: examine. (`check out`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2987 — Progressive tense (be + -ing). Use simple present. (`is running`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2997 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`help us continue improving`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:2997 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`information helps us understand`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3001 — "setting" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by setting the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3034 — Progressive tense (be + -ing). Use simple present. (`is moving`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3036 — Phrasal verb "Check out". Try: examine. (`Check out`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3043 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3071 — Phrasal verb "Set up". Try: prepare / install. (`Set up`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3106 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Generate Instagram image ads`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3106 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`pages using browser agents`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3109 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`demo requires browser-use v`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3119 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Creates scroll-stopping Instagram image ads`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3125 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3164 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Generate Instagram image ad default`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3165 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`video ad using Veo`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3202 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`message scheduler using browser agents`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3205 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`demo requires browser-use v`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3220 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3248 — Modal + be + past participle. Use an active verb. (`will be saved`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3261 — Modal + be + past participle. Use an active verb. (`will be sent`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3330 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`sentiment analysis using browser agents`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3333 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`demo requires browser-use v`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3344 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Persistent deduplication across monitoring sessions`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3348 — Phrasal verb "Make sure". Try: verify / ensure. (`Make sure`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3476 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3476 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Simple natural-language prompts via`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3539 — Semicolon. Use two sentences. (`**Agents** – CODE by default; more agents = deeper coverage`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3660 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`chain multiple tasks together`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3692 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`browser state across tasks`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3697 — "preserving" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, preserving all`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3704 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3708 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`View Complete Examples Directory`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3770 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:3772 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Playwright functions like screenshot`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:4272 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Logo data-og-width width data-og-height height`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:4274 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Logo data-og-width width data-og-height height`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/llms.txt:4446 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`favorite coding agent Cursor`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/README.md:3 — "opening" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by opening a`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/README.md:3 — "inspecting" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, inspecting the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:14 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`hybrid browser automation workflow`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/README.md:18 — "completing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`After completing this`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:60 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`hybrid browser automation workflow`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:87 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Capture screenshots while iterating`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/15-browser-use/README.md:96 — Semicolon. Use two sentences. (`**Separate observation from action.** Let the agent search, read, and extract data first; require an explicit approval step before it submits forms, sends messa`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/15-browser-use/README.md:96 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/README.md:99 — "asking" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`before asking the`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:99 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`deterministic checks around risky steps`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/README.md:101 — Modal + be + past participle. Use an active verb. (`can be reviewed`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/README.md:103 — "contacting" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, contacting a`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:112 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Intelligent form filling across multi-step flows`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/README.md:116 — Progressive tense (be + -ing). Use simple present. (`is bringing`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:120 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`security group membership requests`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/15-browser-use/README.md:122 — "Triaging" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`Triaging IT`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:122 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`incidents updating ticket status`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:145 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`page changes often enough`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/15-browser-use/README.md:145 — Vague word "usually". Give the exact condition, value or action. (`usually`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:148 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`direct Playwright code handle`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/15-browser-use/README.md:161 — Semicolon. Use two sentences. (`Searching and extracting prices can be autonomous; account access, messages, purchases, and bookings should be user-approved.`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/README.md:172 — Modal + be + past participle. Use an active verb. (`should be avoided`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/15-browser-use/README.md:177 — Modal + be + past participle. Use an active verb. (`can be reviewed`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/15-browser-use/README.md:177 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`full page contents unless there`)
 - **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:5 — Perfect tense. Use simple past or present. (`have built`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:7 — "building" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by building a`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/16-deploying-scalable-agents/README.md:7 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`gap using Microsoft Foundry`)
@@ -2874,107 +1837,14 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/AGENTS.md:276 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Actions workflow handles translation updates`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/AGENTS.md:300 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Code development container configuration`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/AGENTS.md:311 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Model Context Protocol support`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:11 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Lesson s model-routing example keeps`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/CHANGELOG.md:13 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:14 — Semicolon. Use two sentences. (`**Environment configuration** ([.env.example](./.env.example)): switched the model deployment names to CODE; added CODE / CODE (Lesson 16 routing) and the previ`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:19 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry project using`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:19 — Semicolon. Use two sentences. (`Deploy equivalent non-deprecated models in your own project; the notebooks read the deployment name from CODE / CODE.`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:20 — Semicolon. Use two sentences. (`**Still requires extra resources for some lessons.** Lesson 05 needs Azure AI Search; the Lesson 08 Bing-grounding workflow (CODE) needs a Bing connection and M`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:20 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Still requires extra resources`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:20 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:28 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`production customer-support agent tools`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/CHANGELOG.md:29 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:29 — Possible noun cluster of 8 words. Break it up with "of", "for" or a verb. (`on-device engineering assistant Qwen function calling via Foundry`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:30 — Semicolon. Use two sentences. (`Lesson 16 gains a "Validating a Deployed Agent with Smoke Tests" section; Lessons 01/04/05 gain an optional smoke-test pointer.`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:39 — Semicolon. Use two sentences. (`**Main [README.md](./README.md)** lesson table: Lessons 16 and 17 now link to their content (previously "Coming Soon"); repository image bumped to CODE.`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/CHANGELOG.md:42 — "closing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, closing the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/CHANGELOG.md:43 — Progressive tense (be + -ing). Use simple present. (`is retiring`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:43 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Lesson s model-routing example keeps`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:47 — Semicolon. Use two sentences. (`**Not executed against live Azure.** The new lessons' notebooks are educational samples; run and validate them against your own Microsoft Foundry / Foundry Loca`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/CHANGELOG.md:48 — "running" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by running the`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:48 — Semicolon. Use two sentences. (`**Lesson 17 is local-only.** It has no Foundry Responses endpoint, so the smoke-test action does not apply; validate it by running the notebook on your workstat`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/CHANGELOG.md:57 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:57 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Agent Framework via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:60 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`former Semantic Kernel notebook`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/CHANGELOG.md:65 — "using" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, using the`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/CHANGELOG.md:68 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:68 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`full function-calling walkthrough tool schema`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:69 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry across Python`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/CHANGELOG.md:73 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:76 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:82 — Semicolon. Use two sentences. (`**Environment configuration** ([.env.example](./.env.example)): removed the GitHub Models variables (CODE, CODE, CODE); added CODE, CODE, and optional CODE; upd`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:83 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`above setup env vars`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:91 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Jupyter notebook execution outputs`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:99 — Semicolon. Use two sentences. (`**Not executed/compiled.** These are educational samples updated for API/naming correctness; they were not run against live Azure resources, and the .NET sample`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:100 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Older models support core Responses functionality`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:101 — Semicolon. Use two sentences. (`The canonical agent-creation call is CODE; APIs were validated against the framework's published docs and an installed build.`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:102 — Semicolon. Use two sentences. (`**Lesson 08 workflow notebook 04** intentionally keeps CODE (from CODE) because it uses Microsoft Foundry Agent Service hosted tools (Bing grounding, code inter`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/CHANGELOG.md:102 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`uses Microsoft Foundry Agent Service`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:103 — Semicolon. Use two sentences. (`**.NET default deployment.** Two Lesson 08 dotNET workflow samples previously hard-coded a specific model; they now default to CODE (CODE).`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/CHANGELOG.md:104 — Semicolon. Use two sentences. (`**Foundry Local** exposes an OpenAI-compatible **Chat Completions** endpoint and is intended for local development; use Azure OpenAI / Microsoft Foundry for the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/CODE_OF_CONDUCT.md:3 — Perfect tense. Use simple past or present. (`has adopted`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/README.md:41 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/README.md:56 — Phrasal verb "check out". Try: examine. (`check out`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/README.md:66 — Modal + be + past participle. Use an active verb. (`can be found`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/README.md:66 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`course includes code examples`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/README.md:68 — "utilize" → use (plain-word hint). (`utilize`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/README.md:68 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`exercises utilize Microsoft Agent Framework`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/README.md:68 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service V`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/README.md:75 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Foundry Agent Service`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/README.md:90 — Possible noun cluster of 7 words. Break it up with "of", "for" or a verb. (`Python code samples using Microsoft Agent Framework`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/README.md:119 — Phrasal verb "Check out". Try: examine. (`Check out`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/README.md:163 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`important code samples demonstrating Agentic`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/README.md:167 — "require" → need (plain-word hint). (`require`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/README.md:172 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/README.md:175 — Perfect tense. Use simple past or present. (`has adopted`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/README.md:177 — "additional" → more (plain-word hint). (`additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/README.md:194 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`errors while building visit`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/SECURITY.md:7 — Perfect tense. Use simple past or present. (`have found`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/SECURITY.md:11 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`security vulnerabilities through public`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/SECURITY.md:13 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Security Response Center`)
-- **P2** `ste.semicolon` microsoft__ai-agents-for-beginners/SECURITY.md:15 — Semicolon. Use two sentences. (`If possible, encrypt your message with our PGP key; please download it from the [Microsoft Security Response Center PGP Key page](URL`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/SECURITY.md:15 — Vague word "If possible". Give the exact condition, value or action. (`If possible`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/SECURITY.md:15 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Microsoft Security Response Center`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/SECURITY.md:17 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/SECURITY.md:17 — "ensure" → make sure → verify (plain-word hint). (`ensure`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/SECURITY.md:17 — Modal + be + past participle. Use an active verb. (`can be found`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/SECURITY.md:17 — "Additional" → more (plain-word hint). (`Additional`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/SECURITY.md:19 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`help us better understand`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/SECURITY.md:21 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/SECURITY.md:21 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/SECURITY.md:26 — Vague word "if possible". Give the exact condition, value or action. (`if possible`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/SECURITY.md:31 — Progressive tense (be + -ing). Use simple present. (`are reporting`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:31 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`short learning path instead`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:61 — Vague word "a few". Give the exact condition, value or action. (`a few`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:67 — Perfect tense. Use simple past or present. (`have been updated`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:119 — "deploying" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`after deploying the`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:143 — Modal + be + past participle. Use an active verb. (`should be grounded`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:159 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`model sees right now`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:163 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`context engineering means choosing`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:171 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`learner prefers Python examples`)
-- **P2** `ste.hedge` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:172 — Vague word "usually". Give the exact condition, value or action. (`usually`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:187 — Modal + be + past participle. Use an active verb. (`must be audited`)
-- **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/STUDY_GUIDE.md:207 — Modal + be + past participle. Use an active verb. (`should be included`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/SUPPORT.md:5 — Phrasal verb "Fill out". Try: complete. (`Fill out`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/SUPPORT.md:6 — Phrasal verb "Fill out". Try: complete. (`Fill out`)
-- **P2** `ste.phrasal_verb` microsoft__ai-agents-for-beginners/SUPPORT.md:7 — Phrasal verb "Fill out". Try: complete. (`Fill out`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/SUPPORT.md:9 — "publishing" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`before publishing your`)
 - **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/tests/lesson-01-smoke-tests.json:6 — Modal + be + past participle. Use an active verb. (`should be redirected`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/tests/lesson-04-smoke-tests.json:6 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`get me flight information`)
 - **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/tests/lesson-16-smoke-tests.json:1 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`Contoso customer support agent built`)
 - **P2** `ste.complex_tense` microsoft__ai-agents-for-beginners/tests/lesson-16-smoke-tests.json:2 — Modal + be + past participle. Use an active verb. (`should be answered`)
 - **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/tests/lesson-16-smoke-tests.json:11 — "repeating" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`without repeating it`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/tests/README.md:3 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`folder holds smoke-test catalogs`)
-- **P2** `ste.word_hint` microsoft__ai-agents-for-beginners/tests/README.md:11 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` microsoft__ai-agents-for-beginners/tests/README.md:37 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`agent whose text replies`)
-- **P2** `ste.ing_verb` microsoft__ai-agents-for-beginners/tests/README.md:43 — "running" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by running the`)
 
 ## 5. Labs tool runs
 
-- Agent Health Checker · microsoft__ai-agents-for-beginners/.agents/skills/jupyter-notebook/agents/openai.yaml · score 38 · Shippable prototype, not production-ready.
-- Agent Health Checker · microsoft__ai-agents-for-beginners/.devcontainer/devcontainer.json · score 38 · Shippable prototype, not production-ready.
-- Agent Health Checker · microsoft__ai-agents-for-beginners/.github/prompts/git-cherrypicking.prompt.md · score 38 · Shippable prototype, not production-ready.
-- Agent Health Checker · microsoft__ai-agents-for-beginners/.github/workflows/smoke-test.yml · score 43 · Shippable prototype, not production-ready.
 - Agent Health Checker · microsoft__ai-agents-for-beginners/tests/lesson-01-smoke-tests.json · score 38 · Shippable prototype, not production-ready.
 - Agent Health Checker · microsoft__ai-agents-for-beginners/tests/lesson-04-smoke-tests.json · score 38 · Shippable prototype, not production-ready.
 - Agent Health Checker · microsoft__ai-agents-for-beginners/tests/lesson-05-smoke-tests.json · score 38 · Shippable prototype, not production-ready.

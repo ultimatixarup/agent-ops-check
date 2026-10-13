@@ -1,29 +1,27 @@
 # Agent ops audit memo (self-run)
 
-_Generated locally by agent-ops-check 0.1.0 on 2026-10-13T08:09:38.857Z. No network calls were made. Nothing left this machine._
+_Generated locally by agent-ops-check 0.1.0 on 2026-10-13T08:21:52.971Z. No network calls were made. Nothing left this machine._
 
 > Heuristic regex and static checks, not a security audit. It can miss problems and can flag harmless code.
 
 Rules 2026.10.13 (2026-10-13). Rules are 0 day(s) old.
 
-**Overall score:** 45/100 · files scanned: 39 · agents: google-gemini__gemini-fullstack-langgraph-quickstart, backend, frontend
+**Overall score:** 60/100 · files scanned: 40 · agents: google-gemini__gemini-fullstack-langgraph-quickstart
 
 | Area | Score | High | Medium | Low |
 |---|---|---|---|---|
-| Personal-to-work data crossover | 89 | 1 | 0 | 1 |
+| Personal-to-work data crossover | 99 | 0 | 0 | 1 |
 | Irreversible actions | 0 | 1 | 62 | 0 |
-| Governance + cost | 47 | 0 | 11 | 9 |
+| Governance + cost | 81 | 0 | 3 | 7 |
 | Agent Health Checker + Labs tools | 97 | 0 | 0 | 3 |
 | Prompt-injection scan (ADSF) | 100 | 0 | 0 | 0 |
-| Simplified Technical English (STE) | 23 | 0 | 15 | 17 |
+| Simplified Technical English (STE) | 100 | 0 | 0 | 0 |
 
 ## 1. Agent and connector inventory
 
 | Agent | Connectors | Credentials (names only) | Scopes |
 |---|---|---|---|
-| google-gemini__gemini-fullstack-langgraph-quickstart | - | GEMINI_API_KEY, LANGSMITH_API_KEY | - |
-| backend | gmail | GEMINI_API_KEY | - |
-| frontend | - | - | - |
+| google-gemini__gemini-fullstack-langgraph-quickstart | gmail | GEMINI_API_KEY, LANGSMITH_API_KEY | - |
 
 ### Source-to-sink matrix (personal data → work destinations)
 
@@ -33,7 +31,7 @@ No agent both reads a personal source and writes to a work sink.
 
 | Agent | Action | Where | Approval | Dry-run | Rate limit | Domain allowlist |
 |---|---|---|---|---|---|---|
-| frontend | `.submit(` | google-gemini__gemini-fullstack-langgraph-quickstart/frontend/src/App.tsx:137 | **no** | **no** | **no** | **no** |
+| google-gemini__gemini-fullstack-langgraph-quickstart | `.submit(` | google-gemini__gemini-fullstack-langgraph-quickstart/frontend/src/App.tsx:137 | **no** | **no** | **no** | **no** |
 
 ## 3. AI inventory
 
@@ -45,13 +43,12 @@ No agent both reads a personal source and writes to a work sink.
 
 _Style checks inspired by ASD-STE100 writing rules. Not a certified ASD-STE100 checker; no specification text or dictionary is included._
 
-- google-gemini__gemini-fullstack-langgraph-quickstart/README.md: 63 sentences, 32 findings
 
 ## Document-wide prompt-injection scan (ADSF)
 
 _Regex and Unicode checks over every file. It flags suspicious content; a clean result does not prove a file is safe._
 
-39 files scanned, 0 findings.
+40 files scanned, 0 findings.
 
 ## Standards map (maps to, not compliance)
 
@@ -64,13 +61,13 @@ _Practices summarized from Anthropic's public docs and engineering posts on buil
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | AN-CONFIRM Ask a human before consequential or irreversible actions | ✅ | 63 (1 high) | Gate map |
-| AN-LEASTPRIV Least-privilege tools and credentials | ✅ | 61 (1 high) | Shared tokens, reach, wildcards |
+| AN-LEASTPRIV Least-privilege tools and credentials | ✅ | 60 | Shared tokens, reach, wildcards |
 | AN-UNTRUSTED Treat tool results and web/doc content as untrusted (prompt injection) | ✅ | - | Injection scan |
 | AN-SANDBOX Run in a sandbox / isolated environment | 🟡 | - | Real browser profile use |
-| AN-PROMPT Clear system prompt with explicit constraints | ✅ | 34 | Deny-list check, STE clarity |
+| AN-PROMPT Clear system prompt with explicit constraints | ✅ | 2 | Deny-list check, STE clarity |
 | AN-EVALS Build evaluations with test cases | ✅ | - | Generates functional + security eval sets (not run) |
-| AN-LIMITS Limit cost and steps | ✅ | 8 | Caps and budgets |
-| AN-OBSERVE Log and monitor agent actions | ✅ | 1 | Tracing |
+| AN-LIMITS Limit cost and steps | ✅ | 2 | Caps and budgets |
+| AN-OBSERVE Log and monitor agent actions | ✅ | - | Tracing |
 
 ### Microsoft Copilot Studio governance areas (summarized)
 
@@ -79,10 +76,10 @@ _Areas summarized from Microsoft's public documentation. This tool scans exporte
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | CS-DLP Data policies for connectors | 🟡 | - | Source-to-sink reach in exported configs |
-| CS-AUTH Agent authentication | 🟡 | 1 (1 high) | Credentials in files |
+| CS-AUTH Agent authentication | 🟡 | - | Credentials in files |
 | CS-SHARE Maker permissions and sharing | ⬜ | - | Not checked (tenant setting) |
 | CS-ENV Environment strategy (dev/test/prod) | ⬜ | - | Not checked |
-| CS-AUDIT Audit logging and monitoring | 🟡 | 1 | Tracing references |
+| CS-AUDIT Audit logging and monitoring | 🟡 | - | Tracing references |
 | CS-KNOW Knowledge sources for generative answers | 🟡 | - | Injection scan over knowledge files you point it at |
 | CS-MOD Content moderation and instructions | 🟡 | - | Prompt checks |
 | CS-HANDOFF Escalation / human handoff | ✅ | - | Handoff rules and transcripts |
@@ -100,16 +97,16 @@ _Domain names only._ (3 ✅ · 9 🟡 · 6 ⬜)
 | CCC Change Control & Configuration | 🟡 | 7 | Pinning, review record |
 | CEK Cryptography, Encryption & Key Management | 🟡 | - | Hardcoded keys |
 | DCS Datacenter Security | ⬜ | - | Not checked |
-| DSP Data Security & Privacy Lifecycle | ✅ | 2 (1 high) | PII, secrets, data paths |
+| DSP Data Security & Privacy Lifecycle | ✅ | 1 | PII, secrets, data paths |
 | GRC Governance, Risk & Compliance | 🟡 | 1 | Owner, inventory |
 | HRS Human Resources | ⬜ | - | Not checked |
-| IAM Identity & Access Management | ✅ | 1 (1 high) | Shared credentials, scopes, profiles |
+| IAM Identity & Access Management | ✅ | - | Shared credentials, scopes, profiles |
 | IPY Interoperability & Portability | ⬜ | - | Not checked |
 | I&S Infrastructure Security | ⬜ | - | Not checked |
-| LOG Logging & Monitoring | ✅ | 4 | Tracing, observability gaps |
+| LOG Logging & Monitoring | ✅ | 3 | Tracing, observability gaps |
 | MDS Model Security | 🟡 | 6 | Injection, pinning |
 | SEF Security Incident Management & Forensics | ⬜ | - | Not checked |
-| STA Supply Chain, Transparency & Accountability | 🟡 | 20 | Inventory, disclosure |
+| STA Supply Chain, Transparency & Accountability | 🟡 | 10 | Inventory, disclosure |
 | TVM Threat & Vulnerability Management | 🟡 | 63 (1 high) | Static findings |
 | UEM Universal Endpoint Management | ⬜ | - | Not checked |
 
@@ -123,7 +120,7 @@ _Selected articles for orientation. Not legal advice; maps to, not compliant wit
 | Art.5 Prohibited practices | ⬜ | - | Not checked |
 | Art.9 Risk management system (high-risk) | 🟡 | - | Audit memo is an input |
 | Art.10 Data and data governance | 🟡 | 1 | Personal data in agent files |
-| Art.12 Record-keeping (logging) | ✅ | 4 | Tracing/logging checks |
+| Art.12 Record-keeping (logging) | ✅ | 3 | Tracing/logging checks |
 | Art.13 Transparency and information to deployers | 🟡 | 1 | Owner docs |
 | Art.14 Human oversight | ✅ | 63 (1 high) | Approval gates, handoff |
 | Art.15 Accuracy, robustness and cybersecurity | 🟡 | - | Injection, secrets, grounding |
@@ -137,13 +134,13 @@ _Annex A area names only (the standard text is copyrighted and not included). Ma
 |---|---|---|---|
 | A.2 Policies related to AI | ⬜ | - | Not checked |
 | A.3 Internal organization (roles, responsibilities) | 🟡 | 1 | Owner/maintainer recorded |
-| A.4 Resources for AI systems (inventory of tools, data, compute) | ✅ | 22 (1 high) | AI and connector inventory |
+| A.4 Resources for AI systems (inventory of tools, data, compute) | ✅ | 11 | AI and connector inventory |
 | A.5 Assessing impacts of AI systems | 🟡 | - | Audit memo is a starting input |
-| A.6 AI system life cycle (verification, deployment, operation, monitoring) | 🟡 | 10 | Tracing, pinning; generated eval sets |
+| A.6 AI system life cycle (verification, deployment, operation, monitoring) | 🟡 | 9 | Tracing, pinning; generated eval sets |
 | A.7 Data for AI systems | 🟡 | 1 | Personal data reach |
 | A.8 Information for interested parties | 🟡 | - | Bot disclosure |
 | A.9 Use of AI systems (responsible use, human oversight) | ✅ | 63 (1 high) | Approval gates, handoff rules |
-| A.10 Third-party and customer relationships | 🟡 | 20 | Provider inventory |
+| A.10 Third-party and customer relationships | 🟡 | 10 | Provider inventory |
 
 ### MITRE ATLAS (selected techniques)
 
@@ -154,10 +151,10 @@ _Selected agent techniques; IDs/names per ATLAS data (via framework-pitch resear
 | AML.T0051 LLM Prompt Injection (direct and indirect) | ✅ | - | Injection scan + untrusted-input rules + eval cases |
 | AML.T0054 LLM Jailbreak | 🟡 | - | Obeyed overrides in transcripts; jailbreak eval cases |
 | AML.T0056 LLM Meta Prompt Extraction | ✅ | - | Secrets in prompts, leaks in transcripts |
-| AML.T0057 LLM Data Leakage | ✅ | 2 (1 high) | Personal-to-work paths, other customers' data |
-| AML.T0053 AI Agent Tool Invocation | ✅ | 64 (2 high) | Tool gates and credential sharing |
-| AML.T0034 Cost Harvesting | ✅ | 6 | Caps and budgets |
-| AML.T0029 Denial of ML Service | 🟡 | 3 | Timeouts and step caps |
+| AML.T0057 LLM Data Leakage | ✅ | 1 | Personal-to-work paths, other customers' data |
+| AML.T0053 AI Agent Tool Invocation | ✅ | 63 (1 high) | Tool gates and credential sharing |
+| AML.T0034 Cost Harvesting | ✅ | 2 | Caps and budgets |
+| AML.T0029 Denial of ML Service | 🟡 | - | Timeouts and step caps |
 | AML.T0055 Unsecured Credentials | ✅ | - | Hardcoded secrets |
 | AML.T0010 ML Supply Chain Compromise | 🟡 | 6 | Pinning only |
 | AML.T0083 Credentials from AI Agent Configuration | ✅ | - | Secrets in agent/MCP configs, .env present |
@@ -172,11 +169,11 @@ _Function names from AI RMF 1.0; risk names from the GenAI Profile. This tool su
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | GOVERN Govern: policies, accountability, oversight | 🟡 | 2 | Owner and review records; AI inventory |
-| MAP Map: context, components, third parties | ✅ | 22 (1 high) | AI inventory (providers, SDKs, models), connector inventory and source-to-sink map |
-| MEASURE Measure: test and evaluate | 🟡 | 4 | Generates eval sets (functional + security) from the source; does not run them |
+| MAP Map: context, components, third parties | ✅ | 11 | AI inventory (providers, SDKs, models), connector inventory and source-to-sink map |
+| MEASURE Measure: test and evaluate | 🟡 | 3 | Generates eval sets (functional + security) from the source; does not run them |
 | MANAGE Manage: prioritize and respond to risks | 🟡 | - | P0–P2 audit memo and SARIF for CI; no incident workflow |
 | GAI-Confabulation GenAI risk: Confabulation | 🟡 | - | Grounding rule checks |
-| GAI-DataPrivacy GenAI risk: Data Privacy | ✅ | 2 (1 high) | PII, secrets, personal-to-work paths |
+| GAI-DataPrivacy GenAI risk: Data Privacy | ✅ | 1 | PII, secrets, personal-to-work paths |
 | GAI-HumanAI GenAI risk: Human-AI Configuration | ✅ | 63 (1 high) | Approval gates, disclosure, handoff |
 | GAI-InfoIntegrity GenAI risk: Information Integrity | 🟡 | - | FAQ grounding; STE information-loss compare |
 | GAI-InfoSecurity GenAI risk: Information Security | ✅ | - | Injection scan, secrets, token lifting |
@@ -191,14 +188,14 @@ _Item names as listed in the OWASP GenAI Security Project document (via framewor
 |---|---|---|---|
 | ASI01 Agent Goal Hijack | ✅ | 2 | ADSF injection scan over all docs, untrusted-input rule, deny-list check |
 | ASI02 Tool Misuse and Exploitation | ✅ | 63 (1 high) | Gate map, rate limits, allowlists, wildcard domains, URL shorteners |
-| ASI03 Identity and Privilege Abuse | ✅ | 1 (1 high) | Shared credentials, scopes, browser profiles, cookie reads |
+| ASI03 Identity and Privilege Abuse | ✅ | - | Shared credentials, scopes, browser profiles, cookie reads |
 | ASI04 Agentic Supply Chain Vulnerabilities | 🟡 | 6 | MCP/provider inventory, unpinned models; no registry integrity check |
 | ASI05 Unexpected Code Execution | 🟡 | - | Free-form shell/exec/SQL tools |
 | ASI06 Memory and Context Poisoning | 🟡 | - | ADSF scan of knowledge/memory files you point it at; no runtime memory check |
 | ASI07 Insecure Inter-Agent Communication | ⬜ | - | Not checked |
-| ASI08 Cascading Failures | 🟡 | 5 | Step, loop and retry caps, timeouts, single-provider fallback |
+| ASI08 Cascading Failures | 🟡 | - | Step, loop and retry caps, timeouts, single-provider fallback |
 | ASI09 Human-Agent Trust Exploitation | 🟡 | - | Bot disclosure, human claims, unrecorded handoffs |
-| ASI10 Rogue Agents | 🟡 | 5 | Tracing, owner, observability; no stop-switch check |
+| ASI10 Rogue Agents | 🟡 | 4 | Tracing, owner, observability; no stop-switch check |
 
 ### OWASP Agentic AI – Threats and Mitigations (T1–T15)
 
@@ -208,13 +205,13 @@ _Threat names from the OWASP Agentic Security Initiative taxonomy._ (5 ✅ · 7 
 |---|---|---|---|
 | T1 Memory Poisoning | 🟡 | - | Hidden instructions in files an agent may load as memory/knowledge |
 | T2 Tool Misuse | ✅ | 63 (1 high) | Gate map: approval, dry-run, rate limit, allowlist per tool |
-| T3 Privilege Compromise | ✅ | 1 (1 high) | Shared tokens, broad reach, real browser profiles, cookie reads |
-| T4 Resource Overload | ✅ | 9 | Caps, timeouts, loops, budgets |
+| T3 Privilege Compromise | ✅ | - | Shared tokens, broad reach, real browser profiles, cookie reads |
+| T4 Resource Overload | ✅ | 2 | Caps, timeouts, loops, budgets |
 | T5 Cascading Hallucination Attacks | 🟡 | - | Grounding rules only |
 | T6 Intent Breaking & Goal Manipulation | ✅ | - | Injection scan, untrusted-input rule, obeyed overrides |
 | T7 Misaligned & Deceptive Behaviors | 🟡 | - | Bot-disclosure / human-persona checks |
-| T8 Repudiation & Untraceability | ✅ | 4 | Tracing and logging checks |
-| T9 Identity Spoofing & Impersonation | 🟡 | 1 (1 high) | Shared credentials; claims to be human |
+| T8 Repudiation & Untraceability | ✅ | 3 | Tracing and logging checks |
+| T9 Identity Spoofing & Impersonation | 🟡 | - | Shared credentials; claims to be human |
 | T10 Overwhelming Human in the Loop | ⬜ | - | Not checked |
 | T11 Unexpected RCE and Code Attacks | 🟡 | - | Shell/exec/SQL tools fed by model output |
 | T12 Agent Communication Poisoning | 🟡 | - | Injection patterns in shared files only; no runtime message checks |
@@ -229,26 +226,25 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | LLM01 Prompt Injection | ✅ | 2 | Document-wide injection scan (ADSF tab), untrusted-input rule in prompts, obeyed overrides in transcripts, injection eval cases |
-| LLM02 Sensitive Information Disclosure | ✅ | 2 (1 high) | Secrets/PII in files, personal-to-work source-to-sink paths, confidential text in prompts, leaks in transcripts |
+| LLM02 Sensitive Information Disclosure | ✅ | 1 | Secrets/PII in files, personal-to-work source-to-sink paths, confidential text in prompts, leaks in transcripts |
 | LLM03 Supply Chain | 🟡 | 6 | Model pinning and SDK inventory only; no dependency or model-provenance scan |
 | LLM04 Data and Model Poisoning | 🟡 | - | Poisoned instructions hidden in docs/knowledge files; no training-data checks |
 | LLM05 Improper Output Handling | 🟡 | - | Shell/SQL/exec tools and ungated actions that consume model output; no taint tracking |
-| LLM06 Excessive Agency | ✅ | 64 (2 high) | Gate map for irreversible tools and browser actions, shared credentials, scopes |
+| LLM06 Excessive Agency | ✅ | 63 (1 high) | Gate map for irreversible tools and browser actions, shared credentials, scopes |
 | LLM07 System Prompt Leakage | ✅ | - | Secrets and internal notes in prompts; leaked prompt text in transcripts |
 | LLM08 Vector and Embedding Weaknesses | ⬜ | - | Not checked |
-| LLM09 Misinformation | 🟡 | 32 | 'I don't know' rule, made-up prices/policies vs your FAQ; STE clarity checks |
-| LLM10 Unbounded Consumption | ✅ | 11 | Token caps, timeouts, retry/step caps, infinite loops, budget alerts, bill smells |
+| LLM09 Misinformation | 🟡 | - | 'I don't know' rule, made-up prices/policies vs your FAQ; STE clarity checks |
+| LLM10 Unbounded Consumption | ✅ | 2 | Token caps, timeouts, retry/step caps, infinite loops, budget alerts, bill smells |
 
 
 ## Generated eval sets
 
-0 functional and 7 security test cases in `evals/` (JSONL + README.md). Generated from the source; not run.
+0 functional and 4 security test cases in `evals/` (JSONL + README.md). Generated from the source; not run.
 
 ## 4. Findings (P0 = fix before real traffic)
 
 ### Personal-to-work data crossover
 
-- **P0** `crossover.shared_credential` (across agents) — Credential GEMINI_API_KEY is used by 2 agents: backend, google-gemini__gemini-fullstack-langgraph-quickstart. They are not really separate agents if they share connections. Give each its own scoped token. (`GEMINI_API_KEY`)
 - **P2** `crossover.pii.email_address` google-gemini__gemini-fullstack-langgraph-quickstart/backend/pyproject.toml:6 — Possible personal data (email_address) in agent code, prompt or fixture. (`schm…om (masked)`)
 
 ### Irreversible actions
@@ -320,24 +316,14 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 ### Governance + cost
 
 - **P1** `governance.no_owner` (project) — No owner/maintainer documented. Every agent needs a named person who answers for it.
-- **P1** `governance.no_max_tokens` google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py:36 — [backend] No max_tokens / output cap set on model calls.
-- **P1** `governance.no_timeout` google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py:36 — [backend] No timeout on model or tool calls.
-- **P1** `governance.no_budget` google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py:36 — [backend] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
-- **P1** `governance.no_tracing` google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py:36 — [backend] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost.
-- **P1** `governance.no_max_tokens` google-gemini__gemini-fullstack-langgraph-quickstart/frontend/components.json:1 — [frontend] No max_tokens / output cap set on model calls.
-- **P1** `governance.no_recursion_cap` google-gemini__gemini-fullstack-langgraph-quickstart/frontend/components.json:1 — [frontend] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` google-gemini__gemini-fullstack-langgraph-quickstart/frontend/components.json:1 — [frontend] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
-- **P1** `governance.no_max_tokens` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:1 — [google-gemini__gemini-fullstack-langgraph-quickstart] No max_tokens / output cap set on model calls.
-- **P1** `governance.no_recursion_cap` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:1 — [google-gemini__gemini-fullstack-langgraph-quickstart] No step / iteration / recursion cap for the agent loop.
-- **P1** `governance.no_budget` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:1 — [google-gemini__gemini-fullstack-langgraph-quickstart] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
+- **P1** `governance.no_max_tokens` google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py:36 — [google-gemini__gemini-fullstack-langgraph-quickstart] No max_tokens / output cap set on model calls.
+- **P1** `governance.no_budget` google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py:36 — [google-gemini__gemini-fullstack-langgraph-quickstart] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here.
 - **P2** `governance.no_review_record` (project) — No documented review (reviewed-by / review date / changelog).
 - **P2** `governance.unpinned_model` google-gemini__gemini-fullstack-langgraph-quickstart/backend/examples/cli_research.py:24 — Model 'gemini-2.5-pro-preview-05-06' is not pinned to a dated version, so behavior and price can change under you. (`gemini-2.5-pro-preview-05-06`)
 - **P2** `governance.unpinned_model` google-gemini__gemini-fullstack-langgraph-quickstart/backend/src/agent/configuration.py:12 — Model 'gemini-2.0-flash' is not pinned to a dated version, so behavior and price can change under you. (`gemini-2.0-flash`)
 - **P2** `governance.unpinned_model` google-gemini__gemini-fullstack-langgraph-quickstart/backend/src/agent/configuration.py:19 — Model 'gemini-2.5-flash' is not pinned to a dated version, so behavior and price can change under you. (`gemini-2.5-flash`)
 - **P2** `governance.unpinned_model` google-gemini__gemini-fullstack-langgraph-quickstart/backend/src/agent/configuration.py:26 — Model 'gemini-2.5-pro' is not pinned to a dated version, so behavior and price can change under you. (`gemini-2.5-pro`)
-- **P2** `governance.no_retry_cap` google-gemini__gemini-fullstack-langgraph-quickstart/frontend/components.json:1 — [frontend] No explicit retry limit or backoff.
 - **P2** `governance.unpinned_model` google-gemini__gemini-fullstack-langgraph-quickstart/frontend/src/components/InputForm.tsx:29 — Model 'gemini-2.5-flash-preview-04-17' is not pinned to a dated version, so behavior and price can change under you. (`gemini-2.5-flash-preview-04-17`)
-- **P2** `governance.no_retry_cap` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:1 — [google-gemini__gemini-fullstack-langgraph-quickstart] No explicit retry limit or backoff.
 - **P2** `governance.unpinned_model` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:100 — Model 'gemini-fullstack-langgraph' is not pinned to a dated version, so behavior and price can change under you. (`gemini-fullstack-langgraph`)
 
 ### Agent Health Checker + Labs tools
@@ -353,38 +339,8 @@ No findings.
 
 ### Simplified Technical English (STE)
 
-- **P1** `ste.sentence_length` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:3 — Descriptive sentence has 45 words (limit 25). Split it. (`The agent is designed to perform comprehensive research on a user's query by dynamically generating search terms, querying the web using Google Search, reflecti`)
-- **P1** `ste.passive_voice` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:3 — Passive voice. Say who does the action (active voice). (`is designed`)
-- **P1** `ste.passive_voice` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:19 — Passive voice. Say who does the action (active voice). (`is divided`)
-- **P1** `ste.multiple_instructions` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:35 — More than one instruction in one sentence. Write one instruction per sentence. (`Open the CODE file and add your Gemini API key: CODE`)
-- **P1** `ste.sentence_length` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:73 — Descriptive sentence has 31 words (limit 25). Split it. (`**Iterative Refinement:** If gaps are found or the information is insufficient, it generates follow-up queries and repeats the web research and reflection steps`)
-- **P1** `ste.passive_voice` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:73 — Passive voice. Say who does the action (active voice). (`are found`)
-- **P1** `ste.sentence_length` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:74 — Descriptive sentence has 28 words (limit 25). Split it. (`**Finalize Answer:** Once the research is deemed sufficient, the agent synthesizes the gathered information into a coherent answer, including citations from the`)
-- **P1** `ste.passive_voice` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:74 — Passive voice. Say who does the action (active voice). (`is deemed`)
-- **P1** `ste.passive_voice` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:90 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.sentence_length` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:90 — Descriptive sentence has 29 words (limit 25). Split it. (`Postgres is used to store assistants, threads, runs, persist thread state and long term memory, and to manage the state of the background task queue with 'exact`)
-- **P1** `ste.passive_voice` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:90 — Passive voice. Say who does the action (active voice). (`is used`)
-- **P1** `ste.sentence_length` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:90 — Descriptive sentence has 44 words (limit 25). Split it. (`For more details on how to deploy the backend server, take a look at the [LangGraph Documentation](URL Below is an example of how to build a Docker image that i`)
-- **P1** `ste.sentence_length` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:94 — Descriptive sentence has 31 words (limit 25). Split it. (`_Note: If you are not running the docker-compose.yml example or exposing the backend server to the public internet, you should update the CODE in the CODE file `)
-- **P1** `ste.passive_voice` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:94 — Passive voice. Say who does the action (active voice). (`is set`)
-- **P1** `ste.passive_voice` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:120 — Passive voice. Say who does the action (active voice). (`is licensed`)
-- **P2** `ste.ing_verb` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:3 — "querying" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, querying the`)
-- **P2** `ste.word_hint` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:3 — "perform" → do (plain-word hint). (`perform`)
-- **P2** `ste.noun_cluster` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:3 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`web using Google Search`)
-- **P2** `ste.noun_cluster` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:11 — Possible noun cluster of 8 words. Break it up with "of", "for" or a verb. (`Dynamic search query generation using Google Gemini models`)
-- **P2** `ste.word_hint` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:12 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:12 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`web research via Google Search`)
-- **P2** `ste.ing_verb` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:22 — "including" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, including the`)
-- **P2** `ste.ing_verb` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:34 — "copying" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`by copying the`)
-- **P2** `ste.word_hint` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:60 — "e.g." → for example (plain-word hint). (`e.g.`)
-- **P2** `ste.hedge` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:72 — Vague word "sufficient". Give the exact condition, value or action. (`sufficient`)
-- **P2** `ste.word_hint` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:72 — "sufficient" → enough (plain-word hint). (`sufficient`)
-- **P2** `ste.ing_verb` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:74 — "using" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`, using a`)
-- **P2** `ste.hedge` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:74 — Vague word "sufficient". Give the exact condition, value or action. (`sufficient`)
-- **P2** `ste.word_hint` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:74 — "sufficient" → enough (plain-word hint). (`sufficient`)
-- **P2** `ste.word_hint` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:90 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.complex_tense` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:94 — Progressive tense (be + -ing). Use simple present. (`are not running`)
-- **P2** `ste.ing_verb` google-gemini__gemini-fullstack-langgraph-quickstart/README.md:115 — "building" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`For building the`)
+No findings.
+
 
 ## 5. Labs tool runs
 

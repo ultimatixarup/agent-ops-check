@@ -1,21 +1,21 @@
 # Agent ops audit memo (self-run)
 
-_Generated locally by agent-ops-check 0.1.0 on 2026-10-13T08:09:52.092Z. No network calls were made. Nothing left this machine._
+_Generated locally by agent-ops-check 0.1.0 on 2026-10-13T08:21:57.131Z. No network calls were made. Nothing left this machine._
 
 > Heuristic regex and static checks, not a security audit. It can miss problems and can flag harmless code.
 
 Rules 2026.10.13 (2026-10-13). Rules are 0 day(s) old.
 
-**Overall score:** 8/100 · files scanned: 359 · agents: customer-support-agent-with-agentcore, end-to-end-customer-service-agent, multitenant-agentic-platform, shopping-concierge-agent, travel-concierge-agent
+**Overall score:** 28/100 · files scanned: 360 · agents: customer-support-agent-with-agentcore, end-to-end-customer-service-agent, multitenant-agentic-platform, shopping-concierge-agent, travel-concierge-agent
 
 | Area | Score | High | Medium | Low |
 |---|---|---|---|---|
-| Personal-to-work data crossover | 0 | 16 | 0 | 0 |
-| Irreversible actions | 0 | 50 | 433 | 0 |
-| Governance + cost | 24 | 2 | 12 | 8 |
-| Agent Health Checker + Labs tools | 0 | 17 | 13 | 2 |
-| Prompt-injection scan (ADSF) | 0 | 38 | 1 | 0 |
-| Simplified Technical English (STE) | 0 | 0 | 246 | 580 |
+| Personal-to-work data crossover | 40 | 6 | 0 | 0 |
+| Irreversible actions | 0 | 47 | 433 | 0 |
+| Governance + cost | 44 | 0 | 12 | 8 |
+| Agent Health Checker + Labs tools | 98 | 0 | 0 | 2 |
+| Prompt-injection scan (ADSF) | 0 | 27 | 1 | 11 |
+| Simplified Technical English (STE) | 0 | 0 | 237 | 562 |
 
 ## 1. Agent and connector inventory
 
@@ -35,11 +35,8 @@ No agent both reads a personal source and writes to a work sink.
 
 | Agent | Action | Where | Approval | Dry-run | Rate limit | Domain allowlist |
 |---|---|---|---|---|---|---|
-| customer-support-agent-with-agentcore | `get_order` | awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:237 | **no** | **no** | **no** | **no** |
 | customer-support-agent-with-agentcore | `process_refund` | awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:260 | **no** | **no** | **no** | **no** |
-| customer-support-agent-with-agentcore | `get_order` | awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/handler.py:100 | **no** | **no** | **no** | **no** |
 | customer-support-agent-with-agentcore | `process_refund` | awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/handler.py:215 | **no** | **no** | **no** | **no** |
-| customer-support-agent-with-agentcore | `get_order` | awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/order_handler.py:159 | **no** | **no** | **no** | **no** |
 | customer-support-agent-with-agentcore | `process_refund` | awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/order_handler.py:230 | **no** | **no** | **no** | **no** |
 | end-to-end-customer-service-agent | `delete` | awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/cx-agent-backend/cx_agent_backend/domain/repositories/conversation_repository.py:28 | **no** | **no** | yes | **no** |
 | end-to-end-customer-service-agent | `send_message` | awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/cx-agent-backend/cx_agent_backend/domain/services/conversation_service.py:42 | **no** | **no** | yes | **no** |
@@ -103,7 +100,6 @@ _Style checks inspired by ASD-STE100 writing rules. Not a certified ASD-STE100 c
 - awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/CODE_OF_CONDUCT.md: 3 sentences, 2 findings
 - awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/CONTRIBUTING.md: 37 sentences, 25 findings
 - awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/README.md: 161 sentences, 101 findings
-- awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md: 111 sentences, 27 findings
 - awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/README.md: 15 sentences, 2 findings
 - awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/SETUP.md: 42 sentences, 6 findings
 - awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json: 5 sentences, 0 findings
@@ -112,7 +108,6 @@ _Style checks inspired by ASD-STE100 writing rules. Not a certified ASD-STE100 c
 - awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json: 1 sentences, 1 findings
 - awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json: 4 sentences, 1 findings
 - awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json: 2 sentences, 0 findings
-- awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/src/cdk_requirements.txt: 0 sentences, 0 findings
 - awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/DEPLOYMENT.md: 133 sentences, 25 findings
 - awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/README.md: 27 sentences, 7 findings
 - awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/local-visa-server/README.md: 23 sentences, 8 findings
@@ -160,7 +155,7 @@ _Style checks inspired by ASD-STE100 writing rules. Not a certified ASD-STE100 c
 
 _Regex and Unicode checks over every file. It flags suspicious content; a clean result does not prove a file is safe._
 
-359 files scanned, 39 findings.
+360 files scanned, 39 findings.
 
 ## Standards map (maps to, not compliance)
 
@@ -172,11 +167,11 @@ _Practices summarized from Anthropic's public docs and engineering posts on buil
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| AN-CONFIRM Ask a human before consequential or irreversible actions | ✅ | 483 (50 high) | Gate map |
+| AN-CONFIRM Ask a human before consequential or irreversible actions | ✅ | 480 (47 high) | Gate map |
 | AN-LEASTPRIV Least-privilege tools and credentials | ✅ | 430 (2 high) | Shared tokens, reach, wildcards |
-| AN-UNTRUSTED Treat tool results and web/doc content as untrusted (prompt injection) | ✅ | 39 (38 high) | Injection scan |
+| AN-UNTRUSTED Treat tool results and web/doc content as untrusted (prompt injection) | ✅ | 39 (27 high) | Injection scan |
 | AN-SANDBOX Run in a sandbox / isolated environment | 🟡 | - | Real browser profile use |
-| AN-PROMPT Clear system prompt with explicit constraints | ✅ | 831 | Deny-list check, STE clarity |
+| AN-PROMPT Clear system prompt with explicit constraints | ✅ | 804 | Deny-list check, STE clarity |
 | AN-EVALS Build evaluations with test cases | ✅ | - | Generates functional + security eval sets (not run) |
 | AN-LIMITS Limit cost and steps | ✅ | 10 | Caps and budgets |
 | AN-OBSERVE Log and monitor agent actions | ✅ | 1 | Tracing |
@@ -192,10 +187,10 @@ _Areas summarized from Microsoft's public documentation. This tool scans exporte
 | CS-SHARE Maker permissions and sharing | ⬜ | - | Not checked (tenant setting) |
 | CS-ENV Environment strategy (dev/test/prod) | ⬜ | - | Not checked |
 | CS-AUDIT Audit logging and monitoring | 🟡 | 1 | Tracing references |
-| CS-KNOW Knowledge sources for generative answers | 🟡 | 39 (38 high) | Injection scan over knowledge files you point it at |
-| CS-MOD Content moderation and instructions | 🟡 | 69 (55 high) | Prompt checks |
+| CS-KNOW Knowledge sources for generative answers | 🟡 | 39 (27 high) | Injection scan over knowledge files you point it at |
+| CS-MOD Content moderation and instructions | 🟡 | 39 (27 high) | Prompt checks |
 | CS-HANDOFF Escalation / human handoff | ✅ | - | Handoff rules and transcripts |
-| CS-ACTIONS Actions and flows that change data | ✅ | 483 (50 high) | Gate map |
+| CS-ACTIONS Actions and flows that change data | ✅ | 480 (47 high) | Gate map |
 
 ### CSA AI Controls Matrix (AICM) domains
 
@@ -204,22 +199,22 @@ _Domain names only._ (3 ✅ · 9 🟡 · 6 ⬜)
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | A&A Audit & Assurance | 🟡 | - | Audit memo + SARIF |
-| AIS Application & Interface Security | 🟡 | 522 (88 high) | Gates, injection |
+| AIS Application & Interface Security | 🟡 | 519 (74 high) | Gates, injection |
 | BCR Business Continuity & Operational Resilience | 🟡 | - | Single-LLM fallback |
 | CCC Change Control & Configuration | 🟡 | 4 | Pinning, review record |
 | CEK Cryptography, Encryption & Key Management | 🟡 | - | Hardcoded keys |
 | DCS Datacenter Security | ⬜ | - | Not checked |
-| DSP Data Security & Privacy Lifecycle | ✅ | 16 (16 high) | PII, secrets, data paths |
+| DSP Data Security & Privacy Lifecycle | ✅ | 6 (6 high) | PII, secrets, data paths |
 | GRC Governance, Risk & Compliance | 🟡 | 1 | Owner, inventory |
 | HRS Human Resources | ⬜ | - | Not checked |
 | IAM Identity & Access Management | ✅ | 2 (2 high) | Shared credentials, scopes, profiles |
 | IPY Interoperability & Portability | ⬜ | - | Not checked |
 | I&S Infrastructure Security | ⬜ | - | Not checked |
 | LOG Logging & Monitoring | ✅ | 3 | Tracing, observability gaps |
-| MDS Model Security | 🟡 | 42 (38 high) | Injection, pinning |
+| MDS Model Security | 🟡 | 42 (27 high) | Injection, pinning |
 | SEF Security Incident Management & Forensics | ⬜ | - | Not checked |
-| STA Supply Chain, Transparency & Accountability | 🟡 | 22 (2 high) | Inventory, disclosure |
-| TVM Threat & Vulnerability Management | 🟡 | 522 (88 high) | Static findings |
+| STA Supply Chain, Transparency & Accountability | 🟡 | 20 | Inventory, disclosure |
+| TVM Threat & Vulnerability Management | 🟡 | 519 (74 high) | Static findings |
 | UEM Universal Endpoint Management | ⬜ | - | Not checked |
 
 ### EU AI Act basics (selected articles)
@@ -231,11 +226,11 @@ _Selected articles for orientation. Not legal advice; maps to, not compliant wit
 | Art.4 AI literacy | ⬜ | - | Not checked |
 | Art.5 Prohibited practices | ⬜ | - | Not checked |
 | Art.9 Risk management system (high-risk) | 🟡 | - | Audit memo is an input |
-| Art.10 Data and data governance | 🟡 | 14 (14 high) | Personal data in agent files |
+| Art.10 Data and data governance | 🟡 | 4 (4 high) | Personal data in agent files |
 | Art.12 Record-keeping (logging) | ✅ | 3 | Tracing/logging checks |
 | Art.13 Transparency and information to deployers | 🟡 | 1 | Owner docs |
-| Art.14 Human oversight | ✅ | 483 (50 high) | Approval gates, handoff |
-| Art.15 Accuracy, robustness and cybersecurity | 🟡 | 39 (38 high) | Injection, secrets, grounding |
+| Art.14 Human oversight | ✅ | 480 (47 high) | Approval gates, handoff |
+| Art.15 Accuracy, robustness and cybersecurity | 🟡 | 39 (27 high) | Injection, secrets, grounding |
 | Art.50 Transparency: tell people they are talking to AI | ✅ | - | Bot disclosure checks |
 
 ### ISO/IEC 42001:2023 Annex A control areas
@@ -246,13 +241,13 @@ _Annex A area names only (the standard text is copyrighted and not included). Ma
 |---|---|---|---|
 | A.2 Policies related to AI | ⬜ | - | Not checked |
 | A.3 Internal organization (roles, responsibilities) | 🟡 | 1 | Owner/maintainer recorded |
-| A.4 Resources for AI systems (inventory of tools, data, compute) | ✅ | 38 (18 high) | AI and connector inventory |
+| A.4 Resources for AI systems (inventory of tools, data, compute) | ✅ | 26 (6 high) | AI and connector inventory |
 | A.5 Assessing impacts of AI systems | 🟡 | - | Audit memo is a starting input |
 | A.6 AI system life cycle (verification, deployment, operation, monitoring) | 🟡 | 6 | Tracing, pinning; generated eval sets |
-| A.7 Data for AI systems | 🟡 | 14 (14 high) | Personal data reach |
+| A.7 Data for AI systems | 🟡 | 4 (4 high) | Personal data reach |
 | A.8 Information for interested parties | 🟡 | - | Bot disclosure |
-| A.9 Use of AI systems (responsible use, human oversight) | ✅ | 483 (50 high) | Approval gates, handoff rules |
-| A.10 Third-party and customer relationships | 🟡 | 22 (2 high) | Provider inventory |
+| A.9 Use of AI systems (responsible use, human oversight) | ✅ | 480 (47 high) | Approval gates, handoff rules |
+| A.10 Third-party and customer relationships | 🟡 | 20 | Provider inventory |
 
 ### MITRE ATLAS (selected techniques)
 
@@ -260,18 +255,18 @@ _Selected agent techniques; IDs/names per ATLAS data (via framework-pitch resear
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| AML.T0051 LLM Prompt Injection (direct and indirect) | ✅ | 39 (38 high) | Injection scan + untrusted-input rules + eval cases |
+| AML.T0051 LLM Prompt Injection (direct and indirect) | ✅ | 39 (27 high) | Injection scan + untrusted-input rules + eval cases |
 | AML.T0054 LLM Jailbreak | 🟡 | - | Obeyed overrides in transcripts; jailbreak eval cases |
 | AML.T0056 LLM Meta Prompt Extraction | ✅ | - | Secrets in prompts, leaks in transcripts |
-| AML.T0057 LLM Data Leakage | ✅ | 16 (16 high) | Personal-to-work paths, other customers' data |
-| AML.T0053 AI Agent Tool Invocation | ✅ | 485 (52 high) | Tool gates and credential sharing |
-| AML.T0034 Cost Harvesting | ✅ | 7 (2 high) | Caps and budgets |
+| AML.T0057 LLM Data Leakage | ✅ | 6 (6 high) | Personal-to-work paths, other customers' data |
+| AML.T0053 AI Agent Tool Invocation | ✅ | 482 (49 high) | Tool gates and credential sharing |
+| AML.T0034 Cost Harvesting | ✅ | 5 | Caps and budgets |
 | AML.T0029 Denial of ML Service | 🟡 | 5 | Timeouts and step caps |
 | AML.T0055 Unsecured Credentials | ✅ | - | Hardcoded secrets |
 | AML.T0010 ML Supply Chain Compromise | 🟡 | 3 | Pinning only |
 | AML.T0083 Credentials from AI Agent Configuration | ✅ | - | Secrets in agent/MCP configs, .env present |
 | AML.T0086 Exfiltration via AI Agent Tool Invocation | ✅ | 3 (3 high) | Source-to-sink paths, hardcoded webhooks, exfil instructions/links in docs |
-| AML.T0101 Data Destruction via AI Agent Tool Invocation | ✅ | 40 (40 high) | Ungated delete/drop/destroy/purge tools |
+| AML.T0101 Data Destruction via AI Agent Tool Invocation | ✅ | 37 (37 high) | Ungated delete/drop/destroy/purge tools |
 | AML.T0100 AI Agent Clickbait | 🟡 | 438 (10 high) | Browser writes, shorteners, allowlists |
 
 ### NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks
@@ -281,14 +276,14 @@ _Function names from AI RMF 1.0; risk names from the GenAI Profile. This tool su
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
 | GOVERN Govern: policies, accountability, oversight | 🟡 | 2 | Owner and review records; AI inventory |
-| MAP Map: context, components, third parties | ✅ | 38 (18 high) | AI inventory (providers, SDKs, models), connector inventory and source-to-sink map |
+| MAP Map: context, components, third parties | ✅ | 26 (6 high) | AI inventory (providers, SDKs, models), connector inventory and source-to-sink map |
 | MEASURE Measure: test and evaluate | 🟡 | 3 | Generates eval sets (functional + security) from the source; does not run them |
 | MANAGE Manage: prioritize and respond to risks | 🟡 | - | P0–P2 audit memo and SARIF for CI; no incident workflow |
 | GAI-Confabulation GenAI risk: Confabulation | 🟡 | - | Grounding rule checks |
-| GAI-DataPrivacy GenAI risk: Data Privacy | ✅ | 16 (16 high) | PII, secrets, personal-to-work paths |
-| GAI-HumanAI GenAI risk: Human-AI Configuration | ✅ | 483 (50 high) | Approval gates, disclosure, handoff |
+| GAI-DataPrivacy GenAI risk: Data Privacy | ✅ | 6 (6 high) | PII, secrets, personal-to-work paths |
+| GAI-HumanAI GenAI risk: Human-AI Configuration | ✅ | 480 (47 high) | Approval gates, disclosure, handoff |
 | GAI-InfoIntegrity GenAI risk: Information Integrity | 🟡 | - | FAQ grounding; STE information-loss compare |
-| GAI-InfoSecurity GenAI risk: Information Security | ✅ | 39 (38 high) | Injection scan, secrets, token lifting |
+| GAI-InfoSecurity GenAI risk: Information Security | ✅ | 39 (27 high) | Injection scan, secrets, token lifting |
 | GAI-ValueChain GenAI risk: Value Chain and Component Integration | 🟡 | 3 | Provider/SDK/model inventory and pinning |
 | GAI-Harmful GenAI risks: CBRN, violent/hateful, obscene, bias, IP, environmental | ⬜ | - | Not checked |
 
@@ -298,14 +293,14 @@ _Item names as listed in the OWASP GenAI Security Project document (via framewor
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| ASI01 Agent Goal Hijack | ✅ | 44 (38 high) | ADSF injection scan over all docs, untrusted-input rule, deny-list check |
-| ASI02 Tool Misuse and Exploitation | ✅ | 483 (50 high) | Gate map, rate limits, allowlists, wildcard domains, URL shorteners |
+| ASI01 Agent Goal Hijack | ✅ | 44 (27 high) | ADSF injection scan over all docs, untrusted-input rule, deny-list check |
+| ASI02 Tool Misuse and Exploitation | ✅ | 480 (47 high) | Gate map, rate limits, allowlists, wildcard domains, URL shorteners |
 | ASI03 Identity and Privilege Abuse | ✅ | 2 (2 high) | Shared credentials, scopes, browser profiles, cookie reads |
 | ASI04 Agentic Supply Chain Vulnerabilities | 🟡 | 3 | MCP/provider inventory, unpinned models; no registry integrity check |
 | ASI05 Unexpected Code Execution | 🟡 | - | Free-form shell/exec/SQL tools |
-| ASI06 Memory and Context Poisoning | 🟡 | 39 (38 high) | ADSF scan of knowledge/memory files you point it at; no runtime memory check |
+| ASI06 Memory and Context Poisoning | 🟡 | 39 (27 high) | ADSF scan of knowledge/memory files you point it at; no runtime memory check |
 | ASI07 Insecure Inter-Agent Communication | ⬜ | - | Not checked |
-| ASI08 Cascading Failures | 🟡 | 11 (2 high) | Step, loop and retry caps, timeouts, single-provider fallback |
+| ASI08 Cascading Failures | 🟡 | 9 | Step, loop and retry caps, timeouts, single-provider fallback |
 | ASI09 Human-Agent Trust Exploitation | 🟡 | - | Bot disclosure, human claims, unrecorded handoffs |
 | ASI10 Rogue Agents | 🟡 | 4 | Tracing, owner, observability; no stop-switch check |
 
@@ -315,18 +310,18 @@ _Threat names from the OWASP Agentic Security Initiative taxonomy._ (5 ✅ · 7 
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| T1 Memory Poisoning | 🟡 | 39 (38 high) | Hidden instructions in files an agent may load as memory/knowledge |
-| T2 Tool Misuse | ✅ | 483 (50 high) | Gate map: approval, dry-run, rate limit, allowlist per tool |
+| T1 Memory Poisoning | 🟡 | 39 (27 high) | Hidden instructions in files an agent may load as memory/knowledge |
+| T2 Tool Misuse | ✅ | 480 (47 high) | Gate map: approval, dry-run, rate limit, allowlist per tool |
 | T3 Privilege Compromise | ✅ | 2 (2 high) | Shared tokens, broad reach, real browser profiles, cookie reads |
-| T4 Resource Overload | ✅ | 12 (2 high) | Caps, timeouts, loops, budgets |
+| T4 Resource Overload | ✅ | 10 | Caps, timeouts, loops, budgets |
 | T5 Cascading Hallucination Attacks | 🟡 | - | Grounding rules only |
-| T6 Intent Breaking & Goal Manipulation | ✅ | 39 (38 high) | Injection scan, untrusted-input rule, obeyed overrides |
+| T6 Intent Breaking & Goal Manipulation | ✅ | 39 (27 high) | Injection scan, untrusted-input rule, obeyed overrides |
 | T7 Misaligned & Deceptive Behaviors | 🟡 | - | Bot-disclosure / human-persona checks |
 | T8 Repudiation & Untraceability | ✅ | 3 | Tracing and logging checks |
 | T9 Identity Spoofing & Impersonation | 🟡 | 2 (2 high) | Shared credentials; claims to be human |
 | T10 Overwhelming Human in the Loop | ⬜ | - | Not checked |
 | T11 Unexpected RCE and Code Attacks | 🟡 | - | Shell/exec/SQL tools fed by model output |
-| T12 Agent Communication Poisoning | 🟡 | 39 (38 high) | Injection patterns in shared files only; no runtime message checks |
+| T12 Agent Communication Poisoning | 🟡 | 39 (27 high) | Injection patterns in shared files only; no runtime message checks |
 | T13 Rogue Agents in Multi-Agent Systems | ⬜ | - | Not checked |
 | T14 Human Attacks on Multi-Agent Systems | ⬜ | - | Not checked |
 | T15 Human Manipulation | 🟡 | - | Persona, unsafe advice |
@@ -337,21 +332,21 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 
 | Item | Status | Findings here | What the tool checks |
 |---|---|---|---|
-| LLM01 Prompt Injection | ✅ | 44 (38 high) | Document-wide injection scan (ADSF tab), untrusted-input rule in prompts, obeyed overrides in transcripts, injection eval cases |
-| LLM02 Sensitive Information Disclosure | ✅ | 16 (16 high) | Secrets/PII in files, personal-to-work source-to-sink paths, confidential text in prompts, leaks in transcripts |
+| LLM01 Prompt Injection | ✅ | 44 (27 high) | Document-wide injection scan (ADSF tab), untrusted-input rule in prompts, obeyed overrides in transcripts, injection eval cases |
+| LLM02 Sensitive Information Disclosure | ✅ | 6 (6 high) | Secrets/PII in files, personal-to-work source-to-sink paths, confidential text in prompts, leaks in transcripts |
 | LLM03 Supply Chain | 🟡 | 3 | Model pinning and SDK inventory only; no dependency or model-provenance scan |
-| LLM04 Data and Model Poisoning | 🟡 | 39 (38 high) | Poisoned instructions hidden in docs/knowledge files; no training-data checks |
-| LLM05 Improper Output Handling | 🟡 | 40 (40 high) | Shell/SQL/exec tools and ungated actions that consume model output; no taint tracking |
-| LLM06 Excessive Agency | ✅ | 485 (52 high) | Gate map for irreversible tools and browser actions, shared credentials, scopes |
+| LLM04 Data and Model Poisoning | 🟡 | 39 (27 high) | Poisoned instructions hidden in docs/knowledge files; no training-data checks |
+| LLM05 Improper Output Handling | 🟡 | 37 (37 high) | Shell/SQL/exec tools and ungated actions that consume model output; no taint tracking |
+| LLM06 Excessive Agency | ✅ | 482 (49 high) | Gate map for irreversible tools and browser actions, shared credentials, scopes |
 | LLM07 System Prompt Leakage | ✅ | - | Secrets and internal notes in prompts; leaked prompt text in transcripts |
 | LLM08 Vector and Embedding Weaknesses | ⬜ | - | Not checked |
-| LLM09 Misinformation | 🟡 | 826 | 'I don't know' rule, made-up prices/policies vs your FAQ; STE clarity checks |
-| LLM10 Unbounded Consumption | ✅ | 16 (2 high) | Token caps, timeouts, retry/step caps, infinite loops, budget alerts, bill smells |
+| LLM09 Misinformation | 🟡 | 799 | 'I don't know' rule, made-up prices/policies vs your FAQ; STE clarity checks |
+| LLM10 Unbounded Consumption | ✅ | 14 | Token caps, timeouts, retry/step caps, infinite loops, budget alerts, bill smells |
 
 
 ## Generated eval sets
 
-36 functional and 72 security test cases in `evals/` (JSONL + README.md). Generated from the source; not run.
+36 functional and 67 security test cases in `evals/` (JSONL + README.md). Generated from the source; not run.
 
 ## 4. Findings (P0 = fix before real traffic)
 
@@ -359,28 +354,15 @@ _Item names from the OWASP 2025 list. Status = what this tool checks statically,
 
 - **P0** `crossover.shared_credential` (across agents) — Credential TAVILY_API_KEY is used by 2 agents: end-to-end-customer-service-agent, travel-concierge-agent. They are not really separate agents if they share connections. Give each its own scoped token. (`TAVILY_API_KEY`)
 - **P0** `crossover.shared_credential` (across agents) — Credential API_KEY is used by 2 agents: shopping-concierge-agent, travel-concierge-agent. They are not really separate agents if they share connections. Give each its own scoped token. (`API_KEY`)
-- **P0** `crossover.pii.bank_account` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/bin/cdk.ts:22 — Possible personal data (bank_account) in agent code, prompt or fixture. (`acco…12 (masked)`)
 - **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/local-visa-server/server.py:181 — Possible personal data (card_number) in agent code, prompt or fixture. (`4622…59 (masked)`)
-- **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md:23 — Possible personal data (card_number) in agent code, prompt or fixture. (`4111…11 (masked)`)
-- **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md:178 — Possible personal data (card_number) in agent code, prompt or fixture. (`4111…11 (masked)`)
 - **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/components/CardOnboardingTest.tsx:69 — Possible personal data (card_number) in agent code, prompt or fixture. (`4622…59 (masked)`)
-- **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/services/visaMockService.ts:257 — Possible personal data (card_number) in agent code, prompt or fixture. (`4111…11 (masked)`)
-- **P0** `crossover.pii.bank_account` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/services/visaMockService.ts:257 — Possible personal data (bank_account) in agent code, prompt or fixture. (`acco…11 (masked)`)
 - **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/concierge_agent/local-visa-server/server.py:180 — Possible personal data (card_number) in agent code, prompt or fixture. (`4622…59 (masked)`)
-- **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md:23 — Possible personal data (card_number) in agent code, prompt or fixture. (`4111…11 (masked)`)
-- **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md:178 — Possible personal data (card_number) in agent code, prompt or fixture. (`4111…11 (masked)`)
-- **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/docs/VISA_SECRETS_SETUP.md:63 — Possible personal data (card_number) in agent code, prompt or fixture. (`4111…11 (masked)`)
 - **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/components/CardOnboardingTest.tsx:69 — Possible personal data (card_number) in agent code, prompt or fixture. (`4622…59 (masked)`)
-- **P0** `crossover.pii.card_number` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/services/visaMockService.ts:257 — Possible personal data (card_number) in agent code, prompt or fixture. (`4111…11 (masked)`)
-- **P0** `crossover.pii.bank_account` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/services/visaMockService.ts:257 — Possible personal data (bank_account) in agent code, prompt or fixture. (`acco…11 (masked)`)
 
 ### Irreversible actions
 
-- **P0** `actions.irreversible_tool` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:237 — Irreversible tool get_order has no approval gate or dry-run mode. Add a human confirm step before it runs. (`name: "get_order",`)
 - **P0** `actions.irreversible_tool` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:260 — Irreversible tool process_refund has no approval gate or dry-run mode. Add a human confirm step before it runs. (`name: "process_refund",`)
-- **P0** `actions.irreversible_tool` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/handler.py:100 — Irreversible tool get_order has no approval gate or dry-run mode. Add a human confirm step before it runs. (`def get_order(event: Dict[str, Any]):`)
 - **P0** `actions.irreversible_tool` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/handler.py:215 — Irreversible tool process_refund has no approval gate or dry-run mode. Add a human confirm step before it runs. (`def process_refund(event: Dict[str, Any]):`)
-- **P0** `actions.irreversible_tool` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/order_handler.py:159 — Irreversible tool get_order has no approval gate or dry-run mode. Add a human confirm step before it runs. (`def get_order(event: Dict[str, Any]):`)
 - **P0** `actions.irreversible_tool` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/mcp/lambda/order_handler.py:230 — Irreversible tool process_refund has no approval gate or dry-run mode. Add a human confirm step before it runs. (`def process_refund(event: Dict[str, Any]):`)
 - **P0** `actions.irreversible_tool` awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/cx-agent-backend/cx_agent_backend/domain/repositories/conversation_repository.py:28 — Irreversible tool delete has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (`async def delete(self, conversation_id: UUID) -> None:`)
 - **P0** `actions.irreversible_tool` awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/cx-agent-backend/cx_agent_backend/domain/services/conversation_service.py:42 — Irreversible tool send_message has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs. (`async def send_message(`)
@@ -874,8 +856,6 @@ Finally, note that in [inf`)
 
 ### Governance + cost
 
-- **P0** `governance.unbounded_loop` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/src/lambda_functions/infrastructure_costs/handler.py:38 — Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices.
-- **P0** `governance.unbounded_loop` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/src/lambda_functions/token_usage/handler.py:17 — Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices.
 - **P1** `governance.no_owner` (project) — No owner/maintainer documented. Every agent needs a named person who answers for it.
 - **P1** `governance.no_max_tokens` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/README.md:1 — [customer-support-agent-with-agentcore] No max_tokens / output cap set on model calls.
 - **P1** `governance.no_recursion_cap` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/README.md:1 — [customer-support-agent-with-agentcore] No step / iteration / recursion cap for the agent loop.
@@ -899,44 +879,11 @@ Finally, note that in [inf`)
 
 ### Agent Health Checker + Labs tools
 
-- **P0** `health.retries_backoff` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P0** `health.prompt_injection_sinks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json — Prompt-injection sinks: Tools that execute free-form text detected without clear guard language.
-- **P0** `health.retries_backoff` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P0** `health.prompt_injection_sinks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json — Prompt-injection sinks: Tools that execute free-form text detected without clear guard language.
-- **P0** `health.retries_backoff` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P0** `health.prompt_injection_sinks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json — Prompt-injection sinks: Tools that execute free-form text detected without clear guard language.
-- **P0** `health.retries_backoff` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P0** `health.retries_backoff` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P0** `health.retries_backoff` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P0** `health.retries_backoff` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json — Retries / backoff: No retry or backoff configuration detected.
-- **P0** `health.tracing_hooks` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json — Tracing hooks (Langfuse / OTel): No tracing / observability hooks detected (Langfuse, OTel, callbacks, etc.).
-- **P1** `health.timeouts` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.tool_auth_notes` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json — Tool auth / scope notes: Tool definitions lack auth/scope/permission notes. (0 of 6 tools: Web Search, Calculator, Date & Time, Database Query, Email Sender, Web Crawler).
-- **P1** `health.timeouts` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.timeouts` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.evals_tests` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json — Evals / tests: No eval, dataset, or test references found in this config slice.
-- **P1** `health.timeouts` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.evals_tests` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json — Evals / tests: No eval, dataset, or test references found in this config slice.
-- **P1** `health.timeouts` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.evals_tests` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json — Evals / tests: No eval, dataset, or test references found in this config slice.
-- **P1** `health.timeouts` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.evals_tests` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json — Evals / tests: No eval, dataset, or test references found in this config slice.
-- **P1** `health.timeouts` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json — Timeouts: No timeout / deadline settings found for LLM or tool calls.
-- **P1** `health.evals_tests` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json — Evals / tests: No eval, dataset, or test references found in this config slice.
 - **P2** `observability.prometheus` (whole input) — Gap — no clear signal for Prometheus metrics / alerts.
 - **P2** `observability.runbooks_alerts` (whole input) — Gap — no clear signal for Alerts tied to runbooks.
 
 ### Prompt-injection scan (ADSF)
 
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:166 — URL with a template slot for the agent to fill in. (`https://cognito-idp.${region}.amazonaws.com/${cognitoUserPool.userPoolId}`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:447 — URL with a template slot for the agent to fill in. (`https://cognito-idp.${region}.amazonaws.com/${cognitoUserPool.userPoolId}`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:499 — URL with a template slot for the agent to fill in. (`https://cognito-idp.${region}.amazonaws.com/${cognitoUserPool.userPoolId}`)
 - **P0** `injection.llmail_tool_call_syntax` awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/cx-agent-backend/cx_agent_backend/infrastructure/adapters/langgraph_agent_service.py:126 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`call_tool`)
 - **P0** `injection.exfil_instruction` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/templates/main.py:31 — Instruction to send secrets or conversation data somewhere. (`Send token usage metrics to`)
 - **P0** `injection.llmail_tool_call_syntax` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/tool.py:8 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`send_email(`)
@@ -948,10 +895,6 @@ Finally, note that in [inf`)
 - **P0** `injection.llmail_tool_call_syntax` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/mcp_cart_tools/server.py:368 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`send_email(`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/supervisor_agent/prompt_manager.py:75 — URL with a template slot for the agent to fill in. (`https://www.amazon.com/dp/{{ASIN}}`)
 - **P0** `injection.exfil_instruction` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md:71 — Instruction to send secrets or conversation data somewhere. (`Send token back to agent to`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/agent-stack/lib/agent-stack.ts:32 — URL with a template slot for the agent to fill in. (`https://cognito-idp.${cognitoRegion}.amazonaws.com/${userPoolId}`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/agent-stack/lib/constructs/gateway-construct.ts:167 — URL with a template slot for the agent to fill in. (`https://bedrock-agentcore.${region}`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/frontend-stack/lib/frontend-stack.ts:65 — URL with a template slot for the agent to fill in. (`https://main.${this.amplifyApp.appId}`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/mcp-servers/lib/base-mcp-stack.ts:39 — URL with a template slot for the agent to fill in. (`https://cognito-idp.${cognitoRegion}.amazonaws.com/${userPoolId}`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/components/DynamicMap.tsx:25 — URL with a template slot for the agent to fill in. (`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${latitude},${longitude}`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/components/DynamicMap.tsx:26 — URL with a template slot for the agent to fill in. (`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(destination)}`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/web-ui/src/services/awsCalls.ts:16 — URL with a template slot for the agent to fill in. (`https://bedrock-agentcore.${AGENT_CONFIG.AWS_REGION}`)
@@ -962,10 +905,6 @@ Finally, note that in [inf`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/concierge_agent/supervisor_agent/prompt_manager.py:80 — URL with a template slot for the agent to fill in. (`https://www.amazon.com/dp/{{ASIN}}`)
 - **P0** `injection.exfil_instruction` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/docs/VISA_IFRAME_INTEGRATION.md:71 — Instruction to send secrets or conversation data somewhere. (`Send token back to agent to`)
 - **P0** `injection.llmail_tool_call_syntax` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/docs/VISA_SECRETS_SETUP.md:74 — Text spells out a tool or API call (e.g. send_email) for the agent to run. Common LLMail-Inject attack shape. (`API call`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/agent-stack/lib/agent-stack.ts:32 — URL with a template slot for the agent to fill in. (`https://cognito-idp.${cognitoRegion}.amazonaws.com/${userPoolId}`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/agent-stack/lib/constructs/gateway-construct.ts:166 — URL with a template slot for the agent to fill in. (`https://bedrock-agentcore.${region}`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/frontend-stack/lib/frontend-stack.ts:65 — URL with a template slot for the agent to fill in. (`https://main.${this.amplifyApp.appId}`)
-- **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/mcp-servers/lib/base-mcp-stack.ts:39 — URL with a template slot for the agent to fill in. (`https://cognito-idp.${cognitoRegion}.amazonaws.com/${userPoolId}`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/components/DynamicMap.tsx:25 — URL with a template slot for the agent to fill in. (`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${latitude},${longitude}`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/components/DynamicMap.tsx:26 — URL with a template slot for the agent to fill in. (`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(destination)}`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/components/TabbedSidebar.tsx:475 — URL with a template slot for the agent to fill in. (`https://www.google.com/maps/embed/v1/directions?key=${apiKey}&origin=${origin}&destination=${destination}&waypoints=${waypoints}`)
@@ -973,6 +912,17 @@ Finally, note that in [inf`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/components/TabbedSidebar.tsx:481 — URL with a template slot for the agent to fill in. (`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(location)}`)
 - **P0** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/web-ui/src/services/awsCalls.ts:16 — URL with a template slot for the agent to fill in. (`https://bedrock-agentcore.${AGENT_CONFIG.AWS_REGION}`)
 - **P1** `injection.css_hidden` awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/cx-agent-frontend/src/components/chat.py:104 — CSS that hides text from people but not from an agent. (`font-size: 0`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:166 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://cognito-idp.${region}.amazonaws.com/${cognitoUserPool.userPoolId}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:447 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://cognito-idp.${region}.amazonaws.com/${cognitoUserPool.userPoolId}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/customer-support-agent-with-agentcore/cdk/lib/stacks/agentcore-stack.ts:499 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://cognito-idp.${region}.amazonaws.com/${cognitoUserPool.userPoolId}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/agent-stack/lib/agent-stack.ts:32 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://cognito-idp.${cognitoRegion}.amazonaws.com/${userPoolId}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/agent-stack/lib/constructs/gateway-construct.ts:167 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://bedrock-agentcore.${region}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/frontend-stack/lib/frontend-stack.ts:65 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://main.${this.amplifyApp.appId}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/infrastructure/mcp-servers/lib/base-mcp-stack.ts:39 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://cognito-idp.${cognitoRegion}.amazonaws.com/${userPoolId}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/agent-stack/lib/agent-stack.ts:32 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://cognito-idp.${cognitoRegion}.amazonaws.com/${userPoolId}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/agent-stack/lib/constructs/gateway-construct.ts:166 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://bedrock-agentcore.${region}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/frontend-stack/lib/frontend-stack.ts:65 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://main.${this.amplifyApp.appId}`)
+- **P2** `injection.templated_url` awslabs__agentcore-samples/05-blueprints/travel-concierge-agent/infrastructure/mcp-servers/lib/base-mcp-stack.ts:39 — URL with a template slot for the agent to fill in. (infrastructure-as-code template: lowered) (`https://cognito-idp.${cognitoRegion}.amazonaws.com/${userPoolId}`)
 
 ### Simplified Technical English (STE)
 
@@ -1047,15 +997,6 @@ Finally, note that in [inf`)
 - **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/end-to-end-customer-service-agent/README.md:403 — Passive voice. Say who does the action (active voice). (`is licensed`)
 - **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/SETUP.md:5 — Passive voice. Say who does the action (active voice). (`be pushed`)
 - **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json:4 — Passive voice. Say who does the action (active voice). (`be included`)
-- **P1** `ste.sentence_length` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:107 — Descriptive sentence has 31 words (limit 25). Split it. (`For production deployments, use authenticated callers (for example, Cognito/IAM/JWT) or a backend proxy/BFF that keeps credentials server‑side and issues short‑`)
-- **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:127 — Passive voice. Say who does the action (active voice). (`is displayed`)
-- **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:182 — Passive voice. Say who does the action (active voice). (`is designed`)
-- **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:211 — Passive voice. Say who does the action (active voice). (`be automatically regenerated`)
-- **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:213 — Passive voice. Say who does the action (active voice). (`is embedded`)
-- **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:252 — Passive voice. Say who does the action (active voice). (`are configured`)
-- **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:253 — Passive voice. Say who does the action (active voice). (`are automatically emptied`)
-- **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:254 — Passive voice. Say who does the action (active voice). (`are automatically removed`)
-- **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:255 — Passive voice. Say who does the action (active voice). (`are deleted`)
 - **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/local-visa-server/README.md:26 — Passive voice. Say who does the action (active voice). (`is required`)
 - **P1** `ste.multiple_instructions` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/local-visa-server/README.md:33 — More than one instruction in one sentence. Write one instruction per sentence. (`Create virtual environment and install dependencies`)
 - **P1** `ste.passive_voice` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/local-visa-server/README.md:41 — Passive voice. Say who does the action (active voice). (`is required`)
@@ -1339,24 +1280,6 @@ Finally, note that in [inf`)
 - **P2** `ste.complex_tense` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/SETUP.md:95 — Modal + be + past participle. Use an active verb. (`must be verified`)
 - **P2** `ste.word_hint` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json:2 — "e.g." → for example (plain-word hint). (`e.g.`)
 - **P2** `ste.complex_tense` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json:1 — Modal + be + past participle. Use an active verb. (`must be verified`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:11 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`custom models Claude Sonnet`)
-- **P2** `ste.hedge` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:12 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:14 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Token Limits per Tenant`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:14 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`enforce token usage limits`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:15 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`inference costs per tenant`)
-- **P2** `ste.word_hint` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:16 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:16 — Possible noun cluster of 9 words. Break it up with "of", "for" or a verb. (`infrastructure costs per tenant using cost allocation tags via`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:17 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`infrastructure costs per tenant`)
-- **P2** `ste.word_hint` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:18 — "via" → through / with (plain-word hint). (`via`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:103 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`See Security Considerations below`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:132 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`target region first see below`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:213 — Possible noun cluster of 5 words. Break it up with "of", "for" or a verb. (`implement proper authentication see Security`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:220 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Tracks token usage per agent invocation`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:223 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Displays usage percentages against token limits`)
-- **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:228 — Possible noun cluster of 6 words. Break it up with "of", "for" or a verb. (`Retrieves current month costs per tenant`)
-- **P2** `ste.hedge` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:233 — Vague word "etc". Give the exact condition, value or action. (`etc`)
-- **P2** `ste.complex_tense` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:238 — Modal + be + past participle. Use an active verb. (`may be delayed`)
-- **P2** `ste.ing_verb` awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/README.md:340 — "deploying" used as a verb (-ing clause). Use a full clause, e.g. "when you ...". (`When deploying an`)
 - **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/local-visa-server/README.md:22 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`hosts entry one-time setup`)
 - **P2** `ste.noun_cluster` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/concierge_agent/local-visa-server/README.md:40 — Possible noun cluster of 4 words. Break it up with "of", "for" or a verb. (`Visa iframe one-time setup`)
 - **P2** `ste.hedge` awslabs__agentcore-samples/05-blueprints/shopping-concierge-agent/DEPLOYMENT.md:15 — Vague word "appropriate". Give the exact condition, value or action. (`appropriate`)
@@ -1805,12 +1728,5 @@ Finally, note that in [inf`)
 
 ## 5. Labs tool runs
 
-- Agent Health Checker · awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/catalog.json · score 29 · Shippable prototype, not production-ready.
-- Agent Health Checker · awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/calculator/config.json · score 40 · Shippable prototype, not production-ready.
-- Agent Health Checker · awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/database-query/config.json · score 29 · Shippable prototype, not production-ready.
-- Agent Health Checker · awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/datetime/config.json · score 44 · Shippable prototype, not production-ready.
-- Agent Health Checker · awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/email-sender/config.json · score 44 · Shippable prototype, not production-ready.
-- Agent Health Checker · awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-crawler/config.json · score 44 · Shippable prototype, not production-ready.
-- Agent Health Checker · awslabs__agentcore-samples/05-blueprints/multitenant-agentic-platform/agent-tools-repo/tools/web-search/config.json · score 44 · Shippable prototype, not production-ready.
 - Observability Gap Finder · (whole input) · score 72 · Baseline present — close remaining high gaps.
 

@@ -28,12 +28,6 @@
               }
             },
             {
-              "id": "governance.unbounded_loop",
-              "shortDescription": {
-                "text": "governance.unbounded_loop"
-              }
-            },
-            {
               "id": "governance.no_owner",
               "shortDescription": {
                 "text": "governance.no_owner"
@@ -64,21 +58,9 @@
               }
             },
             {
-              "id": "governance.no_tracing",
-              "shortDescription": {
-                "text": "governance.no_tracing"
-              }
-            },
-            {
               "id": "governance.no_review_record",
               "shortDescription": {
                 "text": "governance.no_review_record"
-              }
-            },
-            {
-              "id": "governance.no_retry_cap",
-              "shortDescription": {
-                "text": "governance.no_retry_cap"
               }
             },
             {
@@ -91,6 +73,12 @@
               "id": "governance.expensive_model",
               "shortDescription": {
                 "text": "governance.expensive_model"
+              }
+            },
+            {
+              "id": "governance.no_retry_cap",
+              "shortDescription": {
+                "text": "governance.no_retry_cap"
               }
             },
             {
@@ -115,48 +103,6 @@
               "id": "injection.ignore_previous",
               "shortDescription": {
                 "text": "injection.ignore_previous"
-              }
-            },
-            {
-              "id": "ste.passive_voice",
-              "shortDescription": {
-                "text": "ste.passive_voice"
-              }
-            },
-            {
-              "id": "ste.sentence_length",
-              "shortDescription": {
-                "text": "ste.sentence_length"
-              }
-            },
-            {
-              "id": "ste.noun_cluster",
-              "shortDescription": {
-                "text": "ste.noun_cluster"
-              }
-            },
-            {
-              "id": "ste.ing_verb",
-              "shortDescription": {
-                "text": "ste.ing_verb"
-              }
-            },
-            {
-              "id": "ste.word_hint",
-              "shortDescription": {
-                "text": "ste.word_hint"
-              }
-            },
-            {
-              "id": "ste.hedge",
-              "shortDescription": {
-                "text": "ste.hedge"
-              }
-            },
-            {
-              "id": "ste.complex_tense",
-              "shortDescription": {
-                "text": "ste.complex_tense"
               }
             }
           ]
@@ -791,25 +737,6 @@
           ]
         },
         {
-          "ruleId": "governance.unbounded_loop",
-          "level": "error",
-          "message": {
-            "text": "Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/python-backend/main.py"
-                },
-                "region": {
-                  "startLine": 89
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "governance.no_owner",
           "level": "warning",
           "message": {
@@ -820,101 +747,6 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "."
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_max_tokens",
-          "level": "warning",
-          "message": {
-            "text": "[python-backend] No max_tokens / output cap set on model calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_timeout",
-          "level": "warning",
-          "message": {
-            "text": "[python-backend] No timeout on model or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_recursion_cap",
-          "level": "warning",
-          "message": {
-            "text": "[python-backend] No step / iteration / recursion cap for the agent loop."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_budget",
-          "level": "warning",
-          "message": {
-            "text": "[python-backend] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_tracing",
-          "level": "warning",
-          "message": {
-            "text": "[python-backend] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
-                },
-                "region": {
-                  "startLine": 1
                 }
               }
             }
@@ -997,101 +829,6 @@
           ]
         },
         {
-          "ruleId": "governance.no_tracing",
-          "level": "warning",
-          "message": {
-            "text": "[openai__openai-cs-agents-demo] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_max_tokens",
-          "level": "warning",
-          "message": {
-            "text": "[ui] No max_tokens / output cap set on model calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_timeout",
-          "level": "warning",
-          "message": {
-            "text": "[ui] No timeout on model or tool calls."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_recursion_cap",
-          "level": "warning",
-          "message": {
-            "text": "[ui] No step / iteration / recursion cap for the agent loop."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_budget",
-          "level": "warning",
-          "message": {
-            "text": "[ui] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "governance.no_review_record",
           "level": "note",
           "message": {
@@ -1102,25 +839,6 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "."
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "governance.no_retry_cap",
-          "level": "note",
-          "message": {
-            "text": "[python-backend] No explicit retry limit or backoff."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
-                },
-                "region": {
-                  "startLine": 1
                 }
               }
             }
@@ -1203,25 +921,6 @@
           ]
         },
         {
-          "ruleId": "governance.no_retry_cap",
-          "level": "note",
-          "message": {
-            "text": "[ui] No explicit retry limit or backoff."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "observability.langfuse",
           "level": "note",
           "message": {
@@ -1271,9 +970,9 @@
         },
         {
           "ruleId": "injection.ignore_previous",
-          "level": "error",
+          "level": "note",
           "message": {
-            "text": "\"Ignore previous instructions\" style override."
+            "text": "\"Ignore previous instructions\" style override. (defensive context, e.g. a guardrail describing attacks: lowered)"
           },
           "locations": [
             {
@@ -1290,9 +989,9 @@
         },
         {
           "ruleId": "injection.ignore_previous",
-          "level": "error",
+          "level": "note",
           "message": {
-            "text": "\"Ignore previous instructions\" style override."
+            "text": "\"Ignore previous instructions\" style override. (defensive context, e.g. a guardrail describing attacks: lowered)"
           },
           "locations": [
             {
@@ -1302,538 +1001,6 @@
                 },
                 "region": {
                   "startLine": 23
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 9
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.sentence_length",
-          "level": "warning",
-          "message": {
-            "text": "Descriptive sentence has 26 words (limit 25). Split it."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 57
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 83
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.sentence_length",
-          "level": "warning",
-          "message": {
-            "text": "Descriptive sentence has 35 words (limit 25). Split it."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 105
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 107
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.sentence_length",
-          "level": "warning",
-          "message": {
-            "text": "Descriptive sentence has 28 words (limit 25). Split it."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 120
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 133
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.sentence_length",
-          "level": "warning",
-          "message": {
-            "text": "Descriptive sentence has 33 words (limit 25). Split it."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 146
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 152
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 153
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.sentence_length",
-          "level": "warning",
-          "message": {
-            "text": "Descriptive sentence has 37 words (limit 25). Split it."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 170
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.passive_voice",
-          "level": "warning",
-          "message": {
-            "text": "Passive voice. Say who does the action (active voice)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 178
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 7
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.ing_verb",
-          "level": "note",
-          "message": {
-            "text": "\"implementing\" used as a verb (-ing clause). Use a full clause, e.g. \"when you ...\"."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 11
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.ing_verb",
-          "level": "note",
-          "message": {
-            "text": "\"running\" used as a verb (-ing clause). Use a full clause, e.g. \"when you ...\"."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 21
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.ing_verb",
-          "level": "note",
-          "message": {
-            "text": "\"running\" used as a verb (-ing clause). Use a full clause, e.g. \"when you ...\"."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 39
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 83
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.word_hint",
-          "level": "note",
-          "message": {
-            "text": "\"modify\" → change (plain-word hint)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 83
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.hedge",
-          "level": "note",
-          "message": {
-            "text": "Vague word \"etc\". Give the exact condition, value or action."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 91
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 91
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 100
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.complex_tense",
-          "level": "note",
-          "message": {
-            "text": "Perfect tense. Use simple past or present."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 107
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.complex_tense",
-          "level": "note",
-          "message": {
-            "text": "Perfect tense. Use simple past or present."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 133
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.hedge",
-          "level": "note",
-          "message": {
-            "text": "Vague word \"appropriate\". Give the exact condition, value or action."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 146
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.word_hint",
-          "level": "note",
-          "message": {
-            "text": "\"via\" → through / with (plain-word hint)."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 152
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.complex_tense",
-          "level": "note",
-          "message": {
-            "text": "Modal + be + past participle. Use an active verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 153
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 5 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 157
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "ste.noun_cluster",
-          "level": "note",
-          "message": {
-            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "openai__openai-cs-agents-demo/README.md"
-                },
-                "region": {
-                  "startLine": 168
                 }
               }
             }
