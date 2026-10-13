@@ -27,10 +27,15 @@ function tools() {
 }
 
 const SEV = { high: "high", medium: "medium", low: "low" };
+// Repo plumbing that mentions "model" or "prompt" but is not agent configuration.
+const NOT_AGENT = /(^|\/)(\.github|\.devcontainer|\.vscode|\.circleci|\.gitlab)(\/|$)|(^|\/)(devcontainer|package(-lock)?|tsconfig|jsconfig|composer|renovate|dependabot|\.?pre-commit-config|docker-compose|compose|mkdocs|azure-pipelines|\.gitlab-ci|codecov|vercel|netlify|app\.json|manifest|cdk|cdk\.context|launch|settings|extensions)\.(json|ya?ml)$|(^|\/)workflows\//i;
+// A JSON/YAML file counts as agent config only with a prompt/instructions key.
+const AGENT_KEYS = /["']?\b(system_prompt|systemPrompt|system_message|systemMessage|instructions|system|prompt|prompts)\b["']?\s*:/;
 function healthTarget(f) {
+  if (NOT_AGENT.test(f.rel)) return null;
   if (/\.jsonl$/i.test(f.rel)) return "transcript";
   if (/transcript|chat[-_]?log|conversations?/i.test(f.rel)) return "transcript";
-  if (/\.(json|ya?ml)$/i.test(f.rel) && /tools|system_prompt|instructions|prompt|llm|model/i.test(f.text) && !/mcpServers/.test(f.text) && !/^\s*\{\s*"name"\s*:\s*"[^"]+"\s*,\s*"version"/.test(f.text)) return "config";
+  if (/\.(json|ya?ml)$/i.test(f.rel) && AGENT_KEYS.test(f.text) && !/mcpServers/.test(f.text) && !/^\s*\{\s*"name"\s*:\s*"[^"]+"\s*,\s*"version"/.test(f.text)) return "config";
   if (/\.(md|txt)$/i.test(f.rel) && /prompt|instruction|system/i.test(f.rel)) return "config";
   return null;
 }
@@ -59,7 +64,7 @@ function scan(files) {
     runs.push({ tool: "Cloud Bill Smell Detector", file: f.display, score: r.score, verdict: r.headline });
     for (const s of (r.smells || [])) findings.push({ rule: "bill." + (s.id || "smell"), severity: s.severity === "high" ? "high" : "medium", file: f.display, line: 0, message: (s.title || s.label || "Bill smell") + (s.message ? ": " + s.message : ""), evidence: s.evidence });
   }
-  const obsText = files.filter((f) => /\.(js|mjs|cjs|ts|py|ya?ml|toml|json|md)$/i.test(f.rel)).map((f) => f.text).join("\n");
+  const obsText = files.filter((f) => /\.(js|mjs|cjs|ts|py|ipynb|ya?ml|toml|json|md)$/i.test(f.rel)).map((f) => f.text).join("\n");
   if (obsText.trim()) {
     const r = T.obs(obsText, {});
     runs.push({ tool: "Observability Gap Finder", file: "(whole input)", score: r.score, verdict: r.headline });
@@ -67,4 +72,4 @@ function scan(files) {
   }
   return { id: "labs", title: "Agent Health Checker + Labs tools", findings, runs, redteam: T.redteam ? T.redteam() : "" };
 }
-module.exports = { scan, tools };
+module.exports = { scan, tools, healthTarget };

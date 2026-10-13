@@ -95,7 +95,7 @@ function generate() {
     L.push(...standardsLines(need.id));
   }
   L.push("_Standards and datasets are named for reference only. This project is not affiliated with or endorsed by Microsoft, OWASP, NIST, ISO, MITRE, CSA, Anthropic or the EU._", "");
-  L.push("_Rules version " + load("rules/VERSION.json").version + ". File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._", "", END);
+  L.push("_Rules version " + load("rules/VERSION.json").version + ". File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), Jupyter notebooks (.ipynb code and markdown cells, outputs ignored; findings show cell N, line M), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._", "", END);
   return L.join("\n");
 }
 

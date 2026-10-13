@@ -12,6 +12,10 @@ function scan(files, opts) {
   const credUse = {}; // credential -> Set(agent)
   const A = (name) => (agents[name] = agents[name] || { agent: name, files: [], connectors: new Set(), credentials: new Set(), scopes: new Set(), sources: {}, sinks: {} });
 
+  // A file at the input root (README, .env.example) is shared setup for the sub-projects when there
+  // are several, not a separate agent sharing their keys.
+  const multi = new Set(files.filter((f) => !f.atRoot).map((f) => f.agent)).size > 1;
+  const sharedRoot = (f) => multi && f.atRoot;
   for (const f of files) {
     const a = A(f.agent);
     a.files.push(f.display);
@@ -30,7 +34,7 @@ function scan(files, opts) {
     let m; ENV_REF.lastIndex = 0;
     while ((m = ENV_REF.exec(c))) {
       const n = m.slice(1).find(Boolean);
-      if (n && CRED_NAME.test(n)) { a.credentials.add(n); (credUse[n] = credUse[n] || new Set()).add(f.agent); }
+      if (n && CRED_NAME.test(n)) { a.credentials.add(n); if (!sharedRoot(f)) (credUse[n] = credUse[n] || new Set()).add(f.agent); }
     }
     const isDoc = /(^|\/)(readme|changelog|contributing|license|docs?\/|knowledge\/|kb\/)/i.test(f.rel);
     (c.match(SCOPE) || []).forEach((s) => a.scopes.add(s));
@@ -42,13 +46,14 @@ function scan(files, opts) {
       const hit = allMatches(c, src)[0];
       if (hit) { (a.sinks[k] = a.sinks[k] || []).push(f.display + ":" + hit.line); a.connectors.add(k); }
     }
+    const ph = (m) => R.placeholders && re(R.placeholders).test(m);
     for (const h of R.hardcoded) for (const x of allMatches(f.text, h.pattern))
       findings.push(finding({ rule: "crossover." + h.id, severity: h.severity, file: f.display, line: x.line, message: h.message, evidence: h.severity === "high" ? mask(x.match) : x.match.slice(0, 80) }));
     for (const s of R.secrets) for (const x of allMatches(f.text, s.pattern)) {
-      if (/example|placeholder|your[-_]|xxxx|<|\$\{|changeme|dummy|fake|not[-_]?a[-_]?real/i.test(x.match)) continue;
+      if (ph(x.match) || /example|placeholder|your[-_]|xxxx|<|\$\{|changeme|dummy|fake|not[-_]?a[-_]?real/i.test(x.match)) continue;
       findings.push(finding({ rule: "crossover.secret." + s.id, severity: "high", file: f.display, line: x.line, message: "Possible hardcoded secret (" + s.id + "). Move it to an env var and rotate it.", evidence: mask(x.match) }));
     }
-    for (const p of R.pii) for (const x of allMatches(f.text, p.pattern))
+    for (const p of R.pii) for (const x of allMatches(f.text, p.pattern)) if (!ph(x.match))
       findings.push(finding({ rule: "crossover.pii." + p.id, severity: p.id === "email_address" ? "low" : "high", file: f.display, line: x.line, message: "Possible personal data (" + p.id + ") in agent code, prompt or fixture.", evidence: mask(x.match) }));
     if (/(^|\/)\.env$/.test(f.rel)) findings.push(finding({ rule: "crossover.env_committed", severity: "high", file: f.display, line: 1, message: ".env file present in the agent folder." }));
   }

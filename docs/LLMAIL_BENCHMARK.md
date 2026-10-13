@@ -15,6 +15,10 @@ Data: [Microsoft LLMail-Inject](https://huggingface.co/datasets/microsoft/llmail
 | LLMail benign emails (`emails_for_fp_tests`) | false-positive rate | 0.0% (0/203) | 0.0% (0/203) | 0.0% (0/203) |
 | Hand-written ordinary emails (authored for this repo) | false-positive rate | 0.0% (0/30) | 23.3% (7/30) | 0.0% (0/30) |
 
+## Context-based lowering (false-positive fixes, 2026-10-13)
+
+Findings in a defensive context (text that describes an attack, e.g. a guardrail prompt) are lowered to low severity, not removed. On these samples that lowered 2 finding(s) in the phase 2 held-out attacks and 1 in phase 1 (held-out emails with a high finding: 40.2% (201/500)). An attacker can add defensive-sounding words to get a finding lowered; the finding is still shown.
+
 ## Findings per rule on the phase 2 held-out set
 
 | Rule | Emails flagged |

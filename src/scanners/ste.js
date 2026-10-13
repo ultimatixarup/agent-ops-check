@@ -12,8 +12,11 @@ function promptStrings(obj, out) {
   return out;
 }
 // Which scanned files are prose for STE: .md/.txt docs and prompts, plus prompt strings inside JSON/YAML configs.
-function proseOf(f) {
-  if (/\.(md|txt)$/i.test(f.rel)) return f.text;
+// By default only prompt/instruction files are checked (STE is about text the agent follows), not
+// every README or lesson. --ste-all restores the old "all .md/.txt" behaviour.
+const PROMPT_FILE = /(^|\/|[-_.])(prompts?|instructions?|system|persona|agents?|claude|copilot-instructions|rules|policy|playbook|sop|runbook|guidelines?)([-_.]|\/|$)|\.prompt(\.md)?$/i;
+function proseOf(f, all) {
+  if (/\.(md|txt)$/i.test(f.rel)) return all || PROMPT_FILE.test(f.rel) ? f.text : null;
   if (/\.(json|ya?ml)$/i.test(f.rel) && /prompt|instruction|agent|system/i.test(f.rel + f.text.slice(0, 2000))) {
     try {
       const obj = /\.json$/i.test(f.rel) ? JSON.parse(f.text) : require("js-yaml").load(f.text);
@@ -35,7 +38,7 @@ function scan(files, opts) {
   const dict = o.steDict ? loadDict(o.steDict) : null;
   const findings = []; const docs = [];
   const run = (text, file) => { const r = core.check(text, R, { file, dict }); docs.push({ file, sentences: r.sentences, findings: r.findings.length }); findings.push(...r.findings); };
-  for (const f of files || []) { const t = proseOf(f); if (t) run(t, f.display); }
+  for (const f of files || []) { const t = proseOf(f, o.steAll); if (t) run(t, f.display); }
   for (const x of o.steInputs || []) run(x.text, x.name);
   let compare = null;
   if (o.steCompare) {
@@ -47,4 +50,4 @@ function scan(files, opts) {
   return { id: "ste", title: "Simplified Technical English (STE)", findings, docs, compare, dictionary: dict ? o.steDict + " (" + dict.length + " words)" : null,
     note: "Style checks inspired by ASD-STE100 writing rules. Not a certified ASD-STE100 checker; no specification text or dictionary is included." };
 }
-module.exports = { scan, proseOf, loadDict };
+module.exports = { scan, proseOf, loadDict, PROMPT_FILE };
