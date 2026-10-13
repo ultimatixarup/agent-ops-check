@@ -1,0 +1,1845 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "agent-ops-check",
+          "version": "0.1.0",
+          "informationUri": "https://github.com/ultimatixarup/agent-ops-check",
+          "rules": [
+            {
+              "id": "actions.irreversible_tool",
+              "shortDescription": {
+                "text": "actions.irreversible_tool"
+              }
+            },
+            {
+              "id": "actions.wildcard_domain",
+              "shortDescription": {
+                "text": "actions.wildcard_domain"
+              }
+            },
+            {
+              "id": "actions.no_deny_list",
+              "shortDescription": {
+                "text": "actions.no_deny_list"
+              }
+            },
+            {
+              "id": "governance.unbounded_loop",
+              "shortDescription": {
+                "text": "governance.unbounded_loop"
+              }
+            },
+            {
+              "id": "governance.no_owner",
+              "shortDescription": {
+                "text": "governance.no_owner"
+              }
+            },
+            {
+              "id": "governance.no_max_tokens",
+              "shortDescription": {
+                "text": "governance.no_max_tokens"
+              }
+            },
+            {
+              "id": "governance.no_timeout",
+              "shortDescription": {
+                "text": "governance.no_timeout"
+              }
+            },
+            {
+              "id": "governance.no_recursion_cap",
+              "shortDescription": {
+                "text": "governance.no_recursion_cap"
+              }
+            },
+            {
+              "id": "governance.no_budget",
+              "shortDescription": {
+                "text": "governance.no_budget"
+              }
+            },
+            {
+              "id": "governance.no_tracing",
+              "shortDescription": {
+                "text": "governance.no_tracing"
+              }
+            },
+            {
+              "id": "governance.no_review_record",
+              "shortDescription": {
+                "text": "governance.no_review_record"
+              }
+            },
+            {
+              "id": "governance.no_retry_cap",
+              "shortDescription": {
+                "text": "governance.no_retry_cap"
+              }
+            },
+            {
+              "id": "governance.unpinned_model",
+              "shortDescription": {
+                "text": "governance.unpinned_model"
+              }
+            },
+            {
+              "id": "governance.expensive_model",
+              "shortDescription": {
+                "text": "governance.expensive_model"
+              }
+            },
+            {
+              "id": "observability.langfuse",
+              "shortDescription": {
+                "text": "observability.langfuse"
+              }
+            },
+            {
+              "id": "observability.prometheus",
+              "shortDescription": {
+                "text": "observability.prometheus"
+              }
+            },
+            {
+              "id": "observability.runbooks_alerts",
+              "shortDescription": {
+                "text": "observability.runbooks_alerts"
+              }
+            },
+            {
+              "id": "injection.ignore_previous",
+              "shortDescription": {
+                "text": "injection.ignore_previous"
+              }
+            },
+            {
+              "id": "ste.passive_voice",
+              "shortDescription": {
+                "text": "ste.passive_voice"
+              }
+            },
+            {
+              "id": "ste.sentence_length",
+              "shortDescription": {
+                "text": "ste.sentence_length"
+              }
+            },
+            {
+              "id": "ste.noun_cluster",
+              "shortDescription": {
+                "text": "ste.noun_cluster"
+              }
+            },
+            {
+              "id": "ste.ing_verb",
+              "shortDescription": {
+                "text": "ste.ing_verb"
+              }
+            },
+            {
+              "id": "ste.word_hint",
+              "shortDescription": {
+                "text": "ste.word_hint"
+              }
+            },
+            {
+              "id": "ste.hedge",
+              "shortDescription": {
+                "text": "ste.hedge"
+              }
+            },
+            {
+              "id": "ste.complex_tense",
+              "shortDescription": {
+                "text": "ste.complex_tense"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "actions.irreversible_tool",
+          "level": "error",
+          "message": {
+            "text": "Irreversible tool book_new_flight has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/airline/tools.py"
+                },
+                "region": {
+                  "startLine": 208
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.irreversible_tool",
+          "level": "error",
+          "message": {
+            "text": "Irreversible tool cancel_flight has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/airline/tools.py"
+                },
+                "region": {
+                  "startLine": 342
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.irreversible_tool",
+          "level": "error",
+          "message": {
+            "text": "Irreversible tool delete_thread has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/memory_store.py"
+                },
+                "region": {
+                  "startLine": 89
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.irreversible_tool",
+          "level": "error",
+          "message": {
+            "text": "Irreversible tool delete_thread_item has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/memory_store.py"
+                },
+                "region": {
+                  "startLine": 148
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.irreversible_tool",
+          "level": "error",
+          "message": {
+            "text": "Irreversible tool delete_attachment has no approval gate or dry-run mode (rate limit/allowlist only). Add a human confirm step before it runs."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/memory_store.py"
+                },
+                "region": {
+                  "startLine": 173
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/main.py"
+                },
+                "region": {
+                  "startLine": 38
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/main.py"
+                },
+                "region": {
+                  "startLine": 39
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.no_deny_list",
+          "level": "warning",
+          "message": {
+            "text": "Prompt has no explicit deny-list such as \"never submit, pay or send without asking me first\". Agents treat what isn't forbidden as allowed."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 815
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 830
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 845
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 864
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 865
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 887
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 888
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 918
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 919
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 941
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 956
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 971
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 995
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1010
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1019
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1028
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1052
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1068
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1916
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 2216
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 3147
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/package-lock.json"
+                },
+                "region": {
+                  "startLine": 3245
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/tailwind.config.ts"
+                },
+                "region": {
+                  "startLine": 10
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/tsconfig.json"
+                },
+                "region": {
+                  "startLine": 26
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "actions.wildcard_domain",
+          "level": "warning",
+          "message": {
+            "text": "Wildcard domain or host permission."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/tsconfig.json"
+                },
+                "region": {
+                  "startLine": 26
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unbounded_loop",
+          "level": "error",
+          "message": {
+            "text": "Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/main.py"
+                },
+                "region": {
+                  "startLine": 89
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_owner",
+          "level": "warning",
+          "message": {
+            "text": "No owner/maintainer documented. Every agent needs a named person who answers for it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_max_tokens",
+          "level": "warning",
+          "message": {
+            "text": "[python-backend] No max_tokens / output cap set on model calls."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_timeout",
+          "level": "warning",
+          "message": {
+            "text": "[python-backend] No timeout on model or tool calls."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_recursion_cap",
+          "level": "warning",
+          "message": {
+            "text": "[python-backend] No step / iteration / recursion cap for the agent loop."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_budget",
+          "level": "warning",
+          "message": {
+            "text": "[python-backend] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_tracing",
+          "level": "warning",
+          "message": {
+            "text": "[python-backend] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_max_tokens",
+          "level": "warning",
+          "message": {
+            "text": "[openai__openai-cs-agents-demo] No max_tokens / output cap set on model calls."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_timeout",
+          "level": "warning",
+          "message": {
+            "text": "[openai__openai-cs-agents-demo] No timeout on model or tool calls."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_recursion_cap",
+          "level": "warning",
+          "message": {
+            "text": "[openai__openai-cs-agents-demo] No step / iteration / recursion cap for the agent loop."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_budget",
+          "level": "warning",
+          "message": {
+            "text": "[openai__openai-cs-agents-demo] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_tracing",
+          "level": "warning",
+          "message": {
+            "text": "[openai__openai-cs-agents-demo] No tracing (OpenTelemetry, LangSmith, Langfuse or similar). You can't see what the agent did or what it cost."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_max_tokens",
+          "level": "warning",
+          "message": {
+            "text": "[ui] No max_tokens / output cap set on model calls."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_timeout",
+          "level": "warning",
+          "message": {
+            "text": "[ui] No timeout on model or tool calls."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_recursion_cap",
+          "level": "warning",
+          "message": {
+            "text": "[ui] No step / iteration / recursion cap for the agent loop."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_budget",
+          "level": "warning",
+          "message": {
+            "text": "[ui] No budget, spend cap or usage alert referenced. Set one in the provider console and note it here."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_review_record",
+          "level": "note",
+          "message": {
+            "text": "No documented review (reviewed-by / review date / changelog)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_retry_cap",
+          "level": "note",
+          "message": {
+            "text": "[python-backend] No explicit retry limit or backoff."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/__init__.py"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unpinned_model",
+          "level": "note",
+          "message": {
+            "text": "Model 'gpt-5.2' is not pinned to a dated version, so behavior and price can change under you."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/airline/agents.py"
+                },
+                "region": {
+                  "startLine": 25
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.unpinned_model",
+          "level": "note",
+          "message": {
+            "text": "Model 'gpt-4.1-mini' is not pinned to a dated version, so behavior and price can change under you."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/airline/guardrails.py"
+                },
+                "region": {
+                  "startLine": 14
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.expensive_model",
+          "level": "note",
+          "message": {
+            "text": "Premium model 'gpt-4.1-mini'. Check it isn't used for simple routing or classification calls."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/airline/guardrails.py"
+                },
+                "region": {
+                  "startLine": 14
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_retry_cap",
+          "level": "note",
+          "message": {
+            "text": "[openai__openai-cs-agents-demo] No explicit retry limit or backoff."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "governance.no_retry_cap",
+          "level": "note",
+          "message": {
+            "text": "[ui] No explicit retry limit or backoff."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/app/layout.tsx"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "observability.langfuse",
+          "level": "note",
+          "message": {
+            "text": "Gap — no clear signal for LLM observability (Langfuse / LangSmith)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "observability.prometheus",
+          "level": "note",
+          "message": {
+            "text": "Gap — no clear signal for Prometheus metrics / alerts."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "observability.runbooks_alerts",
+          "level": "note",
+          "message": {
+            "text": "Gap — no clear signal for Alerts tied to runbooks."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.ignore_previous",
+          "level": "error",
+          "message": {
+            "text": "\"Ignore previous instructions\" style override."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/python-backend/airline/guardrails.py"
+                },
+                "region": {
+                  "startLine": 64
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "injection.ignore_previous",
+          "level": "error",
+          "message": {
+            "text": "\"Ignore previous instructions\" style override."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/ui/components/guardrails.tsx"
+                },
+                "region": {
+                  "startLine": 23
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.passive_voice",
+          "level": "warning",
+          "message": {
+            "text": "Passive voice. Say who does the action (active voice)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 9
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.sentence_length",
+          "level": "warning",
+          "message": {
+            "text": "Descriptive sentence has 26 words (limit 25). Split it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 57
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.passive_voice",
+          "level": "warning",
+          "message": {
+            "text": "Passive voice. Say who does the action (active voice)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 83
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.sentence_length",
+          "level": "warning",
+          "message": {
+            "text": "Descriptive sentence has 35 words (limit 25). Split it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 105
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.passive_voice",
+          "level": "warning",
+          "message": {
+            "text": "Passive voice. Say who does the action (active voice)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 107
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.sentence_length",
+          "level": "warning",
+          "message": {
+            "text": "Descriptive sentence has 28 words (limit 25). Split it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 120
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.passive_voice",
+          "level": "warning",
+          "message": {
+            "text": "Passive voice. Say who does the action (active voice)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 133
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.sentence_length",
+          "level": "warning",
+          "message": {
+            "text": "Descriptive sentence has 33 words (limit 25). Split it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 146
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.passive_voice",
+          "level": "warning",
+          "message": {
+            "text": "Passive voice. Say who does the action (active voice)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 152
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.passive_voice",
+          "level": "warning",
+          "message": {
+            "text": "Passive voice. Say who does the action (active voice)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 153
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.sentence_length",
+          "level": "warning",
+          "message": {
+            "text": "Descriptive sentence has 37 words (limit 25). Split it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 170
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.passive_voice",
+          "level": "warning",
+          "message": {
+            "text": "Passive voice. Say who does the action (active voice)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 178
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.noun_cluster",
+          "level": "note",
+          "message": {
+            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 7
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.ing_verb",
+          "level": "note",
+          "message": {
+            "text": "\"implementing\" used as a verb (-ing clause). Use a full clause, e.g. \"when you ...\"."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.ing_verb",
+          "level": "note",
+          "message": {
+            "text": "\"running\" used as a verb (-ing clause). Use a full clause, e.g. \"when you ...\"."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 21
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.ing_verb",
+          "level": "note",
+          "message": {
+            "text": "\"running\" used as a verb (-ing clause). Use a full clause, e.g. \"when you ...\"."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 39
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.noun_cluster",
+          "level": "note",
+          "message": {
+            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 83
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.word_hint",
+          "level": "note",
+          "message": {
+            "text": "\"modify\" → change (plain-word hint)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 83
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.hedge",
+          "level": "note",
+          "message": {
+            "text": "Vague word \"etc\". Give the exact condition, value or action."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 91
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.noun_cluster",
+          "level": "note",
+          "message": {
+            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 91
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.noun_cluster",
+          "level": "note",
+          "message": {
+            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 100
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.complex_tense",
+          "level": "note",
+          "message": {
+            "text": "Perfect tense. Use simple past or present."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 107
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.complex_tense",
+          "level": "note",
+          "message": {
+            "text": "Perfect tense. Use simple past or present."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 133
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.hedge",
+          "level": "note",
+          "message": {
+            "text": "Vague word \"appropriate\". Give the exact condition, value or action."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 146
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.word_hint",
+          "level": "note",
+          "message": {
+            "text": "\"via\" → through / with (plain-word hint)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 152
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.complex_tense",
+          "level": "note",
+          "message": {
+            "text": "Modal + be + past participle. Use an active verb."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 153
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.noun_cluster",
+          "level": "note",
+          "message": {
+            "text": "Possible noun cluster of 5 words. Break it up with \"of\", \"for\" or a verb."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 157
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "ste.noun_cluster",
+          "level": "note",
+          "message": {
+            "text": "Possible noun cluster of 4 words. Break it up with \"of\", \"for\" or a verb."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "openai__openai-cs-agents-demo/README.md"
+                },
+                "region": {
+                  "startLine": 168
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
