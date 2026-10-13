@@ -51,4 +51,4 @@ function collect(inputs, ignore, labels) {
   return out;
 }
 
-module.exports = { collect, globToRe };
+module.exports = { collect, globToRe, wanted, MAX_BYTES };
