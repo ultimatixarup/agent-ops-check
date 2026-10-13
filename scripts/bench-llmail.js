@@ -14,7 +14,8 @@ function run(rows, R) {
   const at = (min) => res.filter((f) => f.some((x) => RANK[x.severity] >= min)).length;
   const byRule = {};
   res.forEach((f) => new Set(f.map((x) => x.rule)).forEach((k) => (byRule[k] = (byRule[k] || 0) + 1)));
-  return { n: rows.length, any: at(1), medPlus: at(2), high: at(3), byRule };
+  const lowered = res.reduce((s, f) => s + f.filter((x) => /: lowered\)$/.test(x.message)).length, 0);
+  return { n: rows.length, any: at(1), medPlus: at(2), high: at(3), byRule, lowered };
 }
 function bench() {
   const full = loadRules("injection");
@@ -42,6 +43,8 @@ function render(b) {
     row("Phase 1 attacks (rules were written from this phase)", b.p1, "detection rate, in-sample"),
     row("LLMail benign emails (`emails_for_fp_tests`)", b.benign, "false-positive rate"),
     row("Hand-written ordinary emails (authored for this repo)", b.hard, "false-positive rate"), "",
+    "## Context-based lowering (false-positive fixes, 2026-10-13)", "",
+    "Findings in a defensive context (text that describes an attack, e.g. a guardrail prompt) are lowered to low severity, not removed. On these samples that lowered " + b.heldout.after.lowered + " finding(s) in the phase 2 held-out attacks and " + b.p1.after.lowered + " in phase 1 (held-out emails with a high finding: " + pct(b.heldout.after.high, b.heldout.after.n) + "). An attacker can add defensive-sounding words to get a finding lowered; the finding is still shown.", "",
     "## Findings per rule on the phase 2 held-out set", "", "| Rule | Emails flagged |", "|---|---|", ...top, "",
     "## How to read this (limits)", "",
     "- **Static regex cannot keep up with adaptive attacks.** LLMail-Inject attacks were adaptive: participants rewrote prompts until they got past ML defenses. Paraphrased, translated, or politely worded requests (\"could you confirm with my colleague at …\") get past these rules. On held-out data about a third of attacks raise no finding at all, and more than half raise nothing above low severity. That is the honest picture.",

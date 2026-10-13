@@ -1,6 +1,26 @@
 "use strict";
 const { loadRules, re, allMatches, code, finding } = require("../util");
 
+// The loop's body: Python = the following lines indented deeper than the while line;
+// brace languages = the text between the first "{" after the loop head and its matching "}".
+function loopBody(c, idx) {
+  const ls = c.lastIndexOf("\n", idx) + 1;
+  const head = c.slice(ls, c.indexOf("\n", idx) < 0 ? c.length : c.indexOf("\n", idx));
+  if (/while\s+True\s*:/.test(head)) {
+    const ind = head.match(/^\s*/)[0].length; const out = [];
+    for (const ln of c.slice(ls).split("\n").slice(1)) {
+      if (!ln.trim()) { out.push(ln); continue; }
+      if (ln.match(/^\s*/)[0].length <= ind) break;
+      out.push(ln);
+    }
+    return out.join("\n");
+  }
+  const open = c.indexOf("{", idx); if (open < 0) return c.slice(idx, idx + 1500);
+  let d = 0;
+  for (let i = open; i < c.length && i < open + 20000; i++) { if (c[i] === "{") d++; else if (c[i] === "}" && --d === 0) return c.slice(open, i + 1); }
+  return c.slice(open, open + 1500);
+}
+
 function scan(files, opts) {
   const R = loadRules("governance", opts && opts.rulesDir);
   const findings = [];
@@ -11,7 +31,7 @@ function scan(files, opts) {
     const a = (perAgent[f.agent] = perAgent[f.agent] || { text: "", files: [], llmCalls: [] });
     a.text += "\n" + c; a.files.push(f);
     for (const [k, src] of Object.entries(R.providers)) if (re(src).test(c)) (inv.providers[k] = inv.providers[k] || new Set()).add(f.display);
-    for (const [k, src] of Object.entries(R.frameworks)) if (/\.(js|mjs|cjs|ts|tsx|py|json|toml)$/i.test(f.rel) && re(src).test(c)) (inv.frameworks[k] = inv.frameworks[k] || new Set()).add(f.display);
+    for (const [k, src] of Object.entries(R.frameworks)) if (/\.(js|mjs|cjs|ts|tsx|py|ipynb|json|toml)$/i.test(f.rel) && re(src).test(c)) (inv.frameworks[k] = inv.frameworks[k] || new Set()).add(f.display);
     for (const x of allMatches(c, R.model_ref)) {
       const name = x.match;
       (inv.models[name] = inv.models[name] || []).push(f.display + ":" + x.line);
@@ -19,6 +39,10 @@ function scan(files, opts) {
     for (const x of allMatches(c, R.llm_call)) a.llmCalls.push({ file: f.display, line: x.line });
     for (const x of allMatches(c, R.loop_risk)) {
       const after = c.slice(x.index, x.index + 1500);
+      // Only an AGENT loop burns tokens: its body must call a model or a tool. Pagination, stream and
+      // input-prompt loops are not flagged.
+      const body = loopBody(c, x.index);
+      if (!re(R.llm_call).test(body) && !re(R.tool_invoke).test(body)) continue;
       if (!re(R.recursion_cap).test(after) && !/\bbreak\b/.test(after.slice(0, 600)))
         findings.push(finding({ rule: "governance.unbounded_loop", severity: "high", file: f.display, line: x.line, message: "Infinite loop with no step cap or break nearby. A stuck agent here burns tokens until someone notices." }));
     }
@@ -51,4 +75,4 @@ function scan(files, opts) {
   };
   return { id: "governance", title: "Governance + cost", findings, inventory };
 }
-module.exports = { scan };
+module.exports = { scan, loopBody };

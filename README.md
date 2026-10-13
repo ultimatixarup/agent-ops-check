@@ -265,7 +265,7 @@ Each section states an unmet need with sourced figures, the checks that address 
 
 _Standards and datasets are named for reference only. This project is not affiliated with or endorsed by Microsoft, OWASP, NIST, ISO, MITRE, CSA, Anthropic or the EU._
 
-_Rules version 2026.10.13. File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._
+_Rules version 2026.10.13. File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), Jupyter notebooks (.ipynb code and markdown cells, outputs ignored; findings show cell N, line M), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._
 
 <!-- CHECKS:END -->
 
@@ -281,7 +281,7 @@ Every input method runs the same rules (`src/ste/core.js`), and none of them use
 
 | Input | Command |
 |---|---|
-| Agent folder (prompts, `.md`, prompt strings in JSON/YAML configs) | `npx github:ultimatixarup/agent-ops-check ./my-agent` (STE is tab 5) |
+| Agent folder (prompt/instruction files such as `system-prompt.txt`, `prompts/*.md`, `AGENTS.md`, and prompt strings in JSON/YAML configs; add `--ste-all` for every `.md`/`.txt`) | `npx github:ultimatixarup/agent-ops-check ./my-agent` (STE is tab 5) |
 | Any file or folder of text | `agent-ops-check --ste docs/ --ste prompt.txt` |
 | Pasted text | `agent-ops-check --ste-text "The pump is running; perhaps utilize the valve."` |
 | stdin | `cat prompt.txt \| agent-ops-check --ste -` |
@@ -302,7 +302,7 @@ Use `--no-ste` to skip the STE tab in a normal scan.
 `.js .mjs .cjs .ts .tsx .py .json .jsonl .yaml .yml .toml .md .txt .csv`, MCP configs (`mcp.json`, `claude_desktop_config.json`)
 and `.env.example`. **Real `.env` files are never read.** `node_modules`, `.git`, `dist`, `build` and virtualenvs are skipped.
 
-Each **subfolder** of the input folder is treated as one agent, which is how shared credentials across agents are found.
+Each **subfolder** of the input folder is treated as one agent, which is how shared credentials across agents are found. App-part folders (`backend/`, `frontend/`, `ui/`, `server/`, `docs/`, `.github/`, ...) belong to the root app, so one full-stack sample is one agent.
 `kb.*`, `faq.*` or `price-list.*` next to a transcript is used as the FAQ for the grounding check.
 
 ## Options
@@ -317,6 +317,7 @@ agent-ops-check <dir|files...> [options]
   --no-labs            skip tab 4
   --llm <provider>     optional review: openai | anthropic | openrouter
   --docs <file|dir>    extra documents for the prompt-injection scan (repeatable)
+  --ste-all            STE-check every .md/.txt file (default: prompt/instruction files only)
   --no-injection, --no-ste, --no-evals   skip those parts
 agent-ops-check ui [--port N] [--open]   local launch page (127.0.0.1 only)
 ```

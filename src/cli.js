@@ -23,6 +23,7 @@ on THIS machine. No network calls unless you pass --llm.
 Simplified Technical English (STE) style checks (not a certified ASD-STE100 checker):
   --ste <file|dir|->   check any text file or folder; "-" reads stdin (repeatable)
   --ste-text "..."     check pasted text
+  --ste-all            STE-check every .md/.txt file, not only prompt/instruction files
   --ste-dict <path>    your own approved-word list (one word per line); flags other words
   --ste-compare <original> <rewrite>   list facts and constraints missing from the STE rewrite
 
@@ -42,6 +43,7 @@ function parse(argv) {
     else if (a === "--format") o.format = v().split(",").map((s) => s.trim());
     else if (a === "--fail-on") o.failOn = v();
     else if (a === "--ignore") o.ignore.push(v());
+    else if (a === "--ste-all") o.steAll = true;
     else if (a === "--rules") o.rulesDir = path.resolve(v());
     else if (a === "--no-labs") o.noLabs = true;
     else if (a === "--llm") o.llm = v();
