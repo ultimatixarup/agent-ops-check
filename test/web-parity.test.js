@@ -72,3 +72,10 @@ test("web bundle contains no network calls of its own", () => {
   assert.doesNotMatch(src, /\bnew XMLHttpRequest\b|navigator\.sendBeacon|new WebSocket|\bimportScripts\b/);
   assert.doesNotMatch(src, /\bfetch\(\s*["'`]http/);
 });
+
+test("web = CLI: false-positive regression fixtures incl. a notebook", () => {
+  const d = path.join(ROOT, "test", "fixtures", "fp");
+  const w = WEB.scan({ inputs: [{ name: "fp", kind: "folder", entries: folderEntries(d) }] });
+  same(w, cli(path.dirname(d), [d]));
+  assert.ok(w.groups.some((g) => g.findings.some((f) => f.notebookCell)));
+});

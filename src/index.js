@@ -1,6 +1,6 @@
 "use strict";
 const path = require("path");
-const { collect } = require("./files");
+const { collect, notebookLoc } = require("./files");
 const crossover = require("./scanners/crossover");
 const actions = require("./scanners/actions");
 const governance = require("./scanners/governance");
@@ -41,6 +41,12 @@ function run(inputs, o, orig) {
   if (!o.noLabs && !steOnly) groups.push(labs.scan(files));
   if (!o.noInjection && (files.length || (o.docs && o.docs.length))) groups.push(injection.scan(files, o));
   if (!o.noSte) groups.push(ste.scan(files, o));
+  // Notebook findings: the scan text is the notebook's cells, so map the line to "cell N, line M".
+  const nbs = {}; for (const f of files) if (f.notebook) nbs[f.display] = f.notebook;
+  if (Object.keys(nbs).length) for (const g of groups) for (const f of g.findings) {
+    const loc = nbs[f.file] && f.line > 0 ? notebookLoc(nbs[f.file], f.line) : null;
+    if (loc) { f.notebookCell = loc; f.message = f.message + " (notebook " + loc + ")"; }
+  }
   for (const g of groups) {
     g.findings.sort((a, b) => (W[b.severity] - W[a.severity]) || String(a.file).localeCompare(b.file) || a.line - b.line);
     g.score = groupScore(g.findings);

@@ -1,8 +1,13 @@
 "use strict";
 const { loadRules, re, allMatches, lines, code, finding } = require("../util");
 
+// A leading read-only verb (get_order, list_bookings, read_post) names a lookup, not an action, unless
+// the name also has a strong action verb (get_and_delete_file, fetch_then_pay).
+const READ_ONLY = /^_*(get|list|read|fetch|search|find|lookup|look_up|describe|query|check|view|show|is|has|count|load|retrieve|preview|validate|verify)(_|$)/;
+const STRONG = /(^|_)(delete|remove|drop|destroy|purge|pay|refund|cancel|submit|wire|purchase|buy|checkout|send|transfer|publish|deploy|merge)(_|$)/;
 function isIrreversible(name, verbs) {
   const snake = name.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase();
+  if (READ_ONLY.test(snake) && !STRONG.test(snake.replace(READ_ONLY, ""))) return false;
   return new RegExp("(^|[_.-])(" + verbs + ")([_.-]|$)").test(snake);
 }
 
@@ -54,4 +59,4 @@ function scan(files, opts) {
   }
   return { id: "actions", title: "Irreversible actions", findings, actions };
 }
-module.exports = { scan, isIrreversible };
+module.exports = { scan, isIrreversible, READ_ONLY };

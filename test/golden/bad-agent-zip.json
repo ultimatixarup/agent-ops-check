@@ -92,12 +92,11 @@
       }
     },
     "ste": {
-      "score": 84,
-      "findings": 7,
+      "score": 89,
+      "findings": 5,
       "rules": {
         "ste.multiple_instructions": 1,
-        "ste.noun_cluster": 2,
-        "ste.passive_voice": 1,
+        "ste.noun_cluster": 1,
         "ste.phrasal_verb": 1,
         "ste.semicolon": 1,
         "ste.sentence_length": 1

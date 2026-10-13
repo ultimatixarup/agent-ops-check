@@ -29,6 +29,7 @@ max_tokens: '\bmax_(output_)?tokens\b|\bmaxTokens\b|\bmax_completion_tokens\b|\b
 timeout: '\btimeout\b|\brequest_timeout\b|AbortSignal\.timeout|\bdeadline\b'
 retry_cap: '\bmax_?retries\b|\bmaxRetries\b|\bretry[_ -]?(limit|max|attempts)\b|\bstop_after_attempt\b|\bbackoff\b'
 recursion_cap: '\brecursion_?limit\b|\bmax_?(iterations|iter|steps|turns|loops|depth)\b|\bmaxSteps\b|\bstopWhen\b|\bmaxTurns\b'
+tool_invoke: '\bcall_tool\(|\brun_tool\(|\bexecute_tool\(|\binvoke_tool\(|\btool_calls\b|\btool_use\b|\.ainvoke\(|\.astream\(|\bRunner\.run|\bagent\.run\(|\.run_stream\(|\bmessages\.stream\(|\b_agent_loop\('
 loop_risk: 'while\s*\(\s*true\s*\)|while\s+True\s*:|for\s*\(\s*;\s*;\s*\)'
 budget: '\bbudget\b|\bspend[_ -]?(limit|cap|alert)|\busage[_ -]?(limit|alert|cap)|\bcost[_ -]?(alert|cap|limit)|\bbilling[_ -]?alert|\bhard[_ -]?limit'
 tracing: '\bopentelemetry\b|\botel\b|\botlp\b|\blangsmith\b|LANGCHAIN_TRACING|\blangfuse\b|\bhelicone\b|\bphoenix\b|\bweave\b|\btraceloop\b'

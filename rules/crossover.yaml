@@ -58,3 +58,7 @@ pii:
     pattern: '\b(account|acct|routing)[ _-]?(no|number|#)?["'']?\s*[:=]?\s*["'']?\d{8,17}\b'
   - id: email_address
     pattern: '\b[A-Za-z0-9._%+-]+@(gmail|yahoo|outlook|hotmail|icloud|proton)\.(com|me)\b'
+# Documented placeholder / example values that match the PII and secret patterns but are not real data.
+# A match that contains one of these is skipped. Sources: AWS docs example account ID and access keys,
+# Stripe/Visa test card numbers, the SSA's retired "Woolworth" SSN. (123-45-6789 is NOT allowlisted: fixtures use it as realistic PII.)
+placeholders: '123456789012|111111111111|000000000000|210987654321|AKIAIOSFODNN7EXAMPLE|wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY|4242[ -]?4242[ -]?4242[ -]?4242|4111[ -]?1111[ -]?1111[ -]?1111|078-05-1120|EXAMPLE'
