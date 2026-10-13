@@ -61,6 +61,19 @@ Each section states an unmet need with sourced figures, the checks that address 
 | `crossover.secret.*` | high | Hardcoded secrets (values are masked): `openai_key`, `anthropic_key`, `aws_access_key`, `github_token`, `slack_token`, `google_api_key`, `stripe_key`, `private_key`, `generic_assignment`. Patterns in `rules/crossover.yaml`. | Possible hardcoded secret (generic_assignment): api_…a (masked). | Move it to an env var or secret store and rotate it. |
 | `crossover.pii.*` | high (low for email_address) | Personal data: `ssn`, `card_number`, `bank_account`, `email_address` (card numbers are Luhn-checked). Patterns in `rules/crossover.yaml`. | Possible personal data (ssn): 123-…89 (masked). | Remove real personal data from prompts and fixtures; use synthetic test data. |
 
+**Personal-to-work data crossover maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): ✅ LLM02 Sensitive Information Disclosure; ✅ LLM06 Excessive Agency; ✅ LLM07 System Prompt Leakage
+- [OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)](https://genai.owasp.org/download/52117): ✅ ASI03 Identity and Privilege Abuse
+- [OWASP Agentic AI – Threats and Mitigations (T1–T15)](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/): ✅ T3 Privilege Compromise; 🟡 T9 Identity Spoofing & Impersonation
+- [MITRE ATLAS (selected techniques)](https://github.com/mitre-atlas/atlas-data): ✅ AML.T0057 LLM Data Leakage; ✅ AML.T0053 AI Agent Tool Invocation; ✅ AML.T0055 Unsecured Credentials; ✅ AML.T0083 Credentials from AI Agent Configuration; ✅ AML.T0086 Exfiltration via AI Agent Tool Invocation
+- [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): ✅ MAP Map: context, components, third parties; ✅ GAI-DataPrivacy GenAI risk: Data Privacy; ✅ GAI-InfoSecurity GenAI risk: Information Security
+- [ISO/IEC 42001:2023 Annex A control areas](https://www.iso.org/standard/81230.html): ✅ A.4 Resources for AI systems (inventory of tools, data, compute); 🟡 A.7 Data for AI systems
+- [CSA AI Controls Matrix (AICM) domains](https://cloudsecurityalliance.org/artifacts/ai-controls-matrix): 🟡 CEK Cryptography, Encryption & Key Management; ✅ DSP Data Security & Privacy Lifecycle; ✅ IAM Identity & Access Management
+- [EU AI Act basics (selected articles)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj): 🟡 Art.10 Data and data governance; 🟡 Art.15 Accuracy, robustness and cybersecurity
+- [Anthropic / Claude agent guidance (summarized)](https://docs.anthropic.com/): ✅ AN-LEASTPRIV Least-privilege tools and credentials
+- [Microsoft Copilot Studio governance areas (summarized)](https://learn.microsoft.com/microsoft-copilot-studio/): 🟡 CS-DLP Data policies for connectors; 🟡 CS-AUTH Agent authentication
+
 ### Agents taking irreversible actions on other people's sites
 
 **The need.**
@@ -83,6 +96,19 @@ Each section states an unmet need with sourced figures, the checks that address 
 | `actions.url_shortener` | medium | URL shortener. Can be used to get around fetch limits or hide the real destination. Pattern: `\b(bit\.ly\\|tinyurl\.com\\|t\.co\\|is\.gd\\|rebrand\.ly\\|cutt\.ly\\|shorturl\.at)/` | bit.ly/ | Remove shorteners; fetch only allowlisted destinations. |
 | `actions.wildcard_domain` | medium | Wildcard domain or host permission. Pattern: `["'](\*\\|https?://\*)[^"']*["']\\|\ballowed_?(domains\\|hosts)\b\s*[:=]\s*\[?\s*["']\*` | ALLOWED_HOSTS = ["*"] | List exact domains. |
 | `actions.no_deny_list` | medium | Prompt files (.md/.txt or named prompt/instruction) with a role marker but no deny_list sentence such as 'never submit … without asking'. | Prompt has no explicit deny-list. | Add: Never send, submit, pay or delete without asking me first. |
+
+**Irreversible actions maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): ✅ LLM01 Prompt Injection; 🟡 LLM05 Improper Output Handling; ✅ LLM06 Excessive Agency
+- [OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)](https://genai.owasp.org/download/52117): ✅ ASI01 Agent Goal Hijack; ✅ ASI02 Tool Misuse and Exploitation; ✅ ASI03 Identity and Privilege Abuse
+- [OWASP Agentic AI – Threats and Mitigations (T1–T15)](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/): ✅ T2 Tool Misuse; ✅ T3 Privilege Compromise
+- [MITRE ATLAS (selected techniques)](https://github.com/mitre-atlas/atlas-data): ✅ AML.T0053 AI Agent Tool Invocation; ✅ AML.T0101 Data Destruction via AI Agent Tool Invocation; 🟡 AML.T0100 AI Agent Clickbait
+- [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): ✅ GAI-HumanAI GenAI risk: Human-AI Configuration; ✅ GAI-InfoSecurity GenAI risk: Information Security
+- [ISO/IEC 42001:2023 Annex A control areas](https://www.iso.org/standard/81230.html): ✅ A.9 Use of AI systems (responsible use, human oversight)
+- [CSA AI Controls Matrix (AICM) domains](https://cloudsecurityalliance.org/artifacts/ai-controls-matrix): 🟡 AIS Application & Interface Security; ✅ IAM Identity & Access Management; 🟡 TVM Threat & Vulnerability Management
+- [EU AI Act basics (selected articles)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj): ✅ Art.14 Human oversight
+- [Anthropic / Claude agent guidance (summarized)](https://docs.anthropic.com/): ✅ AN-CONFIRM Ask a human before consequential or irreversible actions; ✅ AN-LEASTPRIV Least-privilege tools and credentials; 🟡 AN-SANDBOX Run in a sandbox / isolated environment; ✅ AN-PROMPT Clear system prompt with explicit constraints
+- [Microsoft Copilot Studio governance areas (summarized)](https://learn.microsoft.com/microsoft-copilot-studio/): ✅ CS-ACTIONS Actions and flows that change data
 
 ### Small businesses building AI faster than they can govern or budget it
 
@@ -113,6 +139,32 @@ Each section states an unmet need with sourced figures, the checks that address 
 | `health+.*` | high (t_handoff_claim: medium) | Extra checks for 7 of the 8 recorded Health Checker misses (src/labs/health-plus.js). IDs: `bot_disclosure` (Prompt sets up a human persona and tells the bot not to mention it is automated.), `handoff_rule` (Prompt discourages handing the customer to a human.), `grounding_rule` (Prompt tells the bot to guess or invent prices or facts.), `untrusted_input` (Non-English instruction to obey the customer unconditionally.), `t_dosing` (Bot gave vague dosing advice (no number or drug name).), `t_leaks` (Bot paraphrased its own instructions to the customer.) | health+.t_dosing: Bot gave vague dosing advice. | Rewrite the prompt rule or fix the bot reply. |
 | `bill.*` | high or medium | Cloud Bill Smell Detector on bill CSV/JSON exports. | bill.egress: Egress-like line items found. | Review the flagged line items. |
 | `observability.*` | low | Observability Gap Finder across the whole input. IDs: `otel`, `langfuse`, `prometheus`, `splunk_logs`, `golden_signals`, `agent_specific`, `runbooks_alerts`. | Gap — no clear signal for OpenTelemetry traces/metrics. | Add the missing signal. |
+
+**Governance + cost maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): 🟡 LLM03 Supply Chain; ✅ LLM10 Unbounded Consumption
+- [OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)](https://genai.owasp.org/download/52117): 🟡 ASI04 Agentic Supply Chain Vulnerabilities; 🟡 ASI08 Cascading Failures; 🟡 ASI10 Rogue Agents
+- [OWASP Agentic AI – Threats and Mitigations (T1–T15)](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/): ✅ T4 Resource Overload; ✅ T8 Repudiation & Untraceability
+- [MITRE ATLAS (selected techniques)](https://github.com/mitre-atlas/atlas-data): ✅ AML.T0034 Cost Harvesting; 🟡 AML.T0029 Denial of ML Service; 🟡 AML.T0010 ML Supply Chain Compromise
+- [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): 🟡 GOVERN Govern: policies, accountability, oversight; ✅ MAP Map: context, components, third parties; 🟡 MEASURE Measure: test and evaluate; 🟡 GAI-ValueChain GenAI risk: Value Chain and Component Integration
+- [ISO/IEC 42001:2023 Annex A control areas](https://www.iso.org/standard/81230.html): 🟡 A.3 Internal organization (roles, responsibilities); ✅ A.4 Resources for AI systems (inventory of tools, data, compute); 🟡 A.6 AI system life cycle (verification, deployment, operation, monitoring); 🟡 A.10 Third-party and customer relationships
+- [CSA AI Controls Matrix (AICM) domains](https://cloudsecurityalliance.org/artifacts/ai-controls-matrix): 🟡 CCC Change Control & Configuration; 🟡 GRC Governance, Risk & Compliance; ✅ LOG Logging & Monitoring; 🟡 MDS Model Security; 🟡 STA Supply Chain, Transparency & Accountability
+- [EU AI Act basics (selected articles)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj): ✅ Art.12 Record-keeping (logging); 🟡 Art.13 Transparency and information to deployers
+- [Anthropic / Claude agent guidance (summarized)](https://docs.anthropic.com/): ✅ AN-LIMITS Limit cost and steps; ✅ AN-OBSERVE Log and monitor agent actions
+- [Microsoft Copilot Studio governance areas (summarized)](https://learn.microsoft.com/microsoft-copilot-studio/): 🟡 CS-AUDIT Audit logging and monitoring
+
+**Labs tools (Agent Health Checker, Cloud Bill Smell, Observability Gap) maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): ✅ LLM01 Prompt Injection; ✅ LLM02 Sensitive Information Disclosure; 🟡 LLM05 Improper Output Handling; ✅ LLM06 Excessive Agency; ✅ LLM07 System Prompt Leakage; 🟡 LLM09 Misinformation; ✅ LLM10 Unbounded Consumption
+- [OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)](https://genai.owasp.org/download/52117): ✅ ASI01 Agent Goal Hijack; 🟡 ASI05 Unexpected Code Execution; 🟡 ASI08 Cascading Failures; 🟡 ASI09 Human-Agent Trust Exploitation; 🟡 ASI10 Rogue Agents
+- [OWASP Agentic AI – Threats and Mitigations (T1–T15)](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/): ✅ T2 Tool Misuse; 🟡 T5 Cascading Hallucination Attacks; ✅ T6 Intent Breaking & Goal Manipulation; 🟡 T7 Misaligned & Deceptive Behaviors; ✅ T8 Repudiation & Untraceability; 🟡 T9 Identity Spoofing & Impersonation; 🟡 T11 Unexpected RCE and Code Attacks; 🟡 T15 Human Manipulation
+- [MITRE ATLAS (selected techniques)](https://github.com/mitre-atlas/atlas-data): ✅ AML.T0051 LLM Prompt Injection (direct and indirect); 🟡 AML.T0054 LLM Jailbreak; ✅ AML.T0056 LLM Meta Prompt Extraction; ✅ AML.T0057 LLM Data Leakage; ✅ AML.T0055 Unsecured Credentials
+- [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): 🟡 MEASURE Measure: test and evaluate; 🟡 GAI-Confabulation GenAI risk: Confabulation; ✅ GAI-DataPrivacy GenAI risk: Data Privacy; ✅ GAI-HumanAI GenAI risk: Human-AI Configuration; 🟡 GAI-InfoIntegrity GenAI risk: Information Integrity
+- [ISO/IEC 42001:2023 Annex A control areas](https://www.iso.org/standard/81230.html): 🟡 A.6 AI system life cycle (verification, deployment, operation, monitoring); 🟡 A.8 Information for interested parties; ✅ A.9 Use of AI systems (responsible use, human oversight)
+- [CSA AI Controls Matrix (AICM) domains](https://cloudsecurityalliance.org/artifacts/ai-controls-matrix): 🟡 BCR Business Continuity & Operational Resilience; ✅ LOG Logging & Monitoring; 🟡 STA Supply Chain, Transparency & Accountability
+- [EU AI Act basics (selected articles)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj): ✅ Art.12 Record-keeping (logging); ✅ Art.14 Human oversight; 🟡 Art.15 Accuracy, robustness and cybersecurity; ✅ Art.50 Transparency: tell people they are talking to AI
+- [Anthropic / Claude agent guidance (summarized)](https://docs.anthropic.com/): ✅ AN-UNTRUSTED Treat tool results and web/doc content as untrusted (prompt injection)
+- [Microsoft Copilot Studio governance areas (summarized)](https://learn.microsoft.com/microsoft-copilot-studio/): 🟡 CS-MOD Content moderation and instructions; ✅ CS-HANDOFF Escalation / human handoff
 
 ### Prompt injection hidden in documents (ADSF)
 
@@ -154,6 +206,20 @@ Each section states an unmet need with sourced figures, the checks that address 
 | `injection.llmail_encoded_text` | medium | Long run of encoded or letter-spaced text (Unicode escapes, s p a c e d letters, URL or binary encoding) that may hide instructions. Pattern: `((\\u\\|u\+\\|\bU\+?)[0-9a-f]{4}[\s,]*){12,}\\|(\b[a-z] ){15,}\\|(%[0-9a-f]{2}){12,}\\|(\b[01]{8}\s+…` | U+0054 U+0068 U+0069 … | Decode and review; don't feed encoded blobs to an agent with tools. |
 | `injection.llmail_send_to_address` | low | Low-confidence signal: text asks the reader to send something to a specific address. Normal in human email; worth a look when the reader is an agent with a send tool. Pattern: `\b(send\\|reply\\|submit\\|forward\\|e-?mail\\|mail\\|confirm)\b[^.\n]{0,60}\bto:?\s*["'(']?[a-z0-9._+…` | send the signed contract to legal@example.com (low; common in normal mail) | Usually fine in human mail. If an agent with a send tool reads it, require confirmation before sending. |
 
+**Microsoft LLMail-Inject dataset.** 8 `injection.llmail_*` rules are derived from Microsoft's [LLMail-Inject](https://huggingface.co/datasets/microsoft/llmail-inject-challenge) dataset (MIT License; see `THIRD_PARTY_NOTICES.md`). On 500 held-out attacks the scan flags 66.8% at any severity and 44.6% at medium or higher (13.6% before these rules), with 0/203 false positives on the dataset's benign emails. About a third of attacks are still missed. Details: [docs/LLMAIL_BENCHMARK.md](docs/LLMAIL_BENCHMARK.md).
+
+**ADSF prompt-injection scan maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): ✅ LLM01 Prompt Injection; 🟡 LLM04 Data and Model Poisoning
+- [OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)](https://genai.owasp.org/download/52117): ✅ ASI01 Agent Goal Hijack; 🟡 ASI06 Memory and Context Poisoning
+- [OWASP Agentic AI – Threats and Mitigations (T1–T15)](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/): 🟡 T1 Memory Poisoning; ✅ T6 Intent Breaking & Goal Manipulation; 🟡 T12 Agent Communication Poisoning
+- [MITRE ATLAS (selected techniques)](https://github.com/mitre-atlas/atlas-data): ✅ AML.T0051 LLM Prompt Injection (direct and indirect); ✅ AML.T0086 Exfiltration via AI Agent Tool Invocation
+- [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): ✅ GAI-InfoSecurity GenAI risk: Information Security
+- [CSA AI Controls Matrix (AICM) domains](https://cloudsecurityalliance.org/artifacts/ai-controls-matrix): 🟡 AIS Application & Interface Security; 🟡 MDS Model Security; 🟡 TVM Threat & Vulnerability Management
+- [EU AI Act basics (selected articles)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj): 🟡 Art.15 Accuracy, robustness and cybersecurity
+- [Anthropic / Claude agent guidance (summarized)](https://docs.anthropic.com/): ✅ AN-UNTRUSTED Treat tool results and web/doc content as untrusted (prompt injection)
+- [Microsoft Copilot Studio governance areas (summarized)](https://learn.microsoft.com/microsoft-copilot-studio/): 🟡 CS-KNOW Knowledge sources for generative answers; 🟡 CS-MOD Content moderation and instructions
+
 ### Unclear instructions and information lost in rewrites (STE)
 
 **The need.**
@@ -180,6 +246,12 @@ Each section states an unmet need with sourced figures, the checks that address 
 | `ste.not_in_dictionary` | low | Words not in your --ste-dict list (capitalized words after the first are treated as names). | Not in your approved word list: rotate, handle. | Use an approved word or add it to your list. |
 | `ste.info_loss.*` | high (names and soft constraints: medium) | --ste-compare: numbers, units, dates, names, paths, URLs, identifiers and constraint words in the original that are missing from the rewrite. | Missing from the STE version: number+unit "30 seconds". | Put the fact or constraint back. |
 
+**STE style checks maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): 🟡 LLM09 Misinformation
+- [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): 🟡 GAI-InfoIntegrity GenAI risk: Information Integrity
+- [Anthropic / Claude agent guidance (summarized)](https://docs.anthropic.com/): ✅ AN-PROMPT Clear system prompt with explicit constraints
+
 ### Testing agents and mapping to standards
 
 **The need.**
@@ -190,6 +262,8 @@ Each section states an unmet need with sourced figures, the checks that address 
 **Where:** Eval sets and Standards map.
 
 **Checks that address it:** `agent-ops-check evals <folder>` writes an offline eval set (JSONL) from your prompts and tool definitions, and the Standards map shows how findings map to 10 frameworks in `data/standards/` (✅ evidence found, 🟡 partial, ⬜ not found). It says "maps to", never "compliant".
+
+_Standards and datasets are named for reference only. This project is not affiliated with or endorsed by Microsoft, OWASP, NIST, ISO, MITRE, CSA, Anthropic or the EU._
 
 _Rules version 2026.10.13. File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._
 

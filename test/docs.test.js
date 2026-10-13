@@ -28,3 +28,17 @@ test("every rule emitted by the example scans is documented", async () => {
     }
   }
 });
+test("every check group maps only to real standards items, worded 'maps to'", () => {
+  const std = require("../src/standards").load(), cs = gen.webCheckStandards();
+  const real = new Set(std.flatMap((fw) => fw.items.map((i) => fw.id + ":" + i.id)));
+  for (const id of ["crossover", "actions", "governance", "labs", "injection", "ste"]) {
+    const g = cs.groups.find((x) => x.id === id);
+    assert.ok(g && g.frameworks.length, "no standards for group " + id);
+    for (const fw of g.frameworks) for (const it of fw.items) assert.ok(real.has(fw.id + ":" + it.id), fw.id + ":" + it.id);
+  }
+  assert.ok(cs.groups.find((g) => g.id === "injection").frameworks.some((fw) => fw.items.some((i) => i.id === "LLM01")));
+  assert.strictEqual(cs.llmail.rules, 8);
+  const docs = readme();
+  assert.ok(docs.includes("docs/LLMAIL_BENCHMARK.md") && docs.includes("not affiliated with or endorsed by Microsoft, OWASP"));
+  assert.ok(!/\bcompliant\b/i.test(docs.slice(docs.indexOf(gen.START), docs.indexOf(gen.END)).replace(/never "compliant"/g, "")));
+});

@@ -41,6 +41,16 @@ needs:
       - 'In the Pax8 survey, 55% of decision-makers spend three or more hours each week checking AI work.'
       - Only 9% of the 137 VentureBeat respondents say sandboxing of high-risk agents best describes their program.
 
+# Check groups for the "Maps to standards" lists (README and the Labs page). Each group's rule-ID prefixes are
+# matched against the `checks` of every item in data/standards/*.yaml. Only real mappings from that data are shown.
+standards_groups:
+  - {id: crossover, need: crossover, title: "Personal-to-work data crossover", prefixes: ["crossover."]}
+  - {id: actions, need: actions, title: "Irreversible actions", prefixes: ["actions."]}
+  - {id: governance, need: governance, title: "Governance + cost", prefixes: ["governance."]}
+  - {id: labs, need: governance, title: "Labs tools (Agent Health Checker, Cloud Bill Smell, Observability Gap)", prefixes: ["health.", "health+.", "bill.", "observability."]}
+  - {id: injection, need: injection, title: "ADSF prompt-injection scan", prefixes: ["injection."]}
+  - {id: ste, need: ste, title: "STE style checks", prefixes: ["ste."]}
+
 checks:
   # ---- crossover (code rules; regex families come from rules/crossover.yaml)
   crossover.source_to_sink: {need: crossover, severity: high, looks_for: "Per agent folder: any personal source (personal_sources in rules/crossover.yaml) AND any work sink (work_sinks) in non-doc files.", example: "Agent 'finance-cfo' can read personal sources (gmail, tax_paths) and write to work sinks (slack).", fix: "Split personal and work agents, scope tokens read-only, allowlist output channels."}
