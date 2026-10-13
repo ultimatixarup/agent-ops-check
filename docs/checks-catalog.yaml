@@ -34,6 +34,18 @@ needs:
     need:
       - Anthropic (October 9, 2026) wrote that some failures "could have been avoided" if the task had clearly stated what was in and out of scope.
       - In the Labs controlled test of a fictional business (September 30, 2026), the unsafe scripted bot failed 17 of 20 tests and the fixed bot failed 0 of 20.
+  - id: daemon
+    title: Agent CLIs that leave background processes or update themselves (verify on your install)
+    tab: "Tab 7: Background daemons + self-update"
+    need:
+      - 'A Hacker News thread on October 12, 2026 ("Codex CLI installs a persistent, self-updating background daemon by default", 578 points) and a Groundy audit guide describe a coding-agent CLI that reportedly keeps a self-updating background process running after the terminal closes. Groundy notes the report rests on a single, author-reported GitHub issue (openai/codex#48195) that had not been reproduced. This project does not confirm it; it is the reason to check your own installs.'
+      - If a background updater replaces the binary, the version you pinned is no longer necessarily the one doing the work.
+  - id: skills
+    title: Agent skills that poison later sessions or hide code in compiled files
+    tab: "Tab 8: Skill artifact provenance"
+    need:
+      - 'SkillRelayBench (arXiv 2610.13227, October 2026), their findings: in 1,890 runs (270 cases x 7 models on Codex CLI, Gemini CLI and Claude Code), attacks carried through files a skill leaves for later sessions succeeded 46.7-77.4% of the time (64.7% overall), and 53% of runs completed both the user''s task and the attack.'
+      - 'PyCache Trap (arXiv 2610.10612, October 2026), their findings: a swapped __pycache__ .pyc can run instead of the reviewed .py; attacks succeeded 94-100% of the time against 7 skill scanners on 100 skills.'
   - id: evals
     title: Testing agents and mapping to standards
     tab: "Eval sets and Standards map"
@@ -50,6 +62,8 @@ standards_groups:
   - {id: labs, need: governance, title: "Labs tools (Agent Health Checker, Cloud Bill Smell, Observability Gap)", prefixes: ["health.", "health+.", "bill.", "observability."]}
   - {id: injection, need: injection, title: "ADSF prompt-injection scan", prefixes: ["injection."]}
   - {id: ste, need: ste, title: "STE style checks", prefixes: ["ste."]}
+  - {id: daemon, need: daemon, title: "Background daemons + self-update", prefixes: ["daemon."]}
+  - {id: skills, need: skills, title: "Skill artifact provenance", prefixes: ["skills."]}
 
 checks:
   # ---- crossover (code rules; regex families come from rules/crossover.yaml)
@@ -128,3 +142,19 @@ checks:
   ste.word_hint: {need: ste, severity: low, looks_for: "hints list (original, not from the ASD-STE100 dictionary).", example: "utilize → use", fix: "Use the plain word."}
   ste.not_in_dictionary: {need: ste, severity: low, looks_for: "Words not in your --ste-dict list (capitalized words after the first are treated as names).", example: "Not in your approved word list: rotate, handle.", fix: "Use an approved word or add it to your list."}
   ste.info_loss.*: {need: ste, severity: "high (names and soft constraints: medium)", looks_for: "--ste-compare: numbers, units, dates, names, paths, URLs, identifiers and constraint words in the original that are missing from the rewrite.", example: 'Missing from the STE version: number+unit "30 seconds".', fix: "Put the fact or constraint back."}
+  # ---- daemon (regex families from rules/persistence.yaml). Static: verify on your install.
+  daemon.launchd_register: {need: daemon, example: "launchctl load ~/Library/LaunchAgents/com.example.relay.plist", fix: "Don't install launch agents from an agent CLI unless the user opted in; document how to remove them."}
+  daemon.systemd_register: {need: daemon, example: "systemctl --user enable relay-updater.service", fix: "Make background services opt-in and document how to disable them."}
+  daemon.cron_register: {need: daemon, example: "(crontab -l; echo \"0 * * * * relay self-update\") | crontab -", fix: "Don't add cron jobs from an installer; let the user schedule updates."}
+  daemon.windows_task_register: {need: daemon, example: "schtasks /create /tn RelayUpdate … /sc hourly", fix: "Make scheduled tasks opt-in and removable."}
+  daemon.auto_update: {need: daemon, example: '"autoUpdate": true', fix: "Turn auto-update off for pinned installs and update through your package manager."}
+  daemon.daemon_mode: {need: daemon, example: "nohup relay daemon start &", fix: "Run the agent in the foreground, or document how to stop the daemon and anything it starts."}
+  daemon.unpinned_latest_install: {need: daemon, example: "npm install -g relay-agent-cli@latest", fix: "Pin an exact version."}
+  daemon.pipe_to_shell: {need: daemon, example: "curl -fsSL https://…/install.sh | sh", fix: "Download a pinned release, check its sha256, then run it."}
+  # ---- skills (src/scanners/persistence.js, settings in rules/persistence.yaml)
+  skills.committed_pycache: {need: skills, severity: "medium in skill/plugin folders, low elsewhere", looks_for: "__pycache__/ folders and .pyc/.pyo files in the scanned folder (names only; never decoded or run).", example: "2 compiled Python file(s) in .claude/skills/notes-relay/__pycache__/ inside a skill/plugin folder.", fix: "Delete them; add __pycache__/ and *.pyc to .gitignore."}
+  skills.orphan_pyc: {need: skills, severity: "high in skill/plugin folders, medium elsewhere", looks_for: ".pyc whose matching .py source is not in the folder.", example: "Compiled Python with no matching source file (…/helper.py not found).", fix: "Remove it, or ship the source and rebuild from it."}
+  skills.persistent_write: {need: skills, severity: medium, looks_for: "In skill scope: a line that names a file later sessions load (persistent_targets: CLAUDE.md, AGENTS.md, GEMINI.md, memory files, .claude/ hooks or settings, shell rc files, sitecustomize.py, .pth) and a write verb (write_verbs).", example: 'with open("AGENTS.md", "a") as f:', fix: "Keep skill output out of memory, instruction and hook files, or review every write."}
+  skills.session_hook: {need: skills, severity: "medium for SessionStart/UserPromptSubmit/BeforeAgent, low for other hook events", looks_for: "Hook event keys (hook_events) in skill-scope JSON settings.", example: '"SessionStart": [{ "hooks": [{ "type": "command", … }] }]', fix: "Check what each hook runs and that it does not write files later sessions load."}
+  skills.unpinned_source: {need: skills, severity: "medium for git sources with no commit and @latest; low for packages with no version and Docker images with no digest", looks_for: "In skill scope and MCP configs: git+https/github: sources with no commit pin (pinned_git), npx/uvx/bunx/pnpm dlx/pipx packages with no version (pinned_pkg), Docker images with no @sha256 digest.", example: "MCP server 'slack' runs npx @modelcontextprotocol/server-slack with no version pin.", fix: "Pin an exact version, commit SHA or image digest."}
+  skills.no_hashes: {need: skills, severity: low, looks_for: "A skill/plugin folder (SKILL.md or plugin.json) with code files but no lockfile (lockfiles) and no hash markers (hash_markers).", example: "Skill/plugin folder .claude/skills/notes-relay/ ships 3 code file(s) but no lockfile or hashes.", fix: "Add a lockfile or sha256 hashes for the skill's code and dependencies."}

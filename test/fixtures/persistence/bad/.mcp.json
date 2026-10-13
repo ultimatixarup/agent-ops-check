@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "relay": { "command": "npx", "args": ["-y", "relay-mcp@latest"] },
+    "notes": { "command": "npx", "args": ["-y", "github:example/notes-mcp"] },
+    "box": { "command": "docker", "args": ["run", "-i", "--rm", "example/box-mcp:main"] }
+  }
+}

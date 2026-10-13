@@ -252,6 +252,78 @@ Each section states an unmet need with sourced figures, the checks that address 
 - [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): 🟡 GAI-InfoIntegrity GenAI risk: Information Integrity
 - [Anthropic / Claude agent guidance (summarized)](https://docs.anthropic.com/): ✅ AN-PROMPT Clear system prompt with explicit constraints
 
+### Agent CLIs that leave background processes or update themselves (verify on your install)
+
+**The need.**
+
+- A Hacker News thread on October 12, 2026 ("Codex CLI installs a persistent, self-updating background daemon by default", 578 points) and a Groundy audit guide describe a coding-agent CLI that reportedly keeps a self-updating background process running after the terminal closes. Groundy notes the report rests on a single, author-reported GitHub issue (openai/codex#48195) that had not been reproduced. This project does not confirm it; it is the reason to check your own installs.
+- If a background updater replaces the binary, the version you pinned is no longer necessarily the one doing the work.
+
+**Where:** Tab 7: Background daemons + self-update.
+
+**Checks that address it:** `daemon.launchd_register`, `daemon.systemd_register`, `daemon.cron_register`, `daemon.windows_task_register`, `daemon.auto_update`, `daemon.daemon_mode`, `daemon.unpinned_latest_install`, `daemon.pipe_to_shell`
+
+| Rule ID | Severity | What it looks for | Example finding | How to fix |
+|---|---|---|---|---|
+| `daemon.launchd_register` | medium | Family: persistence (macOS launchd). Registers or defines a macOS launchd job, which keeps running (or restarts) after the terminal closes. Pattern: `\blaunchctl\s+(load\\|bootstrap\\|enable\\|submit\\|kickstart)\b\\|Library/Launch(Agents\\|Daemons)/\\|<…` Lowered to low in documentation. | launchctl load ~/Library/LaunchAgents/com.example.relay.plist | Don't install launch agents from an agent CLI unless the user opted in; document how to remove them. |
+| `daemon.systemd_register` | medium | Family: persistence (Linux systemd). Enables a systemd unit (or lingering user services) that survives logout or reboot. Pattern: `\bsystemctl\s+(--user\s+)?(enable\\|link)\b\\|\bloginctl\s+enable-linger\b\\|^\s*WantedBy\s*=\s*…` Lowered to low in documentation. | systemctl --user enable relay-updater.service | Make background services opt-in and document how to disable them. |
+| `daemon.cron_register` | medium | Family: persistence (cron). Installs a cron job (or @reboot entry) that runs on a schedule outside your session. Pattern: `\bcrontab\s+(?!-l\b)(-\s*$\\|[\w./~$-]+\s*$)\\|\(\s*crontab\s+-l\\|\\\|\s*crontab\s+-\\|/etc/cron\.(…` Lowered to low in documentation. | (crontab -l; echo "0 * * * * relay self-update") \| crontab - | Don't add cron jobs from an installer; let the user schedule updates. |
+| `daemon.windows_task_register` | medium | Family: persistence (Windows). Registers a Windows scheduled task, service or Run key that starts without you. Pattern: `\bschtasks(\.exe)?\s+/create\b\\|\bRegister-ScheduledTask\b\\|\bNew-Service\b\\|\bsc(\.exe)?\s+c…` Lowered to low in documentation. | schtasks /create /tn RelayUpdate … /sc hourly | Make scheduled tasks opt-in and removable. |
+| `daemon.auto_update` | medium | Family: self-update. Turns on automatic or self-updating behavior, so the binary that runs may not be the version you pinned. Pattern: `\bauto[_-]?updates?(_?enabled)?["']?\s*[:=]\s*["']?(true\\|on\\|yes\\|1\\|enabled\\|latest)\b\\|\bauto…` Lowered to low in documentation. | "autoUpdate": true | Turn auto-update off for pinned installs and update through your package manager. |
+| `daemon.daemon_mode` | low | Family: background process. Starts a detached or daemon-mode process that can outlive the session. Pattern: `\s--daemon(ize)?\b\\|\bdaemon(ize)?["']?\s*[:=]\s*["']?(true\\|yes\\|1)\b\\|\bdaemon\s+start\b\\|^\s…` Lowered to low in documentation. | nohup relay daemon start & | Run the agent in the foreground, or document how to stop the daemon and anything it starts. |
+| `daemon.unpinned_latest_install` | medium | Family: unpinned install. Installs or runs "latest" rather than a pinned version, so each run can pick up a different binary. Pattern: `\b(npm\\|pnpm\\|yarn\\|bun)\s+(i\\|install\\|add\\|global\s+add)\b[^\n]*@latest\b\\|\b(npx\\|bunx\\|pnpm\s+d…` Lowered to low in documentation. | npm install -g relay-agent-cli@latest | Pin an exact version. |
+| `daemon.pipe_to_shell` | medium | Family: unpinned install. Pipes a downloaded script straight into a shell. You run whatever the server sends that day, unreviewed and unpinned. Pattern: `\b(curl\\|wget)\b[^\\|\n]{0,240}\\\|\s*(sudo\s+)?(-E\s+)?(ba\\|z\\|k\\|da)?sh\b\\|\b(iwr\\|irm\\|Invoke-WebR…` Lowered to low in documentation. | curl -fsSL https://…/install.sh \| sh | Download a pinned release, check its sha256, then run it. |
+
+**Sources (rule `source` metadata in `rules/persistence.yaml`; their findings, not ours):**
+
+- `codex_daemon_report`: Single, unreproduced report (openai/codex#48195, author-reported) discussed on Hacker News on 2026-10-12 ("Codex CLI installs a persistent, self-updating background daemon by default") and in Groundy's audit guide (https://groundy.com/articles/codex-cli-now-runs-a-self-updating-daemon-how-to-audit-and-stop/). Not verified by this project. Used only as the reason to look for persistence and self-update patterns.
+
+**What it can't see.** Static check of files in the scanned folder only. It cannot see running processes, installed binaries, what a CLI or skill does at runtime, files written outside this folder, or what a .pyc contains (never decoded or run). A clean result does not mean nothing persists or nothing was swapped. Verify on your install. Commands to try: ps / Activity Monitor, launchctl list, systemctl --user list-units, crontab -l, schtasks /query, and the CLI's own settings.
+
+**Background daemons + self-update maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): 🟡 LLM03 Supply Chain
+- [OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)](https://genai.owasp.org/download/52117): 🟡 ASI04 Agentic Supply Chain Vulnerabilities; 🟡 ASI05 Unexpected Code Execution; 🟡 ASI10 Rogue Agents
+- [OWASP Agentic AI – Threats and Mitigations (T1–T15)](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/): 🟡 T11 Unexpected RCE and Code Attacks
+- [MITRE ATLAS (selected techniques)](https://github.com/mitre-atlas/atlas-data): 🟡 AML.T0010 ML Supply Chain Compromise
+- [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): 🟡 GAI-ValueChain GenAI risk: Value Chain and Component Integration
+
+### Agent skills that poison later sessions or hide code in compiled files
+
+**The need.**
+
+- SkillRelayBench (arXiv 2610.13227, October 2026), their findings: in 1,890 runs (270 cases x 7 models on Codex CLI, Gemini CLI and Claude Code), attacks carried through files a skill leaves for later sessions succeeded 46.7-77.4% of the time (64.7% overall), and 53% of runs completed both the user's task and the attack.
+- PyCache Trap (arXiv 2610.10612, October 2026), their findings: a swapped __pycache__ .pyc can run instead of the reviewed .py; attacks succeeded 94-100% of the time against 7 skill scanners on 100 skills.
+
+**Where:** Tab 8: Skill artifact provenance.
+
+**Checks that address it:** `skills.committed_pycache`, `skills.orphan_pyc`, `skills.persistent_write`, `skills.session_hook`, `skills.unpinned_source`, `skills.no_hashes`
+
+| Rule ID | Severity | What it looks for | Example finding | How to fix |
+|---|---|---|---|---|
+| `skills.committed_pycache` | medium in skill/plugin folders, low elsewhere | __pycache__/ folders and .pyc/.pyo files in the scanned folder (names only; never decoded or run). | 2 compiled Python file(s) in .claude/skills/notes-relay/__pycache__/ inside a skill/plugin folder. | Delete them; add __pycache__/ and *.pyc to .gitignore. |
+| `skills.orphan_pyc` | high in skill/plugin folders, medium elsewhere | .pyc whose matching .py source is not in the folder. | Compiled Python with no matching source file (…/helper.py not found). | Remove it, or ship the source and rebuild from it. |
+| `skills.persistent_write` | medium | In skill scope: a line that names a file later sessions load (persistent_targets: CLAUDE.md, AGENTS.md, GEMINI.md, memory files, .claude/ hooks or settings, shell rc files, sitecustomize.py, .pth) and a write verb (write_verbs). | with open("AGENTS.md", "a") as f: | Keep skill output out of memory, instruction and hook files, or review every write. |
+| `skills.session_hook` | medium for SessionStart/UserPromptSubmit/BeforeAgent, low for other hook events | Hook event keys (hook_events) in skill-scope JSON settings. | "SessionStart": [{ "hooks": [{ "type": "command", … }] }] | Check what each hook runs and that it does not write files later sessions load. |
+| `skills.unpinned_source` | medium for git sources with no commit and @latest; low for packages with no version and Docker images with no digest | In skill scope and MCP configs: git+https/github: sources with no commit pin (pinned_git), npx/uvx/bunx/pnpm dlx/pipx packages with no version (pinned_pkg), Docker images with no @sha256 digest. | MCP server 'slack' runs npx @modelcontextprotocol/server-slack with no version pin. | Pin an exact version, commit SHA or image digest. |
+| `skills.no_hashes` | low | A skill/plugin folder (SKILL.md or plugin.json) with code files but no lockfile (lockfiles) and no hash markers (hash_markers). | Skill/plugin folder .claude/skills/notes-relay/ ships 3 code file(s) but no lockfile or hashes. | Add a lockfile or sha256 hashes for the skill's code and dependencies. |
+
+**Sources (rule `source` metadata in `rules/persistence.yaml`; their findings, not ours):**
+
+- `skillrelaybench`: arXiv 2610.13227 (SkillRelayBench, https://arxiv.org/abs/2610.13227). Their finding, not ours: 1,890 runs (270 cases x 7 models on Codex CLI, Gemini CLI and Claude Code); attack success 46.7-77.4% (64.7% overall); 53% of runs completed both the user's task and the attack.
+- `pycache_trap`: arXiv 2610.10612 (PyCache Trap, https://arxiv.org/abs/2610.10612). Their finding, not ours: a swapped __pycache__ .pyc can run instead of the reviewed .py; 94-100% attack success against 7 skill scanners on 100 skills.
+- `supply_chain`: General supply-chain hygiene (pin versions and commits, keep lockfiles/hashes), as in OWASP LLM03:2025 Supply Chain. No specific incident is claimed.
+
+**What it can't see.** Static check of files in the scanned folder only. It cannot see running processes, installed binaries, what a CLI or skill does at runtime, files written outside this folder, or what a .pyc contains (never decoded or run). A clean result does not mean nothing persists or nothing was swapped. Verify on your install.
+
+**Skill artifact provenance maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): 🟡 LLM03 Supply Chain
+- [OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)](https://genai.owasp.org/download/52117): 🟡 ASI04 Agentic Supply Chain Vulnerabilities; 🟡 ASI05 Unexpected Code Execution; 🟡 ASI06 Memory and Context Poisoning
+- [OWASP Agentic AI – Threats and Mitigations (T1–T15)](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/): 🟡 T1 Memory Poisoning; 🟡 T11 Unexpected RCE and Code Attacks
+- [MITRE ATLAS (selected techniques)](https://github.com/mitre-atlas/atlas-data): 🟡 AML.T0010 ML Supply Chain Compromise
+- [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): 🟡 GAI-ValueChain GenAI risk: Value Chain and Component Integration
+
 ### Testing agents and mapping to standards
 
 **The need.**
@@ -265,7 +337,7 @@ Each section states an unmet need with sourced figures, the checks that address 
 
 _Standards and datasets are named for reference only. This project is not affiliated with or endorsed by Microsoft, OWASP, NIST, ISO, MITRE, CSA, Anthropic or the EU._
 
-_Rules version 2026.10.13. File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), Jupyter notebooks (.ipynb code and markdown cells, outputs ignored; findings show cell N, line M), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._
+_Rules version 2026.10.13. File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), Jupyter notebooks (.ipynb code and markdown cells, outputs ignored; findings show cell N, line M), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these. The daemon and skill checks also read install/startup scripts and unit files (.sh, .ps1, .bat, .plist, .service, .timer, Dockerfile, Makefile, crontab) and list .pyc file names (never decoded or run)._
 
 <!-- CHECKS:END -->
 
@@ -318,7 +390,7 @@ agent-ops-check <dir|files...> [options]
   --llm <provider>     optional review: openai | anthropic | openrouter
   --docs <file|dir>    extra documents for the prompt-injection scan (repeatable)
   --ste-all            STE-check every .md/.txt file (default: prompt/instruction files only)
-  --no-injection, --no-ste, --no-evals   skip those parts
+  --no-injection, --no-ste, --no-evals, --no-persistence   skip those parts
 agent-ops-check ui [--port N] [--open]   local launch page (127.0.0.1 only)
 ```
 
@@ -364,6 +436,7 @@ The ADSF scan includes 8 rules derived from Microsoft's [LLMail-Inject](https://
 ## Known limits
 
 - Regex reads what code and configs **say**, not what they enforce at runtime.
+- The background-daemon and skill-provenance tabs (7 and 8) are static: they read files in the folder you scan. They can't see running processes, installed binaries, what a CLI or skill does at runtime, files written outside the folder, or what a `.pyc` contains (never decoded or run). Verify on your install. They don't change the overall score.
 - Agent = subfolder. A monorepo with one folder per service works best.
 - Gates are judged from the code near each action (6 lines above, 12 below). A gate in a distant wrapper is not seen.
 - Health Checker extras still miss a false claim with no price or policy keyword (e.g. "we see emergencies every Saturday" when the FAQ says otherwise). English only, plus a few Spanish/French/German "obey the customer" phrases.
