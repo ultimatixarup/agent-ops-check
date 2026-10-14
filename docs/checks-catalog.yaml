@@ -34,6 +34,12 @@ needs:
     need:
       - Anthropic (October 9, 2026) wrote that some failures "could have been avoided" if the task had clearly stated what was in and out of scope.
       - In the Labs controlled test of a fictional business (September 30, 2026), the unsafe scripted bot failed 17 of 20 tests and the fixed bot failed 0 of 20.
+  - id: execconfig
+    title: Agents that can rewrite the config a later run executes
+    tab: "Execution-config tab (after STE), plus --lock on the CLI"
+    need:
+      - 'Microsoft fixed CVE-2026-103572 (CVSS 8.8) on October 13, 2026. As described by Embrace The Red, Copilot in Visual Studio/SSMS could "write to its own settings and configuration files… escape containment restrictions and achieve arbitrary command execution", and a trailing dot (.mcp.json.) got past the protected-file check. Their description, not ours.'
+      - 'arXiv 2610.15137 (October 2026), their finding, not ours: in 20 public repos, 296 of 542 commits (54.6%) that changed a file the run reads left the approved file untouched; a one-line edit removed a required human approval and still passed.'
   - id: evals
     title: Testing agents and mapping to standards
     tab: "Eval sets and Standards map"
@@ -50,6 +56,7 @@ standards_groups:
   - {id: labs, need: governance, title: "Labs tools (Agent Health Checker, Cloud Bill Smell, Observability Gap)", prefixes: ["health.", "health+.", "bill.", "observability."]}
   - {id: injection, need: injection, title: "ADSF prompt-injection scan", prefixes: ["injection."]}
   - {id: ste, need: ste, title: "STE style checks", prefixes: ["ste."]}
+  - {id: execconfig, need: execconfig, title: "Execution-config writes + lock", prefixes: ["execconfig."]}
 
 checks:
   # ---- crossover (code rules; regex families come from rules/crossover.yaml)
@@ -128,3 +135,13 @@ checks:
   ste.word_hint: {need: ste, severity: low, looks_for: "hints list (original, not from the ASD-STE100 dictionary).", example: "utilize → use", fix: "Use the plain word."}
   ste.not_in_dictionary: {need: ste, severity: low, looks_for: "Words not in your --ste-dict list (capitalized words after the first are treated as names).", example: "Not in your approved word list: rotate, handle.", fix: "Use an approved word or add it to your list."}
   ste.info_loss.*: {need: ste, severity: "high (names and soft constraints: medium)", looks_for: "--ste-compare: numbers, units, dates, names, paths, URLs, identifiers and constraint words in the original that are missing from the rewrite.", example: 'Missing from the STE version: number+unit "30 seconds".', fix: "Put the fact or constraint back."}
+  # ---- execconfig (src/scanners/execconfig.js + src/lock.js; settings in rules/execconfig.yaml). Static; lock is CLI only.
+  execconfig.exec_target_write: {need: execconfig, severity: high, looks_for: "A line that names an execution-config file (exec_targets: .mcp.json/mcp.json, .vscode settings/tasks/launch/mcp, .cursor/.claude/.codex/.gemini settings and hooks, .github/workflows, .git/hooks, .husky, pre-commit config, shell rc files, .envrc, .devcontainer, sitecustomize.py) and a write call (write_verbs), or a write within 25 lines through a variable assigned that path.", example: 'MCP_CONFIG.write_text(json.dumps(cfg))  (MCP_CONFIG = Path(".mcp.json"))', fix: "Remove the write or require a person to approve it; hash the file with --lock."}
+  execconfig.instruction_write: {need: execconfig, severity: medium, looks_for: "The same, for agent instruction files (instruction_targets: AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules, .windsurfrules, .clinerules, copilot-instructions.md, *.instructions.md, *.prompt.md, .cursor/rules, SKILL.md).", example: 'with open("AGENTS.md", "a") as f:', fix: "Keep agent output out of instruction files, or review each change."}
+  execconfig.unrestricted_write_tool: {need: execconfig, severity: medium, looks_for: "A file that defines a write tool (write_tool_names such as write_file, edit_file, str_replace_editor, apply_patch), calls a write, and has no path guard anywhere (path_guards: allowlist, is_relative_to, startswith, realpath, sandbox, protected...).", example: "Write tool write_file writes to a path it is given, and this file has no allowlist or base-folder check.", fix: "Resolve the path, require it to be inside one work folder, refuse execution-config names."}
+  execconfig.broad_fs_server: {need: execconfig, severity: medium, looks_for: "A filesystem MCP server (server-filesystem) in a JSON config given ~, $HOME, / , C:\\ or .. as its folder.", example: '"~"  (argument to @modelcontextprotocol/server-filesystem)', fix: "Give it only the project folder."}
+  execconfig.auto_run_setting: {need: execconfig, example: '"chat.tools.autoApprove": true', fix: "Turn it off, or make sure no agent can write this file (see --lock)."}
+  execconfig.lookalike_name: {need: execconfig, severity: high, looks_for: "CLI only: an execution-config file whose name ends in a dot or space (.mcp.json.), which some tools open as the real name while exact-name checks miss it.", example: "File name ends in a dot or space, so some tools open it as .mcp.json.", fix: "Rename or delete it and check who created it."}
+  execconfig.lock_changed: {need: execconfig, severity: high, looks_for: "CLI only: a file in .agent-ops-lock.json whose SHA-256 changed.", example: "Execution-config file changed since .agent-ops-lock.json was written.", fix: "Review the diff; run --lock again to approve it."}
+  execconfig.lock_added: {need: execconfig, severity: medium, looks_for: "CLI only: an execution-config file (lock_files) that is not in the lockfile.", example: "Execution-config file is not in .agent-ops-lock.json.", fix: "Review it, then run --lock again."}
+  execconfig.lock_removed: {need: execconfig, severity: medium, looks_for: "CLI only: a file in the lockfile that is gone.", example: "File listed in .agent-ops-lock.json is gone.", fix: "Check why it was removed (it may have held an approval or deny-list)."}

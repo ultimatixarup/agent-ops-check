@@ -19,6 +19,14 @@ on THIS machine. No network calls unless you pass --llm.
   --docs <file|dir>    extra docs/knowledge files for the prompt-injection scan (ADSF) (repeatable)
   --no-injection       skip the ADSF tab
   --no-evals           don't write generated eval sets (report/evals/)
+  --no-execconfig      skip the execution-config tab (and the lock check)
+
+Execution-config lock (offline; folder inputs only, not zips):
+  --lock               write .agent-ops-lock.json in each scanned folder: SHA-256 of every file an IDE,
+                       agent harness, CI, git or the shell reads or runs later (rules/execconfig.yaml lock_files)
+  --verify-lock        compare with .agent-ops-lock.json; exit 2 if a folder has none. Without this flag the
+                       comparison still runs automatically whenever the lockfile is present
+  --no-lock            don't read the lockfile even if present
 
 Simplified Technical English (STE) style checks (not a certified ASD-STE100 checker):
   --ste <file|dir|->   check any text file or folder; "-" reads stdin (repeatable)
@@ -51,6 +59,10 @@ function parse(argv) {
     else if (a === "--docs") o.docs.push(v());
     else if (a === "--no-injection") o.noInjection = true;
     else if (a === "--no-evals") o.noEvals = true;
+    else if (a === "--no-execconfig") o.noExecconfig = true;
+    else if (a === "--lock") o.lock = true;
+    else if (a === "--verify-lock") o.verifyLock = true;
+    else if (a === "--no-lock") o.noLock = true;
     else if (a === "--ste") o.stePaths.push(v());
     else if (a === "--ste-text") o.steInputs.push({ name: "(pasted text)", text: v() });
     else if (a === "--ste-dict") o.steDict = path.resolve(v());
@@ -73,6 +85,32 @@ function steFiles(p, out) {
   else if (/\.(md|txt|prompt|rst|adoc|html?)$/i.test(p) || !path.extname(p)) out.push({ name: path.relative(process.cwd(), p) || p, text: fs.readFileSync(p, "utf8") });
 }
 
+// Execution-config lock: CLI only (it reads and writes a file in the scanned folder). Folder inputs only.
+// Default: if .agent-ops-lock.json exists in a scanned folder, compare against it. --verify-lock makes it required.
+function lockStep(r, o, msgs) {
+  const g = r.groups.find((x) => x.id === "execconfig");
+  if (!g) return true;
+  const lock = require("./lock");
+  const dirs = o.inputs.filter((p) => !/\.zip$/i.test(p) && fs.existsSync(p) && fs.statSync(p).isDirectory()).map((p) => path.resolve(p));
+  const display = (root) => (rel) => path.relative(process.cwd(), path.join(root, rel)).split(path.sep).join("/");
+  for (const root of dirs) {
+    if (o.lock) {
+      const w = lock.write(root, o.rulesDir, o.ignore);
+      msgs.push("Lock: wrote " + path.relative(process.cwd(), w.path) + " (" + w.count + " execution-config file(s), SHA-256). Commit it; later scans report changes.");
+      g.findings.push(...lock.verify(root, null, display(root), o.rulesDir, o.ignore));
+      continue;
+    }
+    const lf = o.noLock ? null : lock.load(root);
+    if (o.verifyLock && !lf) { console.error("--verify-lock: no " + lock.LOCKFILE + " in " + root + " (create one with --lock)"); return false; }
+    const found = lock.verify(root, lf, display(root), o.rulesDir, o.ignore);
+    if (lf) msgs.push("Lock: checked " + Object.keys(lf.files).length + " file(s) in " + path.relative(process.cwd(), path.join(root, lock.LOCKFILE)) + ": " + found.filter((f) => /lock_/.test(f.rule)).length + " change(s).");
+    g.findings.push(...found);
+  }
+  require("./index").finalize(g);
+  r.lock = { mode: o.lock ? "write" : o.noLock ? "off" : "verify-if-present" };
+  return true;
+}
+
 async function main(argv) {
   let o;
   try { o = parse(argv); } catch (e) { console.error(e.message + "\n\n" + HELP); return 2; }
@@ -93,7 +131,10 @@ async function main(argv) {
   const steAsked = o.steInputs.length || o.steCompare || o.docs.length;
   if (o.help || (!o.inputs.length && !steAsked)) { console.log(HELP); return o.help ? 0 : 2; }
   o.inputsLabel = o.inputs.slice();
+  if (o.lock && o.verifyLock) { console.error("Use --lock or --verify-lock, not both."); return 2; }
   const r = analyze(o.inputs, o);
+  const lockMsgs = [];
+  try { if (!lockStep(r, o, lockMsgs)) return 2; } catch (e) { console.error(e.message); return 2; }
   if (o.llm) r.llm = await require("./llm/optional").review(r, o.llm);
   fs.mkdirSync(o.out, { recursive: true });
   const W = { html: ["index.html", require("./report/html")], json: ["report.json", (x) => JSON.stringify(x, null, 2)], md: ["report.md", require("./report/md")], sarif: ["report.sarif", require("./report/sarif")] };
@@ -114,6 +155,7 @@ async function main(argv) {
   console.log("Rules " + r.rules.version + " (" + r.rules.date + "). " + r.rules.hint);
   console.log(r.network);
   if (r.llm && r.llm.error) console.log("LLM: " + r.llm.error);
+  lockMsgs.forEach((m) => console.log(m));
   console.log("Report: " + written.join(", "));
   if (o.failOn) {
     const order = ["low", "medium", "high"]; const min = order.indexOf(o.failOn);

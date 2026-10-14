@@ -14,9 +14,9 @@ const short = (s, n = 90) => (s.length > n ? s.slice(0, n) + "…" : s);
 function yamlRules() {
   const R = {};
   const add = (scanner, list) => (list || []).forEach((r) => (R[scanner + "." + r.id] = r));
-  const c = load("rules/crossover.yaml"), a = load("rules/actions.yaml"), i = load("rules/injection.yaml");
+  const c = load("rules/crossover.yaml"), a = load("rules/actions.yaml"), i = load("rules/injection.yaml"), ec = load("rules/execconfig.yaml");
   add("crossover", c.hardcoded); add("actions", a.risky_reads);
-  add("injection", i.instructions); add("injection", i.exfil_links); add("injection", i.hidden_text); add("injection", i.llmail);
+  add("injection", i.instructions); add("injection", i.exfil_links); add("injection", i.hidden_text); add("injection", i.llmail); add("execconfig", ec.rules);
   return { R, secrets: c.secrets || [], pii: c.pii || [] };
 }
 function healthChecks() {
@@ -91,6 +91,13 @@ function generate() {
     if (need.id === "injection") {
       const s = llmailStats();
       L.push("**Microsoft LLMail-Inject dataset.** " + s.rules + " `injection.llmail_*` rules are derived from Microsoft's [LLMail-Inject](https://huggingface.co/datasets/microsoft/llmail-inject-challenge) dataset (MIT License; see `THIRD_PARTY_NOTICES.md`). On " + s.heldout + " held-out attacks the scan flags " + s.any + " at any severity and " + s.medium + " at medium or higher (" + s.before + " before these rules), with " + s.fp + " false positives on the dataset's benign emails. About a third of attacks are still missed. Details: [docs/LLMAIL_BENCHMARK.md](docs/LLMAIL_BENCHMARK.md).", "");
+    }
+    if (need.id === "execconfig") {
+      const ec = load("rules/execconfig.yaml");
+      L.push("**Lock mode (CLI, offline).** `agent-ops-check <folder> --lock` writes `.agent-ops-lock.json` with the SHA-256 of every execution-config file in the folder (`lock_files` in `rules/execconfig.yaml`). Every later scan of that folder compares against it automatically and reports `lock_changed`, `lock_added` and `lock_removed`; `--verify-lock` makes the lockfile required (exit 2 if missing) and `--no-lock` skips it. Approve reviewed changes by running `--lock` again and committing the file. Names ending in a dot or space are matched as the real name and reported as `lookalike_name`. The browser version runs the static rules only.", "");
+      L.push("**Sources (rule `source` metadata in `rules/execconfig.yaml`; their findings, not ours):**", "");
+      Object.keys(ec.sources).forEach((k) => L.push("- `" + k + "`: " + String(ec.sources[k]).trim()));
+      L.push("", "**What it can't see.** " + require("../src/scanners/execconfig").LIMITS, "");
     }
     L.push(...standardsLines(need.id));
   }
