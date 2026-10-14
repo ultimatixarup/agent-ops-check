@@ -38,7 +38,8 @@ items:
     coverage: partial
     checks:
       - health.injection_sinks
-    how: Free-form shell/exec/SQL tools
+      - execconfig.
+    how: Free-form shell/exec/SQL tools; writes to config files a later run executes, plus a hash lock
   - id: ASI06
     title: Memory and Context Poisoning
     coverage: partial

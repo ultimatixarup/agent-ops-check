@@ -252,6 +252,43 @@ Each section states an unmet need with sourced figures, the checks that address 
 - [NIST AI RMF 1.0 (functions) + Generative AI Profile (NIST AI 600-1) risks](https://www.nist.gov/itl/ai-risk-management-framework): 🟡 GAI-InfoIntegrity GenAI risk: Information Integrity
 - [Anthropic / Claude agent guidance (summarized)](https://docs.anthropic.com/): ✅ AN-PROMPT Clear system prompt with explicit constraints
 
+### Agents that can rewrite the config a later run executes
+
+**The need.**
+
+- Microsoft fixed CVE-2026-103572 (CVSS 8.8) on October 13, 2026. As described by Embrace The Red, Copilot in Visual Studio/SSMS could "write to its own settings and configuration files… escape containment restrictions and achieve arbitrary command execution", and a trailing dot (.mcp.json.) got past the protected-file check. Their description, not ours.
+- arXiv 2610.15137 (October 2026), their finding, not ours: in 20 public repos, 296 of 542 commits (54.6%) that changed a file the run reads left the approved file untouched; a one-line edit removed a required human approval and still passed.
+
+**Where:** Execution-config tab (after STE), plus --lock on the CLI.
+
+**Checks that address it:** `execconfig.exec_target_write`, `execconfig.instruction_write`, `execconfig.unrestricted_write_tool`, `execconfig.broad_fs_server`, `execconfig.auto_run_setting`, `execconfig.lookalike_name`, `execconfig.lock_changed`, `execconfig.lock_added`, `execconfig.lock_removed`
+
+| Rule ID | Severity | What it looks for | Example finding | How to fix |
+|---|---|---|---|---|
+| `execconfig.exec_target_write` | high | A line that names an execution-config file (exec_targets: .mcp.json/mcp.json, .vscode settings/tasks/launch/mcp, .cursor/.claude/.codex/.gemini settings and hooks, .github/workflows, .git/hooks, .husky, pre-commit config, shell rc files, .envrc, .devcontainer, sitecustomize.py) and a write call (write_verbs), or a write within 25 lines through a variable assigned that path. | MCP_CONFIG.write_text(json.dumps(cfg))  (MCP_CONFIG = Path(".mcp.json")) | Remove the write or require a person to approve it; hash the file with --lock. |
+| `execconfig.instruction_write` | medium | The same, for agent instruction files (instruction_targets: AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules, .windsurfrules, .clinerules, copilot-instructions.md, *.instructions.md, *.prompt.md, .cursor/rules, SKILL.md). | with open("AGENTS.md", "a") as f: | Keep agent output out of instruction files, or review each change. |
+| `execconfig.unrestricted_write_tool` | medium | A file that defines a write tool (write_tool_names such as write_file, edit_file, str_replace_editor, apply_patch), calls a write, and has no path guard anywhere (path_guards: allowlist, is_relative_to, startswith, realpath, sandbox, protected...). | Write tool write_file writes to a path it is given, and this file has no allowlist or base-folder check. | Resolve the path, require it to be inside one work folder, refuse execution-config names. |
+| `execconfig.broad_fs_server` | medium | A filesystem MCP server (server-filesystem) in a JSON config given ~, $HOME, / , C:\ or .. as its folder. | "~"  (argument to @modelcontextprotocol/server-filesystem) | Give it only the project folder. |
+| `execconfig.auto_run_setting` | medium | A setting that starts tools, MCP servers or tasks without asking. If an agent can edit this file, it can change what runs next time. Pattern: `"enableAllProjectMcpServers"\s*:\s*true\\|"chat\.tools\.(global\.)?autoApprove"\s*:\s*true\\|"…` | "chat.tools.autoApprove": true | Turn it off, or make sure no agent can write this file (see --lock). |
+| `execconfig.lookalike_name` | high | CLI only: an execution-config file whose name ends in a dot or space (.mcp.json.), which some tools open as the real name while exact-name checks miss it. | File name ends in a dot or space, so some tools open it as .mcp.json. | Rename or delete it and check who created it. |
+| `execconfig.lock_changed` | high | CLI only: a file in .agent-ops-lock.json whose SHA-256 changed. | Execution-config file changed since .agent-ops-lock.json was written. | Review the diff; run --lock again to approve it. |
+| `execconfig.lock_added` | medium | CLI only: an execution-config file (lock_files) that is not in the lockfile. | Execution-config file is not in .agent-ops-lock.json. | Review it, then run --lock again. |
+| `execconfig.lock_removed` | medium | CLI only: a file in the lockfile that is gone. | File listed in .agent-ops-lock.json is gone. | Check why it was removed (it may have held an approval or deny-list). |
+
+**Lock mode (CLI, offline).** `agent-ops-check <folder> --lock` writes `.agent-ops-lock.json` with the SHA-256 of every execution-config file in the folder (`lock_files` in `rules/execconfig.yaml`). Every later scan of that folder compares against it automatically and reports `lock_changed`, `lock_added` and `lock_removed`; `--verify-lock` makes the lockfile required (exit 2 if missing) and `--no-lock` skips it. Approve reviewed changes by running `--lock` again and committing the file. Names ending in a dot or space are matched as the real name and reported as `lookalike_name`. The browser version runs the static rules only.
+
+**Sources (rule `source` metadata in `rules/execconfig.yaml`; their findings, not ours):**
+
+- `ms_cve_2026_103572`: Microsoft Patch Tuesday, CVE-2026-103572 (CVSS 8.8), as described by Embrace The Red on 2026-10-13 (https://embracethered.com/blog/posts/2026/visual-studio-copilot-remote-code-execution/): Copilot in Visual Studio/SSMS could write to its own settings and configuration files and reach command execution; a trailing dot (".mcp.json.") got past the protected-file check. Their description, not ours; exploit steps are not reproduced here.
+- `arxiv_2610_15137`: arXiv 2610.15137 (https://arxiv.org/abs/2610.15137), their finding, not ours: in 20 public repos, 296 of 542 commits (54.6%) that change a file the run reads leave the approved file untouched.
+
+**What it can't see.** Static check of files in the scanned folder only. It cannot see what an agent writes at runtime, files outside this folder, or settings stored in your home directory. A clean result does not mean your agent can't change its own config.
+
+**Execution-config writes + lock maps to** (✅ checked, 🟡 partly checked; from `data/standards/`, "maps to", not compliance):
+
+- [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/): ✅ LLM06 Excessive Agency
+- [OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10)](https://genai.owasp.org/download/52117): 🟡 ASI05 Unexpected Code Execution
+
 ### Testing agents and mapping to standards
 
 **The need.**
@@ -265,7 +302,7 @@ Each section states an unmet need with sourced figures, the checks that address 
 
 _Standards and datasets are named for reference only. This project is not affiliated with or endorsed by Microsoft, OWASP, NIST, ISO, MITRE, CSA, Anthropic or the EU._
 
-_Rules version 2026.10.13. File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), Jupyter notebooks (.ipynb code and markdown cells, outputs ignored; findings show cell N, line M), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._
+_Rules version 2026.10.14. File types: code, config (JSON/YAML/TOML/.env names), prompts (.md/.txt), Jupyter notebooks (.ipynb code and markdown cells, outputs ignored; findings show cell N, line M), transcripts (.jsonl), bill exports (CSV/JSON), and zips of these._
 
 <!-- CHECKS:END -->
 
@@ -319,6 +356,10 @@ agent-ops-check <dir|files...> [options]
   --docs <file|dir>    extra documents for the prompt-injection scan (repeatable)
   --ste-all            STE-check every .md/.txt file (default: prompt/instruction files only)
   --no-injection, --no-ste, --no-evals   skip those parts
+  --no-execconfig      skip the execution-config tab (and the lock check)
+  --lock               write .agent-ops-lock.json: SHA-256 of execution-config files in each scanned folder
+  --verify-lock        require the lockfile and report changes (exit 2 if missing); runs automatically when it exists
+  --no-lock            ignore the lockfile
 agent-ops-check ui [--port N] [--open]   local launch page (127.0.0.1 only)
 ```
 

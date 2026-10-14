@@ -1,0 +1,57 @@
+{
+  "score": 98,
+  "filesScanned": 7,
+  "groups": {
+    "crossover": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "actions": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "governance": {
+      "score": 95,
+      "findings": 2,
+      "rules": {
+        "governance.no_owner": 1,
+        "governance.no_review_record": 1
+      }
+    },
+    "labs": {
+      "score": 94,
+      "findings": 6,
+      "rules": {
+        "observability.agent_specific": 1,
+        "observability.golden_signals": 1,
+        "observability.langfuse": 1,
+        "observability.otel": 1,
+        "observability.prometheus": 1,
+        "observability.runbooks_alerts": 1
+      }
+    },
+    "injection": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "ste": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "execconfig": {
+      "score": 30,
+      "findings": 13,
+      "rules": {
+        "execconfig.auto_run_setting": 4,
+        "execconfig.broad_fs_server": 1,
+        "execconfig.exec_target_write": 4,
+        "execconfig.instruction_write": 3,
+        "execconfig.unrestricted_write_tool": 1
+      }
+    }
+  }
+}
