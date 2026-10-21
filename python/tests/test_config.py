@@ -38,7 +38,9 @@ def test_example_yaml_matches_the_proposal_shape(repo: Path):
     assert "\nlive:" not in text
 
 
-def test_example_yaml_schema_is_valid_until_the_missing_generated_pack(repo: Path, tmp_path: Path):
+def test_example_yaml_dry_run_succeeds(repo: Path, tmp_path: Path):
+    import json
+
     from agent_ops_evals.runner import execute
     path = repo / "examples" / "agent-evals.yaml"
     config = load_config(path)
@@ -46,8 +48,15 @@ def test_example_yaml_schema_is_valid_until_the_missing_generated_pack(repo: Pat
     assert config.live is False
     assert config.evaluators.ignored[0].name == "llm_judge"
     assert config.evaluators.benign_overblock.enabled is True
-    with pytest.raises(ConfigError, match="security.jsonl"):
-        execute(config, path, live=False, out_path=tmp_path / "results.json")
+    assert [pack.id for pack in config.packs] == ["adsf-llmail", "owasp-llm-2025", "benign-fp"]
+    out = tmp_path / "results.json"
+    assert execute(config, path, live=False, out_path=out) == 0
+    report = json.loads(out.read_text(encoding="utf-8"))
+    assert report["mode"] == "dry_run"
+    assert report["summary"]["dry_run"] is True
+    assert report["summary"]["passed"] is None
+    assert [row["id"] for row in report["packs"]] == ["adsf-llmail", "owasp-llm-2025", "benign-fp"]
+    assert all(row["selected"] > 0 for row in report["packs"])
 
 
 def test_unknown_target_type_is_a_helpful_error(tmp_path: Path):

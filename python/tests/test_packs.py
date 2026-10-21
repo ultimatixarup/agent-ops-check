@@ -118,6 +118,20 @@ def test_max_cases_truncates_in_pack_order(tmp_path: Path):
     assert any("truncated" in note or "skipped" in note for note in loaded.notes)
 
 
+def test_missing_jsonl_names_the_paths_it_tried(tmp_path: Path):
+    path = write_config(tmp_path, """
+    version: 1
+    target:
+      type: cli
+      command: ["python", "agent.py", "{{input}}"]
+    packs:
+      - id: generated
+        source: ./evals/security.jsonl
+    """)
+    with pytest.raises(ConfigError, match="security.jsonl"):
+        load_cases(load_config(path), path)
+
+
 def test_bad_jsonl_line_is_named(tmp_path: Path):
     bad = tmp_path / "bad.jsonl"
     bad.write_text('{"id":"ok","text":"hello"}\nnot-json\n', encoding="utf-8")

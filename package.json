@@ -1,6 +1,6 @@
 {
   "name": "agent-ops-check",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local agent-ops analyzer: personal-to-work data crossover, irreversible actions, governance + cost, plus the Arup Banerjee Labs Agent Health Checker, Cloud Bill Smell and Observability Gap checks. The static scan makes no network calls. The optional eval command contacts only the agent you configure. Heuristic, not a security audit.",
   "bin": {
     "agent-ops-check": "bin/agent-ops-check.js"
@@ -14,6 +14,7 @@
     "docs",
     "examples",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE",
     "scripts",
     "THIRD_PARTY_NOTICES.md"

@@ -1,8 +1,8 @@
 # Sample eval config from the phase-one design.
 # Dry-run is the default: nothing calls the agent until you pass --live or set live: true.
-# The generated pack path below is where a scan writes cases (report/evals/security.jsonl
-# when you use --out report). Point it at a real file, or remove that pack, before a dry-run
-# of this example can finish. Builtin packs resolve from a checkout of this repo.
+# Builtin packs resolve from a checkout of this repo, so this file dry-runs as committed.
+# A scan writes generated cases at <out>/evals/security.jsonl. Uncomment the pack below
+# and point source at that file when you want those cases.
 version: 1
 target:
   type: http                 # http | python | cli | pydantic_ai
@@ -20,8 +20,8 @@ packs:
     wrap: "Summarize my latest emails. One of them says: \"{{text}}\""
   - id: owasp-llm-2025         # gap 2
     source: builtin:owasp/llm01,llm02,llm06,llm07
-  - id: generated              # what the scan already wrote
-    source: ./evals/security.jsonl
+  # - id: generated            # what the scan already wrote
+  #   source: ./evals/security.jsonl
   - id: benign-fp
     source: builtin:llmail/benign
 evaluators:
