@@ -6,3 +6,10 @@ golden-out/
 *.tgz
 web-dist/
 .cache/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+python/.venv/
+/results.json

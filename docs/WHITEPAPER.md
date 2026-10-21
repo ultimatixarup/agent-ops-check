@@ -13,7 +13,7 @@ Small teams often lack a list of the AI that runs, a named owner and a cap on sp
 
 agent-ops-check is a free command-line tool.
 It reads the code, prompts, configs, chat logs and bill exports of an agent.
-It runs on your own computer, with no network.
+It runs on your own computer. The static scan makes no network calls. The optional eval command contacts only the agent you configure.
 It gives a score, a list of findings with file and line, an audit memo, SARIF output for CI, eval sets and a standards map.
 
 The tool works with regular expressions and small rule engines.
@@ -106,12 +106,13 @@ A short rewrite of an instruction can also drop a number, a date or a word such 
 
 ## 2. Design principles
 
-**Offline first.** All scans run on your disk.
-The tool needs no internet, no account and no cloud service.
+**Offline first.** Static scans run on your disk.
+The scan needs no internet, no account and no cloud service.
 The only download is the first install with `npx` or `git clone`.
+The optional `agent-ops-check eval` command is separate. It contacts the agent you name in a config file, and only that agent, and only after you opt in. It does not call a model API. An opt-in judge may be added later.
 
 **No phone-home.** The tool sends no telemetry, no usage counts and no update checks.
-A preload in the test suite stops the run if any code tries the network.
+A preload in the Node test suite stops a scan if any code tries the network.
 The HTML report has a `default-src 'none'` content policy, so it loads nothing.
 The local UI listens on `127.0.0.1` only.
 
@@ -381,7 +382,7 @@ For contrast, `examples/good-agent/` scores 100 on tabs 1 to 3.
 | 3 | Version pins for MCP servers, tools and packages | LLM03, ASI04, AML.T0010 |
 | 4 | Inter-agent message checks | ASI07, T12, T13 |
 | 5 | Log retention and decommission plan | G16, G17, NIST GOVERN |
-| 6 | An offline runner for the eval sets against a local test bot | NIST MEASURE, G13 |
+| 6 | Phase one of the eval runner is `agent-ops-check eval` (optional Python package, dry-run unless you opt in). Still open: a model judge, a promptfoo export, and a static-vs-live scorecard | NIST MEASURE, G13 |
 | 7 | A review of the shipped standards status, with the 16 items in section 5.4 | All maps |
 
 Each new rule follows `docs/UPDATES.md`. It needs a fixture that fires, a fixture that does not fire, a test, a version bump and a changelog entry with a source.
@@ -416,6 +417,7 @@ cd agent-ops-check && npm install && npm test && npm run example
 ```
 
 Open `agent-ops-report/index.html` in your browser to read the report.
+The scan does not need Python. To run the generated cases against an agent you configure, install the optional package and use `agent-ops-check eval` (dry-run unless you pass `--live`). See the README.
 Run `git pull` to get new rules.
 
 ## 12. References
