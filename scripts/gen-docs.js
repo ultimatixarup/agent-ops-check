@@ -68,7 +68,7 @@ function generate() {
     const ids = Object.keys(cat.checks).filter((k) => cat.checks[k].need === need.id);
     L.push("", "**Where:** " + need.tab + ".", "");
     if (need.id === "evals") {
-      L.push("**Checks that address it:** `agent-ops-check evals <folder>` writes an offline eval set (JSONL) from your prompts and tool definitions, and the Standards map shows how findings map to 10 frameworks in `data/standards/` (✅ evidence found, 🟡 partial, ⬜ not found). It says \"maps to\", never \"compliant\".", "");
+      L.push("**Checks that address it:** A scan writes an offline eval set (JSONL) under `report/evals/` from your prompts and tool definitions. The scan does not run those cases. The optional `agent-ops-check eval` command runs them, the LLMail samples, and benign emails against an agent you configure. It contacts only that agent, and only after you opt in. The Standards map shows how findings map to 10 frameworks in `data/standards/` (✅ evidence found, 🟡 partial, ⬜ not found). It says \"maps to\", never \"compliant\".", "");
       continue;
     }
     L.push("**Checks that address it:** " + ids.map((k) => "`" + k + "`").join(", "), "");

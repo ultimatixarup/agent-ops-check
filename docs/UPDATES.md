@@ -2,6 +2,7 @@
 
 **Standing rule:** new checks, injection patterns and CVE-driven rules ship **only through this Git repo**.
 agent-ops-check never fetches rules, never checks for updates over the network, and never phones home.
+The optional `eval` command is separate from that promise. It contacts only the agent in your config, and only when you opt in. It does not download rules, phone home, or call a model API. An opt-in judge is not part of this version.
 
 ## Imported datasets (maintainers)
 - **LLMail-Inject** (Microsoft, MIT): `npm run import:llmail` downloads the dataset into `.cache/llmail/` (git-ignored), then writes the small samples and family stats committed in `data/llmail/`. `npm run bench:llmail` re-measures the rules offline and rewrites `docs/LLMAIL_BENCHMARK.md`; a test fails if that doc is stale. The tool itself never downloads the dataset. Users get the result with `git pull`.

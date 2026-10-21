@@ -6,7 +6,11 @@ const { analyze } = require("./index");
 const HELP = `agent-ops-check <dir|files...> [options]
 
 Scans agent code, prompts, MCP configs, .env.example, chat transcripts (.jsonl) and bill exports (.csv)
-on THIS machine. No network calls unless you pass --llm.
+on THIS machine. The scan makes no network calls unless you pass --llm.
+agent-ops-check eval is separate: it contacts only the agent in your config, and only when you opt in.
+
+agent-ops-check eval <agent-evals.yaml> [--live] [--dry-run] [--out results.json]
+  dry-run unless you pass --live or set live: true. Needs the optional Python package.
 
   --out <dir>          report folder (default ./agent-ops-report)
   --format <list>      html,json,md,sarif (default html,json,md,sarif)
@@ -74,6 +78,7 @@ function steFiles(p, out) {
 }
 
 async function main(argv) {
+  if (argv[0] === "eval") return require("./eval-cli").main(argv.slice(1));
   let o;
   try { o = parse(argv); } catch (e) { console.error(e.message + "\n\n" + HELP); return 2; }
   if (o.localUi) return require("./ui-server").start(o);

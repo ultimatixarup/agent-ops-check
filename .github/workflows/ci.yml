@@ -54,3 +54,18 @@ jobs:
           name: agent-ops-reports
           path: golden-out/
           if-no-files-found: warn
+  python-eval:
+    name: python eval runner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install the optional eval package
+        run: python -m pip install -e "./python[dev]"
+      - name: Eval unit tests and fake HTTP/CLI agents
+        run: python -m pytest python/tests -q

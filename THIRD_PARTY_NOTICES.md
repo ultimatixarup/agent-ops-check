@@ -1,5 +1,9 @@
 # Third-party notices
 
+## pydantic-evals (Pydantic)
+
+The optional package in `python/` depends on `pydantic-evals` (pinned to 2.59.0), part of [pydantic-ai](https://github.com/pydantic/pydantic-ai), MIT License. The code is not vendored. Node does not import it. The static scan does not need it.
+
 ## LLMail-Inject dataset (Microsoft)
 
 Files under `data/llmail/` (except `benign-hard-authored.jsonl`, written for this repo) are samples taken from the

@@ -1,7 +1,8 @@
 "use strict";
 // Offline eval-set generator: turns what the scanners found in the agent's source (tools, prompts, irreversible
 // actions, source-to-sink paths, credentials) into functional and security test cases (JSONL + readable MD).
-// It only WRITES test cases. It does not run them against your agent.
+// It only WRITES test cases. It does not run them. Run them with `agent-ops-check eval`
+// (optional Python package; dry-run unless you pass --live or set live: true).
 const TOOL_NAME = /(?:["']?name["']?\s*[:=]\s*["']([A-Za-z_][\w.-]{2,})["'])|(?:@tool[^\n]*\n\s*(?:async\s+)?def\s+(\w+))|(?:server\.tool\(\s*["']([\w.-]+)["'])/g;
 
 function toolsOf(files) {
@@ -63,7 +64,7 @@ function generate(files, groups) {
 }
 
 function toMarkdown(ev) {
-  const L = ["# Generated eval sets", "", "_Generated offline from the agent's source by agent-ops-check. These are test cases to run against your agent; agent-ops-check does not run them._", "",
+  const L = ["# Generated eval sets", "", "_Generated offline from the agent's source by agent-ops-check. The scan does not run them. To run them against an agent you configure, use `agent-ops-check eval` (optional Python package; dry-run unless you pass --live)._", "",
     "Functional: " + ev.functional.length + " · Security: " + ev.security.length, ""];
   for (const [title, arr] of [["Functional", ev.functional], ["Security", ev.security]]) {
     L.push("## " + title, "", "| ID | Agent | Category | Input | Expected |", "|---|---|---|---|---|");

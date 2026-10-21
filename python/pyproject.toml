@@ -1,0 +1,29 @@
+[project]
+name = "agent-ops-evals"
+version = "0.1.0"
+description = "Optional eval runner for agent-ops-check. Runs YAML-configured cases against an agent you name. Built on pydantic-evals."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Arup Kumar Banerjee" }]
+dependencies = [
+  "pydantic-evals==2.59.0",
+  "pydantic>=2.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+agent-ops-evals = "agent_ops_evals.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["agent_ops_evals*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
