@@ -101,6 +101,11 @@
         "ste.semicolon": 1,
         "ste.sentence_length": 1
       }
+    },
+    "execconfig": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
     }
   }
 }

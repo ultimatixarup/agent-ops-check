@@ -7,6 +7,9 @@ The optional `eval` command is separate from that promise. It contacts only the 
 ## Imported datasets (maintainers)
 - **LLMail-Inject** (Microsoft, MIT): `npm run import:llmail` downloads the dataset into `.cache/llmail/` (git-ignored), then writes the small samples and family stats committed in `data/llmail/`. `npm run bench:llmail` re-measures the rules offline and rewrites `docs/LLMAIL_BENCHMARK.md`; a test fails if that doc is stale. The tool itself never downloads the dataset. Users get the result with `git pull`.
 
+## Recent rule families
+- **2026.10.14:** execution-config writes (`execconfig.*`) and the offline `--lock` / `--verify-lock` hash check, in `rules/execconfig.yaml`. Get them with `git pull`.
+
 ## Getting updates
 - Cloned: `git pull`
 - npx: re-run `npx github:ultimatixarup/agent-ops-check ...` (npx fetches the current `main`; to force it, clear the npx cache or pin a tag `#vX.Y.Z`)

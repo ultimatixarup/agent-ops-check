@@ -41,6 +41,11 @@
       "rules": {
         "ste.ing_verb": 1
       }
+    },
+    "execconfig": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
     }
   }
 }

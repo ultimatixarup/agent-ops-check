@@ -51,6 +51,11 @@
       "score": 100,
       "findings": 0,
       "rules": {}
+    },
+    "execconfig": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
     }
   }
 }

@@ -16,6 +16,8 @@ module.exports = function html(r) {
       extra = "<p class=note>" + esc(g.note) + " <a href='ste.html'>Open the offline STE page</a> to paste text or pick files.</p>" + (g.dictionary ? "<p>Approved-word list: " + esc(g.dictionary) + "</p>" : "")
         + "<h3>Documents checked</h3><table><tr><th>Input</th><th>Sentences</th><th>Findings</th></tr>" + g.docs.map((d) => "<tr><td>" + esc(d.file) + "</td><td>" + d.sentences + "</td><td>" + d.findings + "</td></tr>").join("") + "</table>"
         + (g.compare ? "<h3>Information-loss check</h3><p>" + esc(g.compare.original) + " → " + esc(g.compare.rewrite) + ": <b>" + g.compare.missing.length + "</b> missing</p><table><tr><th>Sev</th><th>Kind</th><th>Missing value</th></tr>" + g.compare.missing.map((m) => "<tr class=" + m.severity + "><td>" + m.severity + "</td><td>" + esc(m.kind) + "</td><td><code>" + esc(m.value) + "</code></td></tr>").join("") + "</table>" : "");
+    } else if (g.id === "execconfig") {
+      extra = "<p class=note>" + esc(g.note) + "</p>";
     } else if (g.id === "injection") {
       extra = "<p class=note>" + esc(g.note) + "</p><p>" + g.docsScanned + " files scanned.</p>";
     } else if (g.id === "labs") {

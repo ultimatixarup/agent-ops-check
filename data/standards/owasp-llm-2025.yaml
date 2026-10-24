@@ -50,7 +50,9 @@ items:
       - crossover.source_to_sink
       - crossover.shared_credential
       - health.high_risk_tools
-    how: Gate map for irreversible tools and browser actions, shared credentials, scopes
+      - execconfig.unrestricted_write_tool
+      - execconfig.broad_fs_server
+    how: Write tools and filesystem servers with no path limit; gate map for irreversible tools and browser actions, shared credentials, scopes
   - id: LLM07
     title: System Prompt Leakage
     coverage: covered

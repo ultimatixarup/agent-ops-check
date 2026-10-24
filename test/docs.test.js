@@ -31,7 +31,7 @@ test("every rule emitted by the example scans is documented", async () => {
 test("every check group maps only to real standards items, worded 'maps to'", () => {
   const std = require("../src/standards").load(), cs = gen.webCheckStandards();
   const real = new Set(std.flatMap((fw) => fw.items.map((i) => fw.id + ":" + i.id)));
-  for (const id of ["crossover", "actions", "governance", "labs", "injection", "ste"]) {
+  for (const id of ["crossover", "actions", "governance", "labs", "injection", "ste", "execconfig"]) {
     const g = cs.groups.find((x) => x.id === id);
     assert.ok(g && g.frameworks.length, "no standards for group " + id);
     for (const fw of g.frameworks) for (const it of fw.items) assert.ok(real.has(fw.id + ":" + it.id), fw.id + ":" + it.id);

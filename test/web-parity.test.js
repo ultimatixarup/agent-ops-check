@@ -79,3 +79,12 @@ test("web = CLI: false-positive regression fixtures incl. a notebook", () => {
   same(w, cli(path.dirname(d), [d]));
   assert.ok(w.groups.some((g) => g.findings.some((f) => f.notebookCell)));
 });
+test("web = CLI: execution-config fixtures (static rules; the lock is CLI only)", () => {
+  const FXE = path.join(ROOT, "test", "fixtures", "execconfig");
+  for (const n of ["bad", "good"]) {
+    const dir = path.join(FXE, n);
+    const w = WEB.scan({ inputs: [{ name: n, kind: "folder", entries: folderEntries(dir) }] });
+    same(w, cli(FXE, [dir]));
+    assert.ok(w.groups.some((g) => g.id === "execconfig"));
+  }
+});

@@ -11,6 +11,8 @@ const CASES = {
   "adsf-poisoned-doc": ["examples/bad-agent/finance-cfo/knowledge/vendor-faq.md"],
   "ste-samples": ["--ste", "examples/ste/original.txt", "--ste", "examples/ste/rewrite.txt", "--ste-dict", "examples/ste/approved-words.txt"],
   "ste-compare": ["--ste-compare", "examples/ste/original.txt", "examples/ste/rewrite.txt"],
+  "execconfig-bad": ["test/fixtures/execconfig/bad"],
+  "execconfig-good": ["test/fixtures/execconfig/good"],
 };
 const update = process.argv.includes("--update");
 const ki = process.argv.indexOf("--keep"), keep = ki > 0 ? path.resolve(process.argv[ki + 1]) : null;

@@ -2,6 +2,15 @@
 
 Rule updates ship only through this Git repo. Refresh with `git pull` or re-run `npx github:ultimatixarup/agent-ops-check`.
 
+## 2026.10.14 (execution-config writes + lock)
+New static check family in `rules/execconfig.yaml` and `src/scanners/execconfig.js`, shown after the STE tab. It doesn't change the overall score (tabs 1–3). Static only: it cannot see what an agent writes at runtime or outside the scanned folder.
+- New: `execconfig.*` static rules (5): `exec_target_write`, `instruction_write`, `unrestricted_write_tool`, `broad_fs_server`, `auto_run_setting`. Matches in documentation and test files are lowered to low.
+- New: `--lock` writes `.agent-ops-lock.json` (SHA-256 of execution-config files, `lock_files`). Later scans of the folder compare against it automatically (`execconfig.lock_changed`, `lock_added`, `lock_removed`); `--verify-lock` makes it required; `--no-lock` skips it. Names ending in a dot or space are reported as `execconfig.lookalike_name`. CLI only, folder inputs only, fully offline.
+- New: `--no-execconfig` CLI flag.
+- New: `data/standards/` "maps to" entries: OWASP Agentic ASI05 (`execconfig.`), OWASP LLM06 (`unrestricted_write_tool`, `broad_fs_server`). Coverage unchanged (partial / as before).
+- Sources (their findings, not ours): Microsoft CVE-2026-103572 as described by Embrace The Red (2026-10-13, https://embracethered.com/blog/posts/2026/visual-studio-copilot-remote-code-execution/); arXiv 2610.15137 (https://arxiv.org/abs/2610.15137). No exploit steps are reproduced.
+- Tuned on the vendor-samples campaign repos: `system_prompt.txt` is not an instruction target (trajectory logs write it); write tools are checked per file for any path guard.
+
 ## 2026.10.13 (second update, same day: false-positive fixes)
 False-positive fixes from the vendor-samples campaign (`campaigns/2026-10-vendor-samples/`). Each has a regression test in `test/fp-regressions.test.js` built on short attributed excerpts of the scanned samples (`test/fixtures/fp/`).
 - New: Jupyter notebooks (`.ipynb`) are scanned: code and markdown cells only (outputs ignored), findings say "notebook cell N, line M". Raw notebook limit 8 MB, extracted text limit 2 MB.
