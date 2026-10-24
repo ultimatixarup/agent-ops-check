@@ -79,3 +79,19 @@ test("web = CLI: false-positive regression fixtures incl. a notebook", () => {
   same(w, cli(path.dirname(d), [d]));
   assert.ok(w.groups.some((g) => g.findings.some((f) => f.notebookCell)));
 });
+test("web = CLI: daemon + skill-provenance fixtures (folder and zip with .pyc, scripts, lockfiles)", async () => {
+  const FXP = path.join(ROOT, "test", "fixtures", "persistence");
+  for (const n of ["bad", "good"]) {
+    const dir = path.join(FXP, n);
+    const webR = WEB.scan({ inputs: [{ name: n, kind: "folder", entries: folderEntries(dir) }] });
+    same(webR, cli(FXP, [dir]));
+    assert.ok(webR.groups.some((g) => g.id === "daemon") && webR.groups.some((g) => g.id === "skills"));
+    // Zip path: the browser's readZip must keep the extra files (scripts, .pyc names) the CLI's unzip extracts.
+    const z = new JSZip(); for (const e of folderEntries(dir)) z.file(n + "/" + e.path, e.text);
+    const zp = path.join(require("os").tmpdir(), "aoc-persist-" + n + ".zip");
+    fs.writeFileSync(zp, await z.generateAsync({ type: "nodebuffer", compression: "DEFLATE" }));
+    const entries = await WEB.readZip(JSZip, fs.readFileSync(zp));
+    assert.ok(n === "good" || entries.some((e) => /\.pyc$/.test(e.path)), "zip keeps .pyc names");
+    same(WEB.scan({ inputs: [{ name: path.basename(zp), kind: "zip", entries }] }), cli(path.dirname(zp), [zp]));
+  }
+});

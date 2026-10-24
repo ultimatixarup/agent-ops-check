@@ -54,8 +54,8 @@ function scan(req) {
   return analyze(inputs, o);
 }
 // Read a .zip with JSZip (vendored, passed in) using the same safety rules as src/unzip.js.
-const { wanted, MAX_BYTES, MAX_NOTEBOOK_BYTES } = require("../src/files");
-const maxBytes = (p) => (/\.ipynb$/i.test(p) ? MAX_NOTEBOOK_BYTES : MAX_BYTES); // same limits as the CLI
+const { wanted, keep, MAX_BYTES, MAX_NOTEBOOK_BYTES } = require("../src/files");
+const maxBytes = (p) => (/\.ipynb$/i.test(p) ? MAX_NOTEBOOK_BYTES : wanted(p) ? MAX_BYTES : /\.py[co]$|\.lockb?$|go\.sum$/i.test(p) ? Infinity : 512 * 1024); // same limits as the CLI (scripts: 512 KB; .pyc: name only)
 async function readZip(JSZip, data) {
   const z = await JSZip.loadAsync(data);
   const all = Object.values(z.files);
@@ -69,8 +69,8 @@ async function readZip(JSZip, data) {
     if (f.unixPermissions && ((f.unixPermissions & 0o170000) === 0o120000)) continue; // symlink: skip
     const size = f._data && f._data.uncompressedSize || 0;
     total += size; if (total > 200 * 1024 * 1024) throw new Error("Zip expands to more than 200 MB");
-    if (!wanted(norm) || size > maxBytes(norm)) continue; // never decoded; the CLI would skip it too
-    out.push({ path: norm, text: await f.async("string") });
+    if (!keep(norm) || size > maxBytes(norm)) continue; // never decoded; the CLI would skip it too
+    out.push({ path: norm, text: /\.py[co]$|\.lockb?$|(^|\/)go\.sum$/i.test(norm) ? "" : await f.async("string") }); // .pyc/lockfiles: name only, never decoded
   }
   return out;
 }
@@ -84,4 +84,4 @@ function outputs(r) {
   return out;
 }
 const ste = { check: (text, name, dict) => steCore.check(text, loadRules("ste"), { file: name || "(pasted)", dict: dict || null }), compare: (a, b) => steCore.compare(a, b) };
-module.exports = { scan, outputs, readZip, wanted, MAX_BYTES, MAX_NOTEBOOK_BYTES, maxBytes, ste, rulesInfo, version: pkg.version };
+module.exports = { scan, outputs, readZip, wanted, keep, MAX_BYTES, MAX_NOTEBOOK_BYTES, maxBytes, ste, rulesInfo, version: pkg.version };

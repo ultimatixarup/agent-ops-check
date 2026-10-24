@@ -51,6 +51,16 @@
       "score": 100,
       "findings": 0,
       "rules": {}
+    },
+    "daemon": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "skills": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
     }
   }
 }

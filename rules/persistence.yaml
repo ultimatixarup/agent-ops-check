@@ -1,0 +1,94 @@
+# Background daemon / sidecar and skill-artifact provenance rules. Case-insensitive JS regex, matched per line.
+# STATIC ONLY: these rules read files in the scanned folder. They cannot see running processes, installed
+# binaries, what a CLI does at runtime, or files a skill writes outside the folder. Treat every finding as
+# "verify on your install", not as proof.
+#
+# Severity is for code, config and scripts. Matches in documentation (.md/.txt/.rst, notebook markdown) are
+# lowered to low: install instructions in a README are common and are not themselves a persistent process.
+
+sources:
+  codex_daemon_report: >-
+    Single, unreproduced report (openai/codex#48195, author-reported) discussed on Hacker News on 2026-10-12
+    ("Codex CLI installs a persistent, self-updating background daemon by default") and in Groundy's audit guide
+    (https://groundy.com/articles/codex-cli-now-runs-a-self-updating-daemon-how-to-audit-and-stop/). Not verified
+    by this project. Used only as the reason to look for persistence and self-update patterns.
+  skillrelaybench: >-
+    arXiv 2610.13227 (SkillRelayBench, https://arxiv.org/abs/2610.13227). Their finding, not ours: 1,890 runs
+    (270 cases x 7 models on Codex CLI, Gemini CLI and Claude Code); attack success 46.7-77.4% (64.7% overall);
+    53% of runs completed both the user's task and the attack.
+  supply_chain: >-
+    General supply-chain hygiene (pin versions and commits, keep lockfiles/hashes), as in OWASP LLM03:2025 Supply Chain.
+    No specific incident is claimed.
+  pycache_trap: >-
+    arXiv 2610.10612 (PyCache Trap, https://arxiv.org/abs/2610.10612). Their finding, not ours: a swapped
+    __pycache__ .pyc can run instead of the reviewed .py; 94-100% attack success against 7 skill scanners on 100 skills.
+
+verify_hint: 'Verify on your install: ps / Activity Monitor, launchctl list, systemctl --user list-units, crontab -l, schtasks /query, and the CLI''s own settings.'
+
+daemon:
+  - id: launchd_register
+    severity: medium
+    family: persistence (macOS launchd)
+    source: codex_daemon_report
+    pattern: '\blaunchctl\s+(load|bootstrap|enable|submit|kickstart)\b|Library/Launch(Agents|Daemons)/|<key>\s*(RunAtLoad|KeepAlive)\s*</key>'
+    message: Registers or defines a macOS launchd job, which keeps running (or restarts) after the terminal closes.
+  - id: systemd_register
+    severity: medium
+    family: persistence (Linux systemd)
+    source: codex_daemon_report
+    pattern: '\bsystemctl\s+(--user\s+)?(enable|link)\b|\bloginctl\s+enable-linger\b|^\s*WantedBy\s*=\s*(default|multi-user|timers)\.target|^\s*Restart\s*=\s*always\b'
+    message: Enables a systemd unit (or lingering user services) that survives logout or reboot.
+  - id: cron_register
+    severity: medium
+    family: persistence (cron)
+    source: codex_daemon_report
+    pattern: '\bcrontab\s+(?!-l\b)(-\s*$|[\w./~$-]+\s*$)|\(\s*crontab\s+-l|\|\s*crontab\s+-|/etc/cron\.(d|hourly|daily|weekly)/|^\s*@reboot\b'
+    message: Installs a cron job (or @reboot entry) that runs on a schedule outside your session.
+  - id: windows_task_register
+    severity: medium
+    family: persistence (Windows)
+    source: codex_daemon_report
+    pattern: '\bschtasks(\.exe)?\s+/create\b|\bRegister-ScheduledTask\b|\bNew-Service\b|\bsc(\.exe)?\s+create\s|CurrentVersion\\+Run(Once)?\b'
+    message: Registers a Windows scheduled task, service or Run key that starts without you.
+  - id: auto_update
+    severity: medium
+    family: self-update
+    source: codex_daemon_report
+    pattern: '\bauto[_-]?updates?(_?enabled)?["'']?\s*[:=]\s*["'']?(true|on|yes|1|enabled|latest)\b|\bautoUpdates?(Enabled)?["'']?\s*[:=]\s*true\b|\bself[_-]update\b|\bdaemon_auto_start\b|\bfeatures\s+enable\s+daemon\b'
+    message: Turns on automatic or self-updating behavior, so the binary that runs may not be the version you pinned.
+  - id: daemon_mode
+    severity: low
+    family: background process
+    source: codex_daemon_report
+    pattern: '\s--daemon(ize)?\b|\bdaemon(ize)?["'']?\s*[:=]\s*["'']?(true|yes|1)\b|\bdaemon\s+start\b|^\s*nohup\s+\S|\bsetsid\s+\S|\bdisown\b|Start-Process\b[^\n]*-WindowStyle\s+Hidden'
+    # Python daemon threads/processes (threading.Thread(daemon=True)) end with the program: not a background service.
+    exclude: '\b(Thread|Process|Timer|ThreadPoolExecutor)\s*\(|\.daemon\s*=|\bdaemon_threads\b'
+    message: Starts a detached or daemon-mode process that can outlive the session.
+  - id: unpinned_latest_install
+    severity: medium
+    family: unpinned install
+    source: codex_daemon_report
+    pattern: '\b(npm|pnpm|yarn|bun)\s+(i|install|add|global\s+add)\b[^\n]*@latest\b|\b(npx|bunx|pnpm\s+dlx|uvx|pipx\s+run)\b[^\n]*@latest\b|/releases/latest/download/'
+    message: Installs or runs "latest" rather than a pinned version, so each run can pick up a different binary.
+  - id: pipe_to_shell
+    severity: medium
+    family: unpinned install
+    source: codex_daemon_report
+    pattern: '\b(curl|wget)\b[^|\n]{0,240}\|\s*(sudo\s+)?(-E\s+)?(ba|z|k|da)?sh\b|\b(iwr|irm|Invoke-WebRequest|Invoke-RestMethod)\b[^|\n]{0,240}\|\s*iex\b'
+    message: Pipes a downloaded script straight into a shell. You run whatever the server sends that day, unreviewed and unpinned.
+
+skills:
+  # Where skill rules apply: skill/plugin folders, folders with a SKILL.md, agent config folders, MCP configs.
+  scope_path: '(^|/)(\.claude|\.codex|\.gemini|\.cursor|\.agents?|\.claude-plugin|skills?|plugins?)(/|$)'
+  mcp_config: '(^|/)(\.?mcp(_servers)?\.json|mcp\.ya?ml|claude_desktop_config\.json|plugin\.json|marketplace\.json)$|(^|/)\.(claude|gemini|cursor|vscode|codex)/(settings(\.local)?\.json|mcp\.json|config\.toml)$'
+  # Files that a later agent session loads automatically (memory, instructions, hooks, shell startup).
+  persistent_targets: '\b(CLAUDE|AGENTS|GEMINI|MEMORY)\.md\b|\.claude/(settings(\.local)?\.json|hooks|commands|agents|skills|memory)|\.codex/|\.gemini/|(^|[/\s"''])memory/[\w.-]+\.(md|json)|\bmemory\.(md|json)\b|\.(bash|zsh)rc\b|\.bash_profile\b|\.profile\b|config\.fish\b|\bhooks\.json\b|\bsitecustomize\.py\b|\.pth\b'
+  write_verbs: '>>?\s*["''$~./\w]|\btee\b|\b(write|append)(_text|_bytes|File|FileSync|line|lines)?\s*\(|\bopen\s*\([^)]*["''](a|w|a\+|w\+)["'']|\b(append|add|write|save|record|update|edit|insert|persist)\b[^\n]{0,40}\b(to|into|in)\b'
+  hook_events: '"(SessionStart|UserPromptSubmit|PreToolUse|PostToolUse|Stop|SubagentStop|PreCompact|Notification|SessionEnd|BeforeAgent|AfterAgent|BeforeTool|AfterTool)"\s*:'
+  hook_events_startup: 'SessionStart|UserPromptSubmit|BeforeAgent'
+  # Version pins that count as pinned for a package argument.
+  pinned_pkg: '@v?\d+(\.\d+){0,3}([-+][\w.]+)?$|==\s*v?\d|@[0-9a-f]{7,40}$|@sha256:[0-9a-f]{64}$'
+  git_source: '\bgit\+(https?|ssh)://[^\s"''<>)]+|\bgithub:[\w.-]+/[\w.-]+[^\s"''<>)]*|\bpip\s+install\s+[^\n]*git\+[^\s"'']+'
+  pinned_git: '[#@][0-9a-f]{7,40}\b|#(v?\d+\.\d+[\w.-]*)'
+  hash_markers: '\bsha(256|384|512)\b|\bintegrity\b|\bchecksum\b|--hash='
+  lockfiles: '(^|/)(package-lock\.json|npm-shrinkwrap\.json|pnpm-lock\.yaml|yarn\.lock|bun\.lockb?|uv\.lock|poetry\.lock|Pipfile\.lock|Cargo\.lock|go\.sum|requirements[\w.-]*\.lock)$'

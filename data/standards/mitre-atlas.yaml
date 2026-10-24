@@ -66,7 +66,14 @@ items:
     coverage: partial
     checks:
       - governance.unpinned_model
-    how: Pinning only
+      - skills.unpinned_source
+      - skills.no_hashes
+      - skills.committed_pycache
+      - skills.orphan_pyc
+      - daemon.unpinned_latest_install
+      - daemon.pipe_to_shell
+      - daemon.auto_update
+    how: Pinning only; unpinned skill/MCP/CLI sources, missing skill hashes, stray .pyc, curl|sh (static)
   - id: AML.T0083
     title: Credentials from AI Agent Configuration
     coverage: covered

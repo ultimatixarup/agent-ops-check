@@ -41,6 +41,16 @@
       "rules": {
         "ste.ing_verb": 1
       }
+    },
+    "daemon": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "skills": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
     }
   }
 }

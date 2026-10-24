@@ -32,19 +32,31 @@ items:
     coverage: partial
     checks:
       - governance.unpinned_model
-    how: MCP/provider inventory, unpinned models; no registry integrity check
+      - skills.unpinned_source
+      - skills.no_hashes
+      - skills.committed_pycache
+      - skills.orphan_pyc
+      - daemon.unpinned_latest_install
+      - daemon.pipe_to_shell
+      - daemon.auto_update
+      - skills.session_hook
+    how: MCP/provider inventory, unpinned models; no registry integrity check; unpinned skill/MCP sources, missing skill hashes, stray .pyc, curl|sh, latest installs, self-update flags (static)
   - id: ASI05
     title: Unexpected Code Execution
     coverage: partial
     checks:
       - health.injection_sinks
-    how: Free-form shell/exec/SQL tools
+      - skills.orphan_pyc
+      - daemon.pipe_to_shell
+    how: Free-form shell/exec/SQL tools; .pyc with no source in skills, curl|sh installers
   - id: ASI06
     title: Memory and Context Poisoning
     coverage: partial
     checks:
       - injection.
-    how: ADSF scan of knowledge/memory files you point it at; no runtime memory check
+      - skills.persistent_write
+      - skills.session_hook
+    how: ADSF scan of knowledge/memory files you point it at; no runtime memory check; skills that write memory/instruction/hook files later sessions load, session hooks (static)
   - id: ASI07
     title: Insecure Inter-Agent Communication
     coverage: none
@@ -75,4 +87,5 @@ items:
       - governance.no_tracing
       - governance.no_owner
       - observability.
-    how: Tracing, owner, observability; no stop-switch check
+      - daemon.
+    how: Tracing, owner, observability; no stop-switch check; background daemons/scheduled tasks that outlive the session (static; verify on your install)

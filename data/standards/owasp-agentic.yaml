@@ -9,7 +9,8 @@ items:
     coverage: partial
     checks:
       - injection.
-    how: Hidden instructions in files an agent may load as memory/knowledge
+      - skills.persistent_write
+    how: Hidden instructions in files an agent may load as memory/knowledge; skills that write memory/instruction files later sessions load (static)
   - id: T2
     title: Tool Misuse
     coverage: covered
@@ -84,7 +85,9 @@ items:
     coverage: partial
     checks:
       - health.injection_sinks
-    how: Shell/exec/SQL tools fed by model output
+      - skills.orphan_pyc
+      - daemon.pipe_to_shell
+    how: Shell/exec/SQL tools fed by model output; .pyc with no source in skills, curl|sh installers
   - id: T12
     title: Agent Communication Poisoning
     coverage: partial

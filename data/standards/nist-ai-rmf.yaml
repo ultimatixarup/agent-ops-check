@@ -74,7 +74,9 @@ items:
     coverage: partial
     checks:
       - governance.unpinned_model
-    how: Provider/SDK/model inventory and pinning
+      - skills.
+      - daemon.
+    how: Provider/SDK/model inventory and pinning; skill provenance and background-daemon/self-update checks (static)
   - id: GAI-Harmful
     title: 'GenAI risks: CBRN, violent/hateful, obscene, bias, IP, environmental'
     coverage: none

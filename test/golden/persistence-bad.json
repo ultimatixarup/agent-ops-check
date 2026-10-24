@@ -1,0 +1,73 @@
+{
+  "score": 98,
+  "filesScanned": 6,
+  "groups": {
+    "crossover": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "actions": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "governance": {
+      "score": 95,
+      "findings": 2,
+      "rules": {
+        "governance.no_owner": 1,
+        "governance.no_review_record": 1
+      }
+    },
+    "labs": {
+      "score": 93,
+      "findings": 7,
+      "rules": {
+        "observability.agent_specific": 1,
+        "observability.golden_signals": 1,
+        "observability.langfuse": 1,
+        "observability.otel": 1,
+        "observability.prometheus": 1,
+        "observability.runbooks_alerts": 1,
+        "observability.splunk_logs": 1
+      }
+    },
+    "injection": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "ste": {
+      "score": 100,
+      "findings": 0,
+      "rules": {}
+    },
+    "daemon": {
+      "score": 33,
+      "findings": 19,
+      "rules": {
+        "daemon.auto_update": 4,
+        "daemon.cron_register": 1,
+        "daemon.daemon_mode": 2,
+        "daemon.launchd_register": 4,
+        "daemon.pipe_to_shell": 2,
+        "daemon.systemd_register": 3,
+        "daemon.unpinned_latest_install": 2,
+        "daemon.windows_task_register": 1
+      }
+    },
+    "skills": {
+      "score": 60,
+      "findings": 10,
+      "rules": {
+        "skills.committed_pycache": 2,
+        "skills.no_hashes": 1,
+        "skills.orphan_pyc": 1,
+        "skills.persistent_write": 2,
+        "skills.session_hook": 1,
+        "skills.unpinned_source": 3
+      }
+    }
+  }
+}

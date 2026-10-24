@@ -42,6 +42,7 @@ module.exports = function md(r) {
   L.push("", "## 4. Findings (P0 = fix before real traffic)", "");
   for (const g of r.groups) {
     L.push("### " + g.title, "");
+    if (g.id === "daemon" || g.id === "skills") L.push("_" + g.note + "_", "");
     if (!g.findings.length) L.push("No findings.", "");
     g.findings.forEach((f) => L.push("- **" + P[f.severity] + "** `" + f.rule + "` " + f.file + (f.line > 0 ? ":" + f.line : "") + " — " + f.message + (f.evidence ? " (`" + String(f.evidence).replace(/`/g, "'") + "`)" : "")));
     L.push("");
