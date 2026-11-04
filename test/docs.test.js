@@ -8,6 +8,7 @@ const covered = (ids, id) => ids.some((k) => k === id || (k.endsWith(".*") && id
 
 test("README check section matches the rules (run npm run docs)", () => {
   assert.strictEqual(gen.render(readme()), readme());
+  assert.strictEqual(gen.renderDataSharing(), fs.readFileSync(path.join(ROOT, "docs", "DATA-SHARING.md"), "utf8"));
 });
 test("every YAML rule ID has a catalog entry", () => {
   const d = gen.documentedIds();

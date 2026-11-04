@@ -3,6 +3,7 @@ node_modules/
 /report/
 *.tgz
 golden-out/
+config-audit-out/
 *.tgz
 web-dist/
 .cache/

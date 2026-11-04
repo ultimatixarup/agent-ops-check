@@ -1,0 +1,41 @@
+model = "gpt-5.4"
+
+[mcp_servers.local-docs]
+command = "npx"
+args = ["-y", "@example/docs-mcp"]
+
+[mcp_servers.postman]
+url = "https://user:leak@mcp.postman.com/mcp?token=should-not-appear"
+enabled = true
+
+[mcp_servers.secretish]
+command = "node"
+args = ["server.js"]
+env = { "API_KEY" = "sk-testFIXTUREsecretvalue12345" }
+
+[marketplaces.postman]
+source_type = "git"
+source = "https://github.com/postmanlabs/postman-plugin.git"
+ref = "main"
+
+[marketplaces.mine]
+source_type = "git"
+source = "https://github.com/example/my-plugins.git"
+
+[plugins."postman@postman"]
+enabled = true
+
+[plugins."notes@local"]
+enabled = true
+
+[hooks.state]
+
+[hooks.state."postman@postman:hooks/codex-hooks.json:session_start:0:0"]
+trusted_hash = "sha256:b67ddd1ece328f5a6f9103ce011bb58adb8411daea644f284732cff85d15cbb3"
+
+[[hooks.SessionStart]]
+matcher = "startup|clear|compact"
+
+[[hooks.SessionStart.hooks]]
+type = "command"
+command = 'python3 "/Users/me/Library/Application Support/Postman/hooks/session.py"'

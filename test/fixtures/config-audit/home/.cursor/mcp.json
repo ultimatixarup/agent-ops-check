@@ -1,0 +1,6 @@
+{
+  "mcpServers": {
+    "docs": { "command": "npx", "args": ["-y", "docs-mcp"], "env": { "API_KEY": "sk-testFIXTUREsecretvalue12345" } },
+    "remote-notes": { "url": "https://example.com/mcp?token=should-not-appear" }
+  }
+}

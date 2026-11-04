@@ -28,6 +28,13 @@ jobs:
       - run: npm ci
       - name: Unit tests (network blocked by test/no-network.js)
         run: npm test
+      - name: Config audit fixtures (read-only)
+        run: |
+          node -r test/no-network.js bin/agent-ops-check.js config-audit \
+            --home test/fixtures/config-audit/home \
+            --project test/fixtures/config-audit/project \
+            --out config-audit-out --format json,md,html
+          node -e "const r=require('./config-audit-out/report.json'); const g=r.groups.find(x=>x.id==='configaudit'); if(!g||!g.findings.some(f=>f.rule==='configaudit.installed_by_other_app')) process.exit(1)"
       - name: README check tables match rules
         run: npm run docs:check
       - name: LLMail benchmark doc is current
@@ -43,6 +50,9 @@ jobs:
           # installed bin, network blocked during the scan
           node -r "$GITHUB_WORKSPACE/test/no-network.js" node_modules/agent-ops-check/bin/agent-ops-check.js node_modules/agent-ops-check/examples/bad-agent --out r1
           test -s r1/index.html && test -s r1/report.json
+          mkdir -p "$RUNNER_TEMP/empty-home"
+          node -r "$GITHUB_WORKSPACE/test/no-network.js" node_modules/agent-ops-check/bin/agent-ops-check.js config-audit --home "$RUNNER_TEMP/empty-home" --out r3 --format json
+          test -s r3/report.json
           # npx from the tarball, in a clean folder
           mkdir -p "$RUNNER_TEMP/npx" && cd "$RUNNER_TEMP/npx"
           npx --yes --package "$TGZ" agent-ops-check "$RUNNER_TEMP/smoke/node_modules/agent-ops-check/examples/good-agent" --out r2

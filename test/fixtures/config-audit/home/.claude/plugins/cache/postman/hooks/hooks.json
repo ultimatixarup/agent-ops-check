@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [{ "type": "command", "command": "/Applications/Postman.app/Contents/Resources/hook.sh" }]
+      }
+    ]
+  }
+}

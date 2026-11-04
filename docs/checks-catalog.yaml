@@ -40,6 +40,11 @@ needs:
     need:
       - 'In the Pax8 survey, 55% of decision-makers spend three or more hours each week checking AI work.'
       - Only 9% of the 137 VentureBeat respondents say sandboxing of high-risk agents best describes their program.
+  - id: configaudit
+    title: Coding-tool plugins, hooks, and MCP servers you may not have added
+    tab: "command: agent-ops-check config-audit (also on the local launch page)"
+    need:
+      - 'Postman desktop logged an auto-existing-upgrade on 24 October 2026 that installed a Claude Code plugin and a Codex plugin, wrote a SessionStart hook and a trusted_hash for that hook, and pointed Codex at the remote MCP server https://mcp.postman.com/mcp. Report: https://github.com/postmanlabs/postman-app-support/issues/14370'
 
 # Check groups for the "Maps to standards" lists (README and the Labs page). Each group's rule-ID prefixes are
 # matched against the `checks` of every item in data/standards/*.yaml. Only real mappings from that data are shown.
@@ -128,3 +133,9 @@ checks:
   ste.word_hint: {need: ste, severity: low, looks_for: "hints list (original, not from the ASD-STE100 dictionary).", example: "utilize → use", fix: "Use the plain word."}
   ste.not_in_dictionary: {need: ste, severity: low, looks_for: "Words not in your --ste-dict list (capitalized words after the first are treated as names).", example: "Not in your approved word list: rotate, handle.", fix: "Use an approved word or add it to your list."}
   ste.info_loss.*: {need: ste, severity: "high (names and soft constraints: medium)", looks_for: "--ste-compare: numbers, units, dates, names, paths, URLs, identifiers and constraint words in the original that are missing from the rewrite.", example: 'Missing from the STE version: number+unit "30 seconds".', fix: "Put the fact or constraint back."}
+  # ---- local coding-tool config audit (src/scanners/config-audit.js). Not part of a normal project scan.
+  configaudit.installed_by_other_app: {need: configaudit, severity: "high when the entry matches the Postman fingerprint and is enabled; medium for another application's path, or when disabled", looks_for: "Plugin, marketplace, hook, or MCP entry whose id, source, URL, command, or path matches the Postman desktop install (postman@postman, postman@claude-plugins-official, postmanlabs/postman-plugin, mcp.postman.com, a Postman.app path) or whose command points at another application's files.", example: "Codex plugin postman@postman matches the Postman desktop install fingerprint.", fix: "Confirm you added it. Remove it in that tool if you did not."}
+  configaudit.remote_mcp: {need: configaudit, severity: "medium; high when the URL is http or ws rather than https or wss", looks_for: "MCP server whose url uses http, https, ws, or wss and whose host is not localhost, 127.0.0.1, or ::1.", example: "Claude Code MCP server hubspot calls https://mcp.hubspot.com/anthropic.", fix: "Confirm you added that host. Prefer a local stdio server when you do not need a remote one."}
+  configaudit.auto_approved_hook: {need: configaudit, severity: "high when a trusted_hash is stored or the command matches another app; medium for other startup hooks", looks_for: "SessionStart, Setup, UserPromptSubmit, beforeSubmitPrompt, or workspaceOpen hooks, and any Codex hook with a trusted_hash in hooks.state.", example: "Codex hook has a trusted_hash, so it can run without asking you to approve the current definition.", fix: "Read the command. Clear the trust and the hook if you did not approve it."}
+  configaudit.unparsed: {need: configaudit, severity: "medium when a file could not be parsed; low when it could not be read", looks_for: "A config file that exists but could not be read or parsed, so its entries were not listed.", example: "Could not parse TOML. Entries in this file were not listed.", fix: "Open the file and fix the syntax, then run the audit again."}
+  configaudit.none: {need: configaudit, severity: info, looks_for: "No config files were found, or the files that were opened listed no plugin, hook, or MCP server.", example: "No Codex, Claude Code, or Cursor config files were found under this home directory.", fix: "Nothing to change. Run again with --project if the configs are in a repo."}

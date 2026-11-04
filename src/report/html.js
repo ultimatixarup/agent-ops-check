@@ -18,6 +18,13 @@ module.exports = function html(r) {
         + (g.compare ? "<h3>Information-loss check</h3><p>" + esc(g.compare.original) + " → " + esc(g.compare.rewrite) + ": <b>" + g.compare.missing.length + "</b> missing</p><table><tr><th>Sev</th><th>Kind</th><th>Missing value</th></tr>" + g.compare.missing.map((m) => "<tr class=" + m.severity + "><td>" + m.severity + "</td><td>" + esc(m.kind) + "</td><td><code>" + esc(m.value) + "</code></td></tr>").join("") + "</table>" : "");
     } else if (g.id === "injection") {
       extra = "<p class=note>" + esc(g.note) + "</p><p>" + g.docsScanned + " files scanned.</p>";
+    } else if (g.id === "configaudit") {
+      const inv = g.inventory || [];
+      const files = g.files || [];
+      extra = "<p class=note>" + esc(g.note) + "</p>"
+        + "<h3>Files</h3><table><tr><th>Path</th><th>Status</th></tr>" + files.map((f) => "<tr><td><code>" + esc(f.path) + "</code></td><td>" + esc(f.status + (f.error ? " (" + f.error + ")" : "")) + "</td></tr>").join("") + "</table>"
+        + "<h3>Plugins, hooks, and MCP servers</h3>" + (inv.length ? "<table><tr><th>Tool</th><th>Kind</th><th>Scope</th><th>Name</th><th>Where</th><th>Detail</th><th>Flags</th></tr>" + inv.map((it) => "<tr><td>" + esc(it.tool) + "</td><td>" + esc(it.kind) + "</td><td>" + esc(it.scope) + "</td><td><code>" + esc(it.name) + "</code></td><td>" + esc(it.file + (it.line ? ":" + it.line : "")) + "</td><td>" + esc(it.detail) + "</td><td>" + esc((it.flags || []).join(", ")) + "</td></tr>").join("") + "</table>" : "<p>None listed.</p>")
+        + (g.checklist ? "<h3>Data-sharing settings</h3>" + require("../checklist-html").checklistHtml(g.checklist) : "");
     } else if (g.id === "labs") {
       extra = (g.redteam ? "<p class=note>Red-team pack: 20 test messages to send to your own customer-facing bot are in <a href='redteam-pack.txt'>redteam-pack.txt</a>.</p><details><summary>Show the red-team pack</summary><pre style='white-space:pre-wrap'>" + esc(g.redteam) + "</pre></details>" : "") + "<h3>Tool runs</h3><table><tr><th>Tool</th><th>Input</th><th>Score</th><th>Verdict</th></tr>" + g.runs.map((x) => "<tr><td>" + esc(x.tool) + "</td><td>" + esc(x.file) + "</td><td>" + esc(x.score) + "</td><td>" + esc(x.verdict) + "</td></tr>").join("") + "</table>";
     }

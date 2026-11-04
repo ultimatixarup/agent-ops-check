@@ -1,0 +1,7 @@
+{
+  "plugins": {
+    "postman@claude-plugins-official": [
+      { "version": "2.0.1", "scope": "user" }
+    ]
+  }
+}

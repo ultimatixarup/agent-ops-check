@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [{ "type": "command", "command": "echo sk-testFIXTUREsecretvalue12345" }]
+      }
+    ]
+  }
+}

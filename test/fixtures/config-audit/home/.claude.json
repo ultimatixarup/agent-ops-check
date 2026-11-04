@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "hubspot": { "type": "http", "url": "https://mcp.hubspot.com/anthropic" },
+    "local-http": { "type": "http", "url": "http://127.0.0.1:9/mcp" }
+  },
+  "projects": {
+    "/work/app": {
+      "mcpServers": {
+        "stripe": { "type": "http", "url": "https://mcp.stripe.com" }
+      }
+    }
+  }
+}
