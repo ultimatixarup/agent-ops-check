@@ -109,9 +109,23 @@ function render(readme) {
 function webCheckStandards() {
   return { groups: groupStandards(load("docs/checks-catalog.yaml").standards_groups || []), llmail: llmailStats() };
 }
-module.exports = { generate, render, documentedIds, webCheckStandards, START, END };
+function renderDataSharing() {
+  return require("../src/data-sharing").toMarkdown();
+}
+module.exports = { generate, render, documentedIds, webCheckStandards, renderDataSharing, START, END };
 if (require.main === module) {
+  const check = process.argv.includes("--check");
   const p = path.join(ROOT, "README.md"), cur = fs.readFileSync(p, "utf8"), next = render(cur);
-  if (process.argv.includes("--check")) { if (cur !== next) { console.error("README is out of date: run npm run docs"); process.exit(1); } console.log("README up to date"); }
-  else { fs.writeFileSync(p, next); console.log("README updated"); }
+  const dp = path.join(ROOT, "docs", "DATA-SHARING.md");
+  const dcur = fs.existsSync(dp) ? fs.readFileSync(dp, "utf8") : "";
+  const dnext = renderDataSharing();
+  if (check) {
+    if (cur !== next) { console.error("README is out of date: run npm run docs"); process.exit(1); }
+    if (dcur !== dnext) { console.error("docs/DATA-SHARING.md is out of date: run npm run docs"); process.exit(1); }
+    console.log("README up to date");
+  } else {
+    fs.writeFileSync(p, next);
+    fs.writeFileSync(dp, dnext);
+    console.log("README and docs/DATA-SHARING.md updated");
+  }
 }

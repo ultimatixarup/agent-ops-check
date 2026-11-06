@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "cleartext": { "url": "http://remote.example/mcp" }
+  }
+}

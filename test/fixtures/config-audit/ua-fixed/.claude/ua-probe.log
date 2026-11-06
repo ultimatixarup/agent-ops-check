@@ -1,0 +1,3 @@
+User-Agent: ClaudeCode/2.1.317
+From: other@example.com
+curl -A "ClaudeCode/2.1.317" https://example.com/

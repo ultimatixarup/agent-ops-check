@@ -28,6 +28,25 @@ module.exports = function md(r) {
     st.docs.forEach((d) => L.push("- " + d.file + ": " + d.sentences + " sentences, " + d.findings + " findings"));
     if (st.compare) L.push("", "**Information-loss check:** " + st.compare.original + " → " + st.compare.rewrite + ": " + st.compare.missing.length + " item(s) missing from the rewrite (of " + st.compare.originalFacts + " facts found in the original).");
   }
+  const ca = r.groups.find((g) => g.id === "configaudit");
+  if (ca) {
+    L.push("", "## AI coding-tool config audit", "", "_" + ca.note + "_", "");
+    L.push("### Files", "", "| Path | Status |", "|---|---|");
+    (ca.files || []).forEach((f) => L.push("| `" + f.path + "` | " + f.status + (f.error ? " (" + f.error + ")" : "") + " |"));
+    L.push("", "### Plugins, hooks, and MCP servers", "");
+    if (!(ca.inventory || []).length) L.push("None listed.", "");
+    else {
+      L.push("| Tool | Kind | Scope | Name | Where | Detail | Flags |", "|---|---|---|---|---|---|---|");
+      const cell = (s) => String(s == null ? "" : s).replace(/\|/g, "\\|").replace(/\n/g, " ");
+      ca.inventory.forEach((it) => L.push("| " + [it.tool, it.kind, it.scope, "`" + String(it.name).replace(/`/g, "'") + "`", it.file + (it.line ? ":" + it.line : ""), it.detail, (it.flags || []).join(", ")].map(cell).join(" | ") + " |"));
+    }
+    if (ca.checklist) {
+      L.push("", "### Data-sharing settings", "", ca.checklist.intro || "", "");
+      (ca.checklist.entries || []).forEach((e) => {
+        L.push("#### " + e.vendor, "", "- Product: " + e.product, "- Where: " + (e.where || ""), "- What it controls: " + (e.controls || ""), "- Default: " + (e.default || ""), "- Official documentation: " + (e.official || []).join(", "), "- Notes from those docs: " + (e.notes || ""), "- Reports, separate from the vendor docs: " + (e.report || ""), "- Report link: " + (e.report_url || ""), "");
+      });
+    }
+  }
   const inj = r.groups.find((g) => g.id === "injection");
   if (inj) L.push("", "## Document-wide prompt-injection scan (ADSF)", "", "_" + inj.note + "_", "", inj.docsScanned + " files scanned, " + inj.findings.length + " findings.");
   if (r.standards) {

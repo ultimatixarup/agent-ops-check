@@ -10,10 +10,15 @@ const { analyze } = require("./index");
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const PAGE = (msg) => `<!doctype html><html lang=en><head><meta charset=utf-8><title>agent-ops-check</title>
 <meta http-equiv=Content-Security-Policy content="default-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
-<style>body{font:15px/1.5 system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 16px}input[type=text]{width:100%;padding:8px;font:14px ui-monospace,monospace}button{padding:8px 16px;margin-top:8px}.note{background:#f3f6fa;padding:8px 12px;border-radius:6px}.err{color:#b00020}</style></head><body>
+<style>body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:40px auto;padding:0 16px}input[type=text]{width:100%;padding:8px;font:14px ui-monospace,monospace}button{padding:8px 16px;margin-top:8px}.note{background:#f3f6fa;padding:8px 12px;border-radius:6px}.err{color:#b00020}table{border-collapse:collapse;width:100%;margin:8px 0 16px}td,th{border:1px solid #ddd;padding:5px 7px;text-align:left;vertical-align:top}code{font-size:12px}</style></head><body>
 <h1>agent-ops-check</h1><p class=note>Runs on this computer only (127.0.0.1). No network calls are made.</p>${msg ? "<p class=err>" + esc(msg) + "</p>" : ""}
 <h2>Scan a folder or .zip by path</h2><form method=post action=/scan><input type=text name=path id=path placeholder="/home/me/my-agent  or  /home/me/agent.zip" required><br><button id=scan>Start scan</button></form>
 <h2>Or upload a .zip</h2><form id=up><input type=file id=zip accept=".zip"><br><button>Scan zip</button></form>
+<h2>Audit Codex, Claude Code, and Cursor configs</h2>
+<p>Reads plugins, hooks, and MCP servers already on this computer. It also compares a local Claude Code install with version 2.1.317 and scans local User-Agent log lines for an email address, which is masked. It does not change files and it does not send them anywhere.</p>
+<form method=post action=/config-audit><label>Optional project folder<br><input type=text name=project placeholder="/home/me/my-repo"></label><br><button id=audit>Audit configs</button></form>
+<h2>Data-sharing settings</h2>
+${require("./checklist-html").checklistHtml(require("./data-sharing").load())}
 <p><a href=/ste.html>Open the STE paste page</a></p>
 <script>document.getElementById("up").onsubmit=async e=>{e.preventDefault();const f=document.getElementById("zip").files[0];if(!f)return;const r=await fetch("/upload",{method:"POST",body:f});location.href=r.url}</script></body></html>`;
 
@@ -33,7 +38,7 @@ function start(o) {
   const server = http.createServer((req, res) => {
     const send = (code, type, body, extra) => { res.writeHead(code, Object.assign({ "content-type": type }, extra)); res.end(body); };
     if (req.method === "GET" && req.url === "/") return send(200, "text/html; charset=utf-8", PAGE());
-    if (req.method === "POST" && (req.url === "/scan" || req.url === "/upload")) {
+    if (req.method === "POST" && (req.url === "/scan" || req.url === "/upload" || req.url === "/config-audit")) {
       const chunks = []; let size = 0;
       req.on("data", (c) => { size += c.length; if (size > 200 * 1024 * 1024) req.destroy(); else chunks.push(c); });
       req.on("end", () => {
@@ -42,6 +47,13 @@ function start(o) {
             const p = decodeURIComponent(Buffer.concat(chunks).toString().replace(/^path=/, "").replace(/\+/g, " ")).trim();
             if (!fs.existsSync(p)) return send(400, "text/html; charset=utf-8", PAGE("Not found: " + p));
             scan(p);
+          } else if (req.url === "/config-audit") {
+            const project = decodeURIComponent(Buffer.concat(chunks).toString().replace(/^project=/, "").replace(/\+/g, " ")).trim();
+            if (project && !fs.existsSync(project)) return send(400, "text/html; charset=utf-8", PAGE("Not found: " + project));
+            const r = require("./scanners/config-audit").buildReport({ home: o.configHome || os.homedir(), project, system: !o.configHome, env: !o.configHome, homeExplicit: !!o.configHome });
+            fs.writeFileSync(path.join(out, "index.html"), render.html(r));
+            fs.writeFileSync(path.join(out, "report.md"), render.md(r));
+            fs.writeFileSync(path.join(out, "report.json"), JSON.stringify(r, null, 2));
           } else {
             const z = path.join(out, "uploaded.zip"); fs.writeFileSync(z, Buffer.concat(chunks)); scan(z, "uploaded.zip");
           }

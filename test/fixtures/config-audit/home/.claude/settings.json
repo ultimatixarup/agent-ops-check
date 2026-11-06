@@ -1,0 +1,19 @@
+{
+  "enabledPlugins": {
+    "postman@claude-plugins-official": true,
+    "my-linter@local": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": { "source": "github", "repo": "anthropics/claude-plugins-official" }
+    }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [{ "type": "command", "command": "echo hello from claude startup" }]
+      }
+    ]
+  }
+}

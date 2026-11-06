@@ -32,8 +32,12 @@ Simplified Technical English (STE) style checks (not a certified ASD-STE100 chec
   --ste-compare <original> <rewrite>   list facts and constraints missing from the STE rewrite
 
 agent-ops-check ./agent.zip   scans a zipped agent (extracted to a temp folder, deleted after)
+agent-ops-check config-audit [--home DIR] [--project DIR] [--out DIR] [--format LIST] [--fail-on SEV]
+  read Codex, Claude Code, and Cursor plugins, hooks, and MCP servers on this computer.
+  Also compares a local Claude Code install with 2.1.317 and scans local User-Agent log lines for an email address.
+  Does not change those files and does not send them anywhere. --home is a fixture root for tests.
 agent-ops-check ui [--port N] [--open]
-  local page on 127.0.0.1 to pick a folder path or .zip and start a scan
+  local page on 127.0.0.1 to pick a folder path or .zip and start a scan, audit local configs, and read the data-sharing checklist
 agent-ops-check ste-ui [--out <file>] [--open]
   writes an offline STE page (paste box + file picker), default ./agent-ops-report/ste.html
   -h, --help`;
@@ -77,8 +81,67 @@ function steFiles(p, out) {
   else if (/\.(md|txt|prompt|rst|adoc|html?)$/i.test(p) || !path.extname(p)) out.push({ name: path.relative(process.cwd(), p) || p, text: fs.readFileSync(p, "utf8") });
 }
 
+function configAudit(argv) {
+  const o = { format: ["html", "json", "md", "sarif"], out: "agent-ops-report" };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]; const v = () => argv[++i];
+    if (a === "-h" || a === "--help") { console.log(HELP); return 0; }
+    else if (a === "--out") o.out = v();
+    else if (a === "--format") o.format = v().split(",").map((s) => s.trim());
+    else if (a === "--fail-on") o.failOn = v();
+    else if (a === "--home") o.home = path.resolve(v());
+    else if (a === "--project") o.project = path.resolve(v());
+    else throw new Error("Unknown option " + a);
+  }
+  if (o.home && !fs.existsSync(o.home)) { console.error("Not found: " + o.home); return 2; }
+  if (o.project && !fs.existsSync(o.project)) { console.error("Not found: " + o.project); return 2; }
+  const r = require("./scanners/config-audit").buildReport({ home: o.home || require("os").homedir(), project: o.project, system: !o.home, env: !o.home, homeExplicit: !!o.home });
+  return emit(r, o);
+}
+
+function emit(r, o) {
+  fs.mkdirSync(o.out, { recursive: true });
+  const W = { html: ["index.html", require("./report/html")], json: ["report.json", (x) => JSON.stringify(x, null, 2)], md: ["report.md", require("./report/md")], sarif: ["report.sarif", require("./report/sarif")] };
+  const written = [];
+  for (const f of o.format) { if (!W[f]) { console.error("Unknown format " + f); return 2; } const p = path.join(o.out, W[f][0]); fs.writeFileSync(p, W[f][1](r)); written.push(p); }
+  const lb = r.groups.find((g) => g.id === "labs");
+  if (r.evals) {
+    const ev = require("./evals"); const d = path.join(o.out, "evals"); fs.mkdirSync(d, { recursive: true });
+    const jl = (a) => a.map((x) => JSON.stringify(x)).join("\n") + (a.length ? "\n" : "");
+    fs.writeFileSync(path.join(d, "functional.jsonl"), jl(r.evals.functional)); fs.writeFileSync(path.join(d, "security.jsonl"), jl(r.evals.security)); fs.writeFileSync(path.join(d, "README.md"), ev.toMarkdown(r.evals));
+    written.push(d + "/ (" + r.evals.functional.length + " functional, " + r.evals.security.length + " security cases)");
+  }
+  if (r.groups.some((g) => g.id === "ste")) { const p = path.join(o.out, "ste.html"); fs.writeFileSync(p, require("./ste/ui")(o.rulesDir)); written.push(p); }
+  if (lb && lb.redteam) { const p = path.join(o.out, "redteam-pack.txt"); fs.writeFileSync(p, lb.redteam); written.push(p); }
+  if (r.configAudit) {
+    const g = r.groups.find((x) => x.id === "configaudit");
+    const n = (k) => g.inventory.filter((it) => it.kind === k).length;
+    console.log("agent-ops-check config-audit: score " + r.score + "/100 · " + r.filesScanned + " config file(s) opened");
+    console.log("  " + g.title.padEnd(36) + String(g.score).padStart(3) + "/100  high " + g.counts.high + " · medium " + g.counts.medium + " · low " + g.counts.low);
+    console.log("  plugins " + n("plugin") + " · marketplaces " + n("marketplace") + " · hooks " + n("hook") + " · MCP servers " + n("mcp"));
+  } else {
+    console.log("agent-ops-check: score " + r.score + "/100 · " + r.filesScanned + " files · " + r.agents.length + " agent(s)" + (o.steInputs.length ? " · " + o.steInputs.length + " STE input(s)" : ""));
+    for (const g of r.groups) console.log("  " + g.title.padEnd(36) + String(g.score).padStart(3) + "/100  high " + g.counts.high + " · medium " + g.counts.medium + " · low " + g.counts.low);
+    if (r.standards) console.log("  Standards map: " + r.standards.length + " frameworks (maps to, not compliance)");
+  }
+  if (r.rules) console.log("Rules " + r.rules.version + " (" + r.rules.date + "). " + r.rules.hint);
+  console.log(r.network);
+  if (r.llm && r.llm.error) console.log("LLM: " + r.llm.error);
+  console.log("Report: " + written.join(", "));
+  if (o.failOn) {
+    const order = ["low", "medium", "high"]; const min = order.indexOf(o.failOn);
+    if (min < 0) { console.error("--fail-on must be high|medium|low"); return 2; }
+    if (r.groups.some((g) => g.findings.some((f) => order.indexOf(f.severity) >= min))) return 1;
+  }
+  return 0;
+}
+
 async function main(argv) {
   if (argv[0] === "eval") return require("./eval-cli").main(argv.slice(1));
+  if (argv[0] === "config-audit") {
+    try { return configAudit(argv.slice(1)); }
+    catch (e) { console.error(e.message + "\n\n" + HELP); return 2; }
+  }
   let o;
   try { o = parse(argv); } catch (e) { console.error(e.message + "\n\n" + HELP); return 2; }
   if (o.localUi) return require("./ui-server").start(o);
@@ -100,31 +163,6 @@ async function main(argv) {
   o.inputsLabel = o.inputs.slice();
   const r = analyze(o.inputs, o);
   if (o.llm) r.llm = await require("./llm/optional").review(r, o.llm);
-  fs.mkdirSync(o.out, { recursive: true });
-  const W = { html: ["index.html", require("./report/html")], json: ["report.json", (x) => JSON.stringify(x, null, 2)], md: ["report.md", require("./report/md")], sarif: ["report.sarif", require("./report/sarif")] };
-  const written = [];
-  for (const f of o.format) { if (!W[f]) { console.error("Unknown format " + f); return 2; } const p = path.join(o.out, W[f][0]); fs.writeFileSync(p, W[f][1](r)); written.push(p); }
-  const lb = r.groups.find((g) => g.id === "labs");
-  if (r.evals) {
-    const ev = require("./evals"); const d = path.join(o.out, "evals"); fs.mkdirSync(d, { recursive: true });
-    const jl = (a) => a.map((x) => JSON.stringify(x)).join("\n") + (a.length ? "\n" : "");
-    fs.writeFileSync(path.join(d, "functional.jsonl"), jl(r.evals.functional)); fs.writeFileSync(path.join(d, "security.jsonl"), jl(r.evals.security)); fs.writeFileSync(path.join(d, "README.md"), ev.toMarkdown(r.evals));
-    written.push(d + "/ (" + r.evals.functional.length + " functional, " + r.evals.security.length + " security cases)");
-  }
-  if (r.groups.some((g) => g.id === "ste")) { const p = path.join(o.out, "ste.html"); fs.writeFileSync(p, require("./ste/ui")(o.rulesDir)); written.push(p); }
-  if (lb && lb.redteam) { const p = path.join(o.out, "redteam-pack.txt"); fs.writeFileSync(p, lb.redteam); written.push(p); }
-  console.log("agent-ops-check: score " + r.score + "/100 · " + r.filesScanned + " files · " + r.agents.length + " agent(s)" + (o.steInputs.length ? " · " + o.steInputs.length + " STE input(s)" : ""));
-  for (const g of r.groups) console.log("  " + g.title.padEnd(36) + String(g.score).padStart(3) + "/100  high " + g.counts.high + " · medium " + g.counts.medium + " · low " + g.counts.low);
-  if (r.standards) console.log("  Standards map: " + r.standards.length + " frameworks (maps to, not compliance)");
-  console.log("Rules " + r.rules.version + " (" + r.rules.date + "). " + r.rules.hint);
-  console.log(r.network);
-  if (r.llm && r.llm.error) console.log("LLM: " + r.llm.error);
-  console.log("Report: " + written.join(", "));
-  if (o.failOn) {
-    const order = ["low", "medium", "high"]; const min = order.indexOf(o.failOn);
-    if (min < 0) { console.error("--fail-on must be high|medium|low"); return 2; }
-    if (r.groups.some((g) => g.findings.some((f) => order.indexOf(f.severity) >= min))) return 1; // "info" is -1, never fails
-  }
-  return 0;
+  return emit(r, o);
 }
 module.exports = { main, parse };

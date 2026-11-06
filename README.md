@@ -14,7 +14,9 @@ Then open `agent-ops-report/index.html` in your browser.
 
 Other ways in:
 - A zipped agent: `npx github:ultimatixarup/agent-ops-check ./agent.zip` (extracted locally to a temp folder, deleted after; path-traversal entries are rejected)
-- A local launch page: `npx github:ultimatixarup/agent-ops-check ui --open` serves a page on `127.0.0.1` where you type a folder/zip path or upload a zip, start the scan, and view the report
+- A local launch page: `npx github:ultimatixarup/agent-ops-check ui --open` serves a page on `127.0.0.1` where you type a folder/zip path or upload a zip, start the scan, and view the report. The same page audits local Codex, Claude Code, and Cursor configs and shows the data-sharing checklist
+- Local coding-tool configs: `npx github:ultimatixarup/agent-ops-check config-audit` reads plugins, hooks, and MCP servers for Codex, Claude Code, and Cursor. It does not change those files and it does not send them anywhere
+- Where each vendor puts the training opt-out: [docs/DATA-SHARING.md](docs/DATA-SHARING.md)
 
 > Heuristic regex and static checks, **not a security audit**. It can miss problems and it can flag harmless code.
 > Free, MIT-licensed personal project.
@@ -264,6 +266,28 @@ Each section states an unmet need with sourced figures, the checks that address 
 **Where:** Eval sets and Standards map.
 
 **Checks that address it:** A scan writes an offline eval set (JSONL) under `report/evals/` from your prompts and tool definitions. The scan does not run those cases. The optional `agent-ops-check eval` command runs them, the LLMail samples, and benign emails against an agent you configure. It contacts only that agent, and only after you opt in. The Standards map shows how findings map to 10 frameworks in `data/standards/` (✅ evidence found, 🟡 partial, ⬜ not found). It says "maps to", never "compliant".
+
+### Coding-tool plugins, hooks, and MCP servers you may not have added
+
+**The need.**
+
+- Postman desktop logged an auto-existing-upgrade on 24 October 2026 that installed a Claude Code plugin and a Codex plugin, wrote a SessionStart hook and a trusted_hash for that hook, and pointed Codex at the remote MCP server https://mcp.postman.com/mcp. Report: https://github.com/postmanlabs/postman-app-support/issues/14370
+- Claude Code put the signed-in account email in User-Agent headers on requests to sites the person had not visited. Reports: https://github.com/anthropics/claude-code/issues/107757 and https://news.ycombinator.com/item?id=50385272. Version 2.1.317 added a partial cc-plugin-privacy check that asks before some shell and web tool calls send that address.
+
+**Where:** command: agent-ops-check config-audit (also on the local launch page).
+
+**Checks that address it:** `configaudit.installed_by_other_app`, `configaudit.remote_mcp`, `configaudit.auto_approved_hook`, `configaudit.unparsed`, `configaudit.none`, `configaudit.claude_ua_version`, `configaudit.claude_ua_privacy`, `configaudit.claude_ua_email`
+
+| Rule ID | Severity | What it looks for | Example finding | How to fix |
+|---|---|---|---|---|
+| `configaudit.installed_by_other_app` | high when the entry matches the Postman fingerprint and is enabled; medium for another application's path, or when disabled | Plugin, marketplace, hook, or MCP entry whose id, source, URL, command, or path matches the Postman desktop install (postman@postman, postman@claude-plugins-official, postmanlabs/postman-plugin, mcp.postman.com, a Postman.app path) or whose command points at another application's files. | Codex plugin postman@postman matches the Postman desktop install fingerprint. | Confirm you added it. Remove it in that tool if you did not. |
+| `configaudit.remote_mcp` | medium; high when the URL is http or ws rather than https or wss | MCP server whose url uses http, https, ws, or wss and whose host is not localhost, 127.0.0.1, or ::1. | Claude Code MCP server hubspot calls https://mcp.hubspot.com/anthropic. | Confirm you added that host. Prefer a local stdio server when you do not need a remote one. |
+| `configaudit.auto_approved_hook` | high when a trusted_hash is stored or the command matches another app; medium for other startup hooks | SessionStart, Setup, UserPromptSubmit, beforeSubmitPrompt, or workspaceOpen hooks, and any Codex hook with a trusted_hash in hooks.state. | Codex hook has a trusted_hash, so it can run without asking you to approve the current definition. | Read the command. Clear the trust and the hook if you did not approve it. |
+| `configaudit.unparsed` | medium when a file could not be parsed; low when it could not be read | A config file that exists but could not be read or parsed, so its entries were not listed. | Could not parse TOML. Entries in this file were not listed. | Open the file and fix the syntax, then run the audit again. |
+| `configaudit.none` | info | No config files were found, or the files that were opened listed no plugin, hook, or MCP server. | No Codex, Claude Code, or Cursor config files were found under this home directory. | Nothing to change. Run again with --project if the configs are in a repo. |
+| `configaudit.claude_ua_version` | high when the install is older than 2.1.317; info when Claude Code files exist but the version was not read | A Claude Code version from ~/.local/share/claude/versions, the ~/.local/bin/claude launcher symlink, or claude --version on a real home directory. Versions before 2.1.317 do not include the cc-plugin-privacy prompt. | Claude Code 2.1.300 is older than 2.1.317. | Update Claude Code to 2.1.317 or later and leave cc-plugin-privacy enabled. The mod does not cover every path. |
+| `configaudit.claude_ua_privacy` | high | enabledPlugins or installed_plugins.json turning cc-plugin-privacy off. | cc-plugin-privacy@builtin is disabled. | Turn the built-in privacy mod back on. It asks before a shell or web tool call sends the account email. |
+| `configaudit.claude_ua_email` | high | An email-like address on a User-Agent header line or a curl -A line in a local .claude log or ua-probe file. The address is masked. | A local log line has an email-like address in a User-Agent. The address is not printed. | Update to 2.1.317 or later, keep cc-plugin-privacy on, and treat the masked line as a lead that the address was sent. |
 
 _Standards and datasets are named for reference only. This project is not affiliated with or endorsed by Microsoft, OWASP, NIST, ISO, MITRE, CSA, Anthropic or the EU._
 

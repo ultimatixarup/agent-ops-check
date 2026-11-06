@@ -1,0 +1,3 @@
+[mcp_servers.repo-docs]
+command = "docs-server"
+args = ["--port", "4000"]
