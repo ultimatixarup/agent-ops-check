@@ -1,0 +1,5 @@
+GET /search HTTP/1.1
+User-Agent: ClaudeCode/2.1.300 (contact: person@example.com)
+From: other@example.com
+curl -A "bot person@example.com" https://example.com/wiki
+User-Agent: ClaudeCode/2.1.300

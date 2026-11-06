@@ -272,10 +272,11 @@ Each section states an unmet need with sourced figures, the checks that address 
 **The need.**
 
 - Postman desktop logged an auto-existing-upgrade on 24 October 2026 that installed a Claude Code plugin and a Codex plugin, wrote a SessionStart hook and a trusted_hash for that hook, and pointed Codex at the remote MCP server https://mcp.postman.com/mcp. Report: https://github.com/postmanlabs/postman-app-support/issues/14370
+- Claude Code put the signed-in account email in User-Agent headers on requests to sites the person had not visited. Reports: https://github.com/anthropics/claude-code/issues/107757 and https://news.ycombinator.com/item?id=50385272. Version 2.1.317 added a partial cc-plugin-privacy check that asks before some shell and web tool calls send that address.
 
 **Where:** command: agent-ops-check config-audit (also on the local launch page).
 
-**Checks that address it:** `configaudit.installed_by_other_app`, `configaudit.remote_mcp`, `configaudit.auto_approved_hook`, `configaudit.unparsed`, `configaudit.none`
+**Checks that address it:** `configaudit.installed_by_other_app`, `configaudit.remote_mcp`, `configaudit.auto_approved_hook`, `configaudit.unparsed`, `configaudit.none`, `configaudit.claude_ua_version`, `configaudit.claude_ua_privacy`, `configaudit.claude_ua_email`
 
 | Rule ID | Severity | What it looks for | Example finding | How to fix |
 |---|---|---|---|---|
@@ -284,6 +285,9 @@ Each section states an unmet need with sourced figures, the checks that address 
 | `configaudit.auto_approved_hook` | high when a trusted_hash is stored or the command matches another app; medium for other startup hooks | SessionStart, Setup, UserPromptSubmit, beforeSubmitPrompt, or workspaceOpen hooks, and any Codex hook with a trusted_hash in hooks.state. | Codex hook has a trusted_hash, so it can run without asking you to approve the current definition. | Read the command. Clear the trust and the hook if you did not approve it. |
 | `configaudit.unparsed` | medium when a file could not be parsed; low when it could not be read | A config file that exists but could not be read or parsed, so its entries were not listed. | Could not parse TOML. Entries in this file were not listed. | Open the file and fix the syntax, then run the audit again. |
 | `configaudit.none` | info | No config files were found, or the files that were opened listed no plugin, hook, or MCP server. | No Codex, Claude Code, or Cursor config files were found under this home directory. | Nothing to change. Run again with --project if the configs are in a repo. |
+| `configaudit.claude_ua_version` | high when the install is older than 2.1.317; info when Claude Code files exist but the version was not read | A Claude Code version from ~/.local/share/claude/versions, the ~/.local/bin/claude launcher symlink, or claude --version on a real home directory. Versions before 2.1.317 do not include the cc-plugin-privacy prompt. | Claude Code 2.1.300 is older than 2.1.317. | Update Claude Code to 2.1.317 or later and leave cc-plugin-privacy enabled. The mod does not cover every path. |
+| `configaudit.claude_ua_privacy` | high | enabledPlugins or installed_plugins.json turning cc-plugin-privacy off. | cc-plugin-privacy@builtin is disabled. | Turn the built-in privacy mod back on. It asks before a shell or web tool call sends the account email. |
+| `configaudit.claude_ua_email` | high | An email-like address on a User-Agent header line or a curl -A line in a local .claude log or ua-probe file. The address is masked. | A local log line has an email-like address in a User-Agent. The address is not printed. | Update to 2.1.317 or later, keep cc-plugin-privacy on, and treat the masked line as a lead that the address was sent. |
 
 _Standards and datasets are named for reference only. This project is not affiliated with or endorsed by Microsoft, OWASP, NIST, ISO, MITRE, CSA, Anthropic or the EU._
 

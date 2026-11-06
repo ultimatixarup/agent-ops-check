@@ -15,7 +15,7 @@ const PAGE = (msg) => `<!doctype html><html lang=en><head><meta charset=utf-8><t
 <h2>Scan a folder or .zip by path</h2><form method=post action=/scan><input type=text name=path id=path placeholder="/home/me/my-agent  or  /home/me/agent.zip" required><br><button id=scan>Start scan</button></form>
 <h2>Or upload a .zip</h2><form id=up><input type=file id=zip accept=".zip"><br><button>Scan zip</button></form>
 <h2>Audit Codex, Claude Code, and Cursor configs</h2>
-<p>Reads plugins, hooks, and MCP servers already on this computer. It does not change them and it does not send them anywhere.</p>
+<p>Reads plugins, hooks, and MCP servers already on this computer. It also compares a local Claude Code install with version 2.1.317 and scans local User-Agent log lines for an email address, which is masked. It does not change files and it does not send them anywhere.</p>
 <form method=post action=/config-audit><label>Optional project folder<br><input type=text name=project placeholder="/home/me/my-repo"></label><br><button id=audit>Audit configs</button></form>
 <h2>Data-sharing settings</h2>
 ${require("./checklist-html").checklistHtml(require("./data-sharing").load())}
@@ -50,7 +50,7 @@ function start(o) {
           } else if (req.url === "/config-audit") {
             const project = decodeURIComponent(Buffer.concat(chunks).toString().replace(/^project=/, "").replace(/\+/g, " ")).trim();
             if (project && !fs.existsSync(project)) return send(400, "text/html; charset=utf-8", PAGE("Not found: " + project));
-            const r = require("./scanners/config-audit").buildReport({ home: o.configHome || os.homedir(), project, system: !o.configHome, env: !o.configHome });
+            const r = require("./scanners/config-audit").buildReport({ home: o.configHome || os.homedir(), project, system: !o.configHome, env: !o.configHome, homeExplicit: !!o.configHome });
             fs.writeFileSync(path.join(out, "index.html"), render.html(r));
             fs.writeFileSync(path.join(out, "report.md"), render.md(r));
             fs.writeFileSync(path.join(out, "report.json"), JSON.stringify(r, null, 2));

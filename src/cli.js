@@ -34,6 +34,7 @@ Simplified Technical English (STE) style checks (not a certified ASD-STE100 chec
 agent-ops-check ./agent.zip   scans a zipped agent (extracted to a temp folder, deleted after)
 agent-ops-check config-audit [--home DIR] [--project DIR] [--out DIR] [--format LIST] [--fail-on SEV]
   read Codex, Claude Code, and Cursor plugins, hooks, and MCP servers on this computer.
+  Also compares a local Claude Code install with 2.1.317 and scans local User-Agent log lines for an email address.
   Does not change those files and does not send them anywhere. --home is a fixture root for tests.
 agent-ops-check ui [--port N] [--open]
   local page on 127.0.0.1 to pick a folder path or .zip and start a scan, audit local configs, and read the data-sharing checklist
@@ -94,7 +95,7 @@ function configAudit(argv) {
   }
   if (o.home && !fs.existsSync(o.home)) { console.error("Not found: " + o.home); return 2; }
   if (o.project && !fs.existsSync(o.project)) { console.error("Not found: " + o.project); return 2; }
-  const r = require("./scanners/config-audit").buildReport({ home: o.home || require("os").homedir(), project: o.project, system: !o.home, env: !o.home });
+  const r = require("./scanners/config-audit").buildReport({ home: o.home || require("os").homedir(), project: o.project, system: !o.home, env: !o.home, homeExplicit: !!o.home });
   return emit(r, o);
 }
 

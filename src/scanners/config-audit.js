@@ -29,6 +29,7 @@ const fs = require("fs");
 const path = require("path");
 const { parseToml, lineAt } = require("../toml-lite");
 const sharing = require("../data-sharing");
+const claudeUa = require("./claude-ua");
 
 const MAX_BYTES = 8 * 1024 * 1024;
 const POSTMAN = "https://github.com/postmanlabs/postman-app-support/issues/14370";
@@ -618,8 +619,12 @@ function audit(opts) {
     it.flags = labels;
   }
 
+  findings.push(...claudeUa.check({
+    home, project, claudeDir, display: disp, cli: !!o.cli, cliRun: o.cliRun
+  }));
+
   const opened = files.filter((f) => f.status === "read").length;
-  if (!kept.length && !findings.some((f) => f.rule === "configaudit.unparsed")) {
+  if (!kept.length && !findings.length) {
     findings.push({
       rule: "configaudit.none", severity: "info", file: "(config audit)", line: 0,
       message: opened ? "Config files were opened. None of them listed a plugin, hook, or MCP server." : "No Codex, Claude Code, or Cursor config files were found under this home directory.",
@@ -640,12 +645,12 @@ function audit(opts) {
     files,
     checklist: sharingDoc,
     tools,
-    note: "Read-only. The files below were opened and not modified, and nothing was sent. Every plugin, hook, and MCP server that was parsed is listed. A flag means the entry matches a fingerprint another app has used, calls a remote MCP server, or is a startup hook or a hook Codex has already trusted. A flag does not prove you did not add the entry. Confirm a flag before you delete anything. Managed Claude Code settings that arrive by MDM or the claude.ai console are not a file this check knows how to open."
+    note: "Read-only. The files below were opened and not modified, and nothing was sent. Every plugin, hook, and MCP server that was parsed is listed. A flag means the entry matches a fingerprint another app has used, calls a remote MCP server, or is a startup hook or a hook Codex has already trusted. The Claude Code section compares a local install with 2.1.317 and scans local User-Agent log lines for an email address, which is masked. A flag does not prove you did not add the entry. Confirm a flag before you delete anything. Managed Claude Code settings that arrive by MDM or the claude.ai console are not a file this check knows how to open."
   };
 }
 
 function buildReport(opts) {
-  const g = audit(opts);
+  const g = audit(Object.assign({}, opts, { cli: opts.cli != null ? opts.cli : !opts.homeExplicit }));
   let rules = null;
   try { rules = require("../index").rulesInfo(); } catch (_) { rules = null; }
   return {

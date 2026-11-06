@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "cc-plugin-privacy@builtin": false,
+    "my-linter@local": true
+  }
+}

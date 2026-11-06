@@ -30,11 +30,12 @@ jobs:
         run: npm test
       - name: Config audit fixtures (read-only)
         run: |
-          node -r test/no-network.js bin/agent-ops-check.js config-audit \
-            --home test/fixtures/config-audit/home \
-            --project test/fixtures/config-audit/project \
-            --out config-audit-out --format json,md,html
-          node -e "const r=require('./config-audit-out/report.json'); const g=r.groups.find(x=>x.id==='configaudit'); if(!g||!g.findings.some(f=>f.rule==='configaudit.installed_by_other_app')) process.exit(1)"
+          # Absolute path: `node -r test/no-network.js` is a module name, not a file, on Linux, macOS, and Windows.
+          node -r "$GITHUB_WORKSPACE/test/no-network.js" "$GITHUB_WORKSPACE/bin/agent-ops-check.js" config-audit \
+            --home "$GITHUB_WORKSPACE/test/fixtures/config-audit/home" \
+            --project "$GITHUB_WORKSPACE/test/fixtures/config-audit/project" \
+            --out "$GITHUB_WORKSPACE/config-audit-out" --format json,md,html
+          node -e "const r=require(require('path').join(process.env.GITHUB_WORKSPACE,'config-audit-out','report.json')); const g=r.groups.find(x=>x.id==='configaudit'); if(!g||!g.findings.some(f=>f.rule==='configaudit.installed_by_other_app')) process.exit(1)"
       - name: README check tables match rules
         run: npm run docs:check
       - name: LLMail benchmark doc is current

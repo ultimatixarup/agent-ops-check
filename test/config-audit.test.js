@@ -7,6 +7,7 @@ const path = require("path");
 const http = require("http");
 const { execFileSync } = require("child_process");
 const { audit } = require("../src/scanners/config-audit");
+const ua = require("../src/scanners/claude-ua");
 const { parseToml } = require("../src/toml-lite");
 const sharing = require("../src/data-sharing");
 const { analyze } = require("../src");
@@ -75,6 +76,7 @@ test("config audit lists entries, flags the Postman-shaped ones, and prints no s
   assert.ok(blob.includes("API_KEY"));
   assert.ok(g.files.some((f) => f.path === "~/.codex/config.toml" && f.status === "read"));
   assert.ok(g.checklist.entries.some((e) => e.vendor === "Google" && /72 hours/.test(e.controls)));
+  assert.ok(g.findings.some((f) => f.rule === "configaudit.claude_ua_version" && f.severity === "info"));
 });
 
 test("clean home scores 100 and a broken file is reported without hiding the rest", () => {
@@ -137,6 +139,33 @@ test("data-sharing page cites only the checked vendor docs and leaves unknown de
   assert.strictEqual(fs.readFileSync(path.join(ROOT, "docs", "DATA-SHARING.md"), "utf8"), md);
 });
 
+test("Claude Code User-Agent check uses the install folder, a disabled privacy mod, and local log lines", () => {
+  assert.strictEqual(ua.cmpSemver("2.1.316", "2.1.317"), -1);
+  assert.strictEqual(ua.cmpSemver("2.1.317", "2.1.317"), 0);
+  assert.strictEqual(ua.highestVersion(["2.1.300", "2.1.400", "notes"]), "2.1.400");
+  assert.strictEqual(ua.parseVersion("2.1.211 (Claude Code)\n"), "2.1.211");
+  const old = audit({ home: path.join(ROOT, "test", "fixtures", "config-audit", "ua-old") });
+  const blob = JSON.stringify(old);
+  assert.ok(!blob.includes("person@example.com") && !blob.includes("other@example.com"));
+  assert.ok(old.findings.some((f) => f.rule === "configaudit.claude_ua_version" && f.severity === "high" && f.message.includes("2.1.300")));
+  assert.ok(old.findings.some((f) => f.rule === "configaudit.claude_ua_privacy" && f.message.includes("cc-plugin-privacy@builtin")));
+  const emails = old.findings.filter((f) => f.rule === "configaudit.claude_ua_email");
+  assert.strictEqual(emails.length, 2);
+  assert.ok(emails.every((f) => f.evidence.includes("***@*** (masked)")));
+  const fixed = audit({ home: path.join(ROOT, "test", "fixtures", "config-audit", "ua-fixed") });
+  assert.ok(!fixed.findings.some((f) => f.rule === "configaudit.claude_ua_version" && f.severity === "high"));
+  assert.ok(!fixed.findings.some((f) => f.rule === "configaudit.claude_ua_privacy" || f.rule === "configaudit.claude_ua_email"));
+  assert.ok(!JSON.stringify(fixed).includes("other@example.com"));
+  let called = false;
+  audit({ home: path.join(ROOT, "test", "fixtures", "config-audit", "ua-fixed"), cli: false, cliRun: () => { called = true; return "1.0.0 (Claude Code)"; } });
+  assert.strictEqual(called, false);
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "aoc-ua-"));
+  fs.mkdirSync(path.join(tmp, ".claude"), { recursive: true });
+  fs.writeFileSync(path.join(tmp, ".claude", "settings.json"), "{}\n");
+  const viaCli = audit({ home: tmp, cli: true, cliRun: () => "2.1.100 (Claude Code)\n" });
+  assert.ok(viaCli.findings.some((f) => f.rule === "configaudit.claude_ua_version" && f.severity === "high" && f.message.includes("2.1.100")));
+});
+
 test("launch page shows the checklist and audits the fixture home", async () => {
   let srv, base;
   const started = new Promise((res) => require("../src/ui-server").start({ configHome: HOME, onListen: (s, u) => { srv = s; base = u; res(); } }));
@@ -153,6 +182,7 @@ test("launch page shows the checklist and audits the fixture home", async () => 
   assert.match(home.body, /action=\/config-audit/);
   assert.match(home.body, /Allow GitHub to use my data for AI model training/);
   assert.match(home.body, /Help Improve our AI models/);
+  assert.match(home.body, /2\.1\.317/);
   const auditPage = await req("POST", "/config-audit", "project=" + encodeURIComponent(PROJECT), "application/x-www-form-urlencoded");
   assert.strictEqual(auditPage.status, 303);
   const report = await req("GET", "/report/index.html");
